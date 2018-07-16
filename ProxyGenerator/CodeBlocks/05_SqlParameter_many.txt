@@ -1,0 +1,6 @@
+			//
+            System.Data.SqlClient.SqlParameter par_placeholderName_ = new SqlParameter();
+            par_placeholderName_.Direction = ParameterDirection._placeholderDirection_;
+            par_placeholderName_.DbType = DbType._placeholderDbtype_;
+            par_placeholderName_.ParameterName = "@_placeholderName_";
+			cmd.Parameters.Add( par_placeholderName_);// add to command

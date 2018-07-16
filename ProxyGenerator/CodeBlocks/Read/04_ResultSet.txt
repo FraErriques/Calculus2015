@@ -1,0 +1,4 @@
+            _placeholderReturnType_ resultset = new _placeholderReturnType_("ResultSet");
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd;// bind adapter to the command.
+			//

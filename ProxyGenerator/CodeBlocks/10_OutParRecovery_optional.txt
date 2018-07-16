@@ -1,0 +1,4 @@
+                object obj__placeholderName_ = cmd.Parameters["@_placeholderName_"].Value;
+                if (null != obj__placeholderName_ && System.DBNull.Value != obj__placeholderName_)
+                    _placeholderName_ = (_placeholderCtype_)(cmd.Parameters["@_placeholderName_"].Value);
+                //

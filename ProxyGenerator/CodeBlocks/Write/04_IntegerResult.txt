@@ -1,0 +1,2 @@
+			int writingSucceeded = -1;// init to error:no_connection.
+			//

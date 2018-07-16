@@ -1,0 +1,8 @@
+			if( _placeholderProxyParValidity_ )
+			{
+				_placeholderNotnullAssignment_
+			}
+			else
+			{
+				par_placeholderName_.Value = System.DBNull.Value;
+			}

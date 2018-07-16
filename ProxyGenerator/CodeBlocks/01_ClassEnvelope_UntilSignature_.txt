@@ -1,0 +1,15 @@
+using System;
+using System.Text;
+using System.Data;
+using System.Data.SqlClient;
+
+
+namespace Entity.Proxies
+{
+
+
+    public abstract class _placeholderProcname__SERVICE
+    {
+
+
+        public static _placeholderReturnType_ _placeholderProcname_(

@@ -1,0 +1,141 @@
+
+Who can use it
+--------------------
+Colleagues working on projects where .Net C# and MS SqlServer are adopted.
+Consider the effort of writing the code that instantiates sql parameters, data adapters and similar
+classes contained in the System.Data namespace.
+If your project involves heavy data flows, through many stored procedures, and You don't have
+ACA/Entlib in the set of your project tools, perhaps this can be of some help.
+
+What the contribution is
+--------------------------
+It's a code generator that takes in input the signature of all the stored procedures
+of a database and gives in output the C# method that calls the stored procedure, with
+the appropriate sql-parameters, data-adapters and all is needed to supports the data flows
+in both the directions.
+Such generator is based only on the signature of the stored procedure, no matter
+what the procedure does inside its body; so there's full support for dynamic sql.
+You need to generate a new proxy when the parameter list changes in number, types,
+names, in-out attributes, or the resultset changes. If none of these changes occur
+your proxy can stay the same.
+Really this utility could be extended to work with each database that has a .Net provider,
+then DB2 and Oracle could be supported too, but in this first implementation I had time to
+code for Sql Server only, since that's the database my project is using.
+The extension should be straight, reading the code. The only "not so obvious" information is how
+each database producer stores information about user objects, into the system ones.
+Sql Server has system tables where it stores every information about user stored procedures.
+Once discovered where and how such objects are classified in other kind of databases,
+such as Oracle, DB2, etc., the extension to such providers should be straight.
+
+
+
+When it can be leveraged
+--------------------------
+Many projects have a huge activity on one or more databases. Such activity involves
+a consequent work on the application code, to fit the proxies to the modified stored procedures.
+If the customer did not buy ACA/Entlib there is the risk of spending much of the
+consultancy time writing code that changes in details only, but within the same
+pattern. The regularity of such a pattern allows to adopt a code generator.
+
+
+How it can be used
+---------------------------
+First customize the app.config:
+	adjust the path of codeBlocks, i.e. tag <CodeBlocks> in App.config.
+	adjust the path of proxyGenerationRepository, i.e. tag <Proxies> in App.config.
+	place a connection string for each of the databases You want to map.
+Compile and run the application:
+	You will be prompted to choose a path where the proxies should be delivered.
+  	You could choose a path within a unit test project, like a console, that You
+	use to make unit tests of your stored procedures. Or, if the stored procedures are
+	already tested, You should choose the path of the project that will actually contain
+	the proxies. Then add the files to your project and you're done.
+In the project(s) where You intend to make use of the db-proxies, You need to add a directory
+	containing the tools needed by the proxies. Such directory is just the "Connection"	directory
+	in the ProxyGenerator project; so You can copy and paste it into your project.
+	In the "catch" block of each proxy there is a call to a method named "DecideAndLog()"; the template
+	for such method is contained in the "Connection" directory too. You can copy and paste
+	such file into your project(s) and everything will work fine. The "DecideAndLog()" method is just a
+	template of how to discriminate where to log onto, based on the current exception nature.
+	The logging tools and additional criteria are up to the end user.
+	I provide a test-console in the solution. It's intended to simulate a project that compiles and runs
+	generated proxies. You can observe that it has no references to the ProxyGenerator, but has a copy
+	of the "Connection" directory, as each proxy-using project is required to have.
+A note on the "CodeBlocks"; this tool is based on the appropriate composition of code-templates, here called
+	CodeBlocks and stored in the subdirectory "CodeBlocks" of the project. For each need of modification
+	the right way should be to edit the appropriate CodeBlock and save it in the desired way. Only particular
+	changes could require to modify the source code of the ProxyGenerator. As an example I cite the agreements
+	adopted in the present version: the integers returned as exit-code, in the proxies that do not have a 
+	resultset. This is just a rule we agreed on in my present project. If You want to change/expand such map,
+	edit the appropriate codeBlocks.
+	If You want not to implement the "DecideAndLog()" method, You can just comment out
+	the call in the CodeBlocks 12_WriteCatch and 12_ReadCatch and the generated code will change consequently.
+	The CodeBlocks are read in memory at run time, so it's necessary to adjust the path
+	of codeBlocks in the App.Config, writing the full-path where the CodeBlocs directory is
+	installed.
+An advise: check the "non default filtering" control. The meaning of it can be achieved by the Help
+	functionality, inside the popup. In a nutshell it consists of additional filters on sql parametrs.
+	I like to work with all filters switched on. It gives You a much better control.
+	This is an early version. I have ideas about enanchments to come. Hope to post them soon.
+	Hope this can be useful to somebody.	
+	
+
+File list    
+----------------
+	sources:
+
+		<DIR>_______________ProxyGenerator
+				    1,669 App.config
+				   81,396 frmDbCockpit.cs
+				   19,307 frmDbCockpit.Designer.cs
+					4,980 frmHelp.cs
+					2,161 frmHelp.Designer.cs
+					7,036 frmNonDefaultFiltering.cs
+					8,416 frmNonDefaultFiltering.Designer.cs
+					  517 Program.cs
+					6,037 ProxyGenerator.csproj
+					6,221 frmDbCockpit.resx
+					5,814 frmHelp.resx
+					6,009 frmNonDefaultFiltering.resx
+					6,562 Abstract_ProxyGenerator_.txt
+					  257 ProxyGenerator.csproj.vspscc				
+				<DIR>_______________ProxyGenerator\Connection
+						 6,402 ConfigurationService.cs
+						 3,270 ConnectionManager.cs
+						 1,293 dbCredentials.cs
+						 4,379 LoggingTools.cs    
+				<DIR>_______________ProxyGenerator\DataAccess
+						6,794 DISCOVER_PARAMETERS_SERVICE.cs
+						1,504 GET_PROCEDURES_SERVICE.cs
+
+
+
+	code blocks:
+
+		<DIR>_______________CodeBlocks
+				01_ClassEnvelope_UntilSignature_.txt
+				02_ProxyParameterList_dynamc.txt
+				05_SqlParameter_many.txt
+				06_ProxyParValidity_.txt
+				07A_NotnullAssignmentBool_.txt
+				07B_NotnullAssignmentNotbool_.txt
+				08_OpenTry.txt
+				10_OutParRecovery_optional.txt
+				11_CloseTry_OpenCatch.txt
+				<DIR>_______________CodeBlocks\Read
+						03_ReadSqlCommand.txt
+						03trx_ReadSqlCommand.txt
+						04_ResultSet.txt
+						09_ReadTry.txt
+						12_ReadCatch.txt
+						13_Read_Shutting.txt
+						13trx_Read_Shutting.txt
+				<DIR>_______________CodeBlocks\Write
+						03_WriteSqlCommand.txt
+						03trx_WriteSqlCommand.txt
+						04_IntegerResult.txt
+						09_WriteTry.txt
+						12_WriteCatch.txt
+						13_Write_Shutting.txt
+						13trx_Write_Shutting.txt
+

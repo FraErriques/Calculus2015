@@ -1,0 +1,11 @@
+				//
+                resultset = null;
+                //
+                //---------------------exception nature discrimination----------------------
+                // no integer map in the return value.
+                LoggingToolsContainerNamespace.LoggingToolsContainer.DecideAndLog(
+					ex,
+					"eccezione in DataAccess::_placeholderProcname__SERVICE : " + ex.Message,
+                    0 // verbosity
+                );
+                //

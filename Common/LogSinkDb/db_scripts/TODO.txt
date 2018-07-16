@@ -1,0 +1,7 @@
+
+Install Howto
+------------------------
+To install the LogSinkDb from scratch You have to:
+	- create database Logging
+	- launch the script contained in logTable.txt
+	- launch the script contained in logTrace.txt

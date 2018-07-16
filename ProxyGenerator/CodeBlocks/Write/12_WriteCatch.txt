@@ -1,0 +1,21 @@
+				//
+				/// <returns>
+				/// -1  no connection
+				/// 0   ok
+				/// 1   sqlException chiave duplicata
+				/// 2   sqlException diversa da chiave duplicata
+				/// 3   eccezione NON sql
+				/// 4   errore logico senza Exception
+				/// ...
+				/// >4  altre eccezioni TODO:dettagliare in fututo
+				/// 
+				/// </returns>
+                //
+                //---------------------exception nature discrimination----------------------
+                writingSucceeded =
+                    LoggingToolsContainerNamespace.LoggingToolsContainer.DecideAndLog(
+                        ex,
+                        "eccezione in DataAccess::_placeholderProcname__SERVICE : " + ex.Message,
+						0 // verbosity
+                );
+                //

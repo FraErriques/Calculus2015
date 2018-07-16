@@ -1,0 +1,24 @@
+
+# let's start with directories
+bin/
+obj/
+TempPE/
+Debug/
+Release/
+Properties/
+.vs/
+
+# let's continue with files
+*.dll
+*.exe
+*.pdb
+*.scc
+*.cache
+*.csproj
+*.vspscc
+*.csproj.vspscc
+*.resx
+*.user
+*.proj
+*.sln
+*.suo

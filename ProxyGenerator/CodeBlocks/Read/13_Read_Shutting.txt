@@ -1,0 +1,14 @@
+            }// end catch
+            finally
+            {
+                if (null != cmd.Connection)
+                    if (System.Data.ConnectionState.Open == cmd.Connection.State)
+                        cmd.Connection.Close();
+            }
+            // ready
+            return resultset;// one or more datatables.
+        }// end service
+
+
+    }// end class
+}// end namespace

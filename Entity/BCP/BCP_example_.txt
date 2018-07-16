@@ -1,0 +1,1 @@
+BCP PrimeData..[Prime_sequence_noIdentity] in D:\util\projects\training\C#\current\primes\gino\BCP_gino.txt -SLaplace -Uapplicationusr -PJJzwz!zwzJJ70 -c -R -e".\log.txt"

@@ -1,0 +1,38 @@
+ SET QUOTED_IDENTIFIER ON 
+ GO
+	SET ANSI_NULLS ON 
+	GO
+
+CREATE         procedure createLogTable
+    @logname char(50)
+as
+
+IF OBJECT_ID(@logname) IS NULL
+BEGIN
+
+declare @cmd varchar( 8000)
+
+    SET @cmd = '
+            CREATE TABLE Logging..'+@logname+' (
+
+    [id] [int] IDENTITY (1, 1) NOT NULL ,
+    [when] varchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [row_nature] char(3) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [stack_depth] varchar(5) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [function_name] varchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [content] varchar(7919) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+    PRIMARY KEY  CLUSTERED
+    (
+        [id]
+    )  ON [PRIMARY] 
+    ) ON [PRIMARY]'
+-- cmd text ready
+    exec (@cmd)
+END
+-- else table already exists
+
+ GO
+ SET QUOTED_IDENTIFIER OFF 
+ GO
+ SET ANSI_NULLS ON 
+ GO

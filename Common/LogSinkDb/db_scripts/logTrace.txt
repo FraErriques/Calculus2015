@@ -1,0 +1,42 @@
+		SET QUOTED_IDENTIFIER ON
+ 	GO
+ 	SET ANSI_NULLS ON 
+ 	GO
+ 	CREATE         procedure trace
+            @logname char(50),
+            @when varchar(50),
+            @row_nature char(3),
+            @stack_depth varchar(5),
+            @function_name varchar(50),
+            @content varchar(7971)
+      as
+        declare @cmd char(8000)
+        IF OBJECT_ID('Logging..'+@logname) IS NOT NULL
+        BEGIN
+    SET @cmd = 'insert into Logging..'+
+    @logname+'(
+    [when],
+    [row_nature],
+    [stack_depth],
+    [function_name],
+    [content] 	  ) values('+
+        @when+', '+
+        @row_nature+', '+
+        @stack_depth+', '+
+        @function_name+', '+
+        @content+  ' )'
+ -- print @cmd  debug only
+ exec (@cmd)
+ end
+     /*
+         else
+         begin
+         -- required table not found -> do nothing
+         END
+     */
+ 		
+ GO
+ SET QUOTED_IDENTIFIER OFF 
+ GO
+ SET ANSI_NULLS ON 
+ GO

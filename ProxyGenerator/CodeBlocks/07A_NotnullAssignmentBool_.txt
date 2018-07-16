@@ -1,0 +1,6 @@
+if("False"==_placeholderName_)
+					par_placeholderName_.Value = false;
+				else if("True"==_placeholderName_)
+					par_placeholderName_.Value = true;
+				else
+					par_placeholderName_.Value = System.DBNull.Value;

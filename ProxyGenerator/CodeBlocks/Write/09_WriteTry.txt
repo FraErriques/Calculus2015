@@ -1,0 +1,9 @@
+				//
+                int rowsWritten =
+                    cmd.ExecuteNonQuery();
+                //
+                if (1 <= rowsWritten )
+                    writingSucceeded = 0;// rows written ok
+                else
+                    writingSucceeded = 4;// errore logico senza exception
+				//

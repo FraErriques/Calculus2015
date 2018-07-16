@@ -1,0 +1,70 @@
+
+ £=start, $=content, ^=close -=separator
+
+-
+£   Main()_______start
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=0 x=Cos(t)=1 y=Sin(t)=0 arg=Atan2(y, x)=0 partOfPi=arg/Math.PI=0
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=0,1 x=Cos(t)=0,995004165278026 y=Sin(t)=0,0998334166468282 arg=Atan2(y, x)=0,1 partOfPi=arg/Math.PI=0,0318309886183791
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=0,2 x=Cos(t)=0,980066577841242 y=Sin(t)=0,198669330795061 arg=Atan2(y, x)=0,2 partOfPi=arg/Math.PI=0,0636619772367581
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=0,3 x=Cos(t)=0,955336489125606 y=Sin(t)=0,29552020666134 arg=Atan2(y, x)=0,3 partOfPi=arg/Math.PI=0,0954929658551372
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=0,4 x=Cos(t)=0,921060994002885 y=Sin(t)=0,389418342308651 arg=Atan2(y, x)=0,4 partOfPi=arg/Math.PI=0,127323954473516
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=0,5 x=Cos(t)=0,877582561890373 y=Sin(t)=0,479425538604203 arg=Atan2(y, x)=0,5 partOfPi=arg/Math.PI=0,159154943091895
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=0,6 x=Cos(t)=0,825335614909678 y=Sin(t)=0,564642473395035 arg=Atan2(y, x)=0,6 partOfPi=arg/Math.PI=0,190985931710274
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=0,7 x=Cos(t)=0,764842187284489 y=Sin(t)=0,644217687237691 arg=Atan2(y, x)=0,7 partOfPi=arg/Math.PI=0,222816920328653
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=0,8 x=Cos(t)=0,696706709347166 y=Sin(t)=0,717356090899523 arg=Atan2(y, x)=0,8 partOfPi=arg/Math.PI=0,254647908947033
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=0,9 x=Cos(t)=0,621609968270665 y=Sin(t)=0,783326909627483 arg=Atan2(y, x)=0,9 partOfPi=arg/Math.PI=0,286478897565412
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=1 x=Cos(t)=0,54030230586814 y=Sin(t)=0,841470984807896 arg=Atan2(y, x)=1 partOfPi=arg/Math.PI=0,318309886183791
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=1,1 x=Cos(t)=0,453596121425577 y=Sin(t)=0,891207360061435 arg=Atan2(y, x)=1,1 partOfPi=arg/Math.PI=0,35014087480217
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=1,2 x=Cos(t)=0,362357754476674 y=Sin(t)=0,932039085967226 arg=Atan2(y, x)=1,2 partOfPi=arg/Math.PI=0,381971863420549
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=1,3 x=Cos(t)=0,267498828624587 y=Sin(t)=0,963558185417193 arg=Atan2(y, x)=1,3 partOfPi=arg/Math.PI=0,413802852038928
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=1,4 x=Cos(t)=0,169967142900241 y=Sin(t)=0,98544972998846 arg=Atan2(y, x)=1,4 partOfPi=arg/Math.PI=0,445633840657307
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=1,5 x=Cos(t)=0,0707372016677027 y=Sin(t)=0,997494986604054 arg=Atan2(y, x)=1,5 partOfPi=arg/Math.PI=0,477464829275686
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=1,6 x=Cos(t)=-0,029199522301289 y=Sin(t)=0,999573603041505 arg=Atan2(y, x)=1,6 partOfPi=arg/Math.PI=0,509295817894065
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=1,7 x=Cos(t)=-0,128844494295525 y=Sin(t)=0,991664810452469 arg=Atan2(y, x)=1,7 partOfPi=arg/Math.PI=0,541126806512444
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=1,8 x=Cos(t)=-0,227202094693088 y=Sin(t)=0,973847630878195 arg=Atan2(y, x)=1,8 partOfPi=arg/Math.PI=0,572957795130823
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=1,9 x=Cos(t)=-0,323289566863504 y=Sin(t)=0,946300087687414 arg=Atan2(y, x)=1,9 partOfPi=arg/Math.PI=0,604788783749203
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=2 x=Cos(t)=-0,416146836547143 y=Sin(t)=0,909297426825681 arg=Atan2(y, x)=2 partOfPi=arg/Math.PI=0,636619772367581
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=2,1 x=Cos(t)=-0,504846104599858 y=Sin(t)=0,863209366648873 arg=Atan2(y, x)=2,1 partOfPi=arg/Math.PI=0,668450760985961
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=2,2 x=Cos(t)=-0,588501117255346 y=Sin(t)=0,80849640381959 arg=Atan2(y, x)=2,2 partOfPi=arg/Math.PI=0,70028174960434
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=2,3 x=Cos(t)=-0,666276021279825 y=Sin(t)=0,74570521217672 arg=Atan2(y, x)=2,3 partOfPi=arg/Math.PI=0,732112738222719
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=2,4 x=Cos(t)=-0,737393715541246 y=Sin(t)=0,67546318055115 arg=Atan2(y, x)=2,4 partOfPi=arg/Math.PI=0,763943726841098
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=2,5 x=Cos(t)=-0,801143615546934 y=Sin(t)=0,598472144103956 arg=Atan2(y, x)=2,5 partOfPi=arg/Math.PI=0,795774715459477
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=2,6 x=Cos(t)=-0,856888753368948 y=Sin(t)=0,515501371821463 arg=Atan2(y, x)=2,6 partOfPi=arg/Math.PI=0,827605704077856
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=2,7 x=Cos(t)=-0,904072142017062 y=Sin(t)=0,427379880233829 arg=Atan2(y, x)=2,7 partOfPi=arg/Math.PI=0,859436692696235
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=2,8 x=Cos(t)=-0,942222340668659 y=Sin(t)=0,334988150155904 arg=Atan2(y, x)=2,8 partOfPi=arg/Math.PI=0,891267681314614
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=2,9 x=Cos(t)=-0,970958165149591 y=Sin(t)=0,239249329213981 arg=Atan2(y, x)=2,9 partOfPi=arg/Math.PI=0,923098669932993
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=3 x=Cos(t)=-0,989992496600446 y=Sin(t)=0,141120008059866 arg=Atan2(y, x)=3 partOfPi=arg/Math.PI=0,954929658551372
+$      inside Main(): 2018_07_16_16_54_01 
+	 t=3,1 x=Cos(t)=-0,999135150273279 y=Sin(t)=0,0415806624332892 arg=Atan2(y, x)=3,1 partOfPi=arg/Math.PI=0,986760647169752
+^   closing____Main()_______end

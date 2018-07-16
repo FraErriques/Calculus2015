@@ -1,0 +1,20 @@
+            //
+            SqlCommand cmd = new SqlCommand();
+            if (null == trx)
+            {
+				cmd.Connection =
+					DbLayer.ConnectionManager.connectWithCustomSingleXpath(
+						"ProxyGeneratorConnections/strings",// compulsory xpath
+						"_placeholderConnStrName_"
+					);
+            }
+            else
+            {
+                cmd.Connection = trx.Connection;
+                cmd.Transaction = trx;
+            }
+            if( null==cmd.Connection)
+                return null;// no conn
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "_placeholderProcname_";
+            //

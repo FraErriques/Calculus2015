@@ -1,0 +1,17 @@
+            }// end catch
+            finally
+            {
+				if( null == trx)
+				{
+					if (null != cmd.Connection)
+						if (System.Data.ConnectionState.Open == cmd.Connection.State)
+							cmd.Connection.Close();
+                }// else preserve transaction
+            }
+            // ready
+            return resultset;// one or more datatables.
+        }// end service
+
+
+    }// end class
+}// end namespace

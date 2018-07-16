@@ -1,0 +1,24 @@
+
+NB. It's necessary to configure "Front Page Extension 2002", to let Visual Studio Remotely deploy.
+	The tool to configure "Front Page Extension 2002" is:
+		in IIS manager, within MMc:
+			right-click on the web site:
+				All_Tasks -> "Configure_Front_Page_Extension_2002".
+
+Configure each web site to run Asp.Net 2.xxx, not 1.1.4.yyy
+
+Configure  "Page Extension 2002" on each web server
+
+When deploying to a web server, manually declare the virtual dir qithin it.
+
+Customize the Web.Config consistently with the current deploy.
+
+The syntax to call a virtual dir, within a web site on a nonstandard port is:
+	( for http://Riemann:12345/PrimeWsite/PrimeWsite/Service.asmx)
+	      http://riemann/PrimeWSite/Service.asmx
+
+	( for a vdir PrimeWebSrv within the Default Web Site)
+              http://riemann/PrimeWebSrv/Service.asmx
+
+The tool in Visual Studio 2008, to deploy is:
+	Publish Web Site.

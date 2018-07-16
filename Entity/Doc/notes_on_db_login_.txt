@@ -1,0 +1,163 @@
+﻿Concept
+-------------
+	- Login is a server-wide entity. It's to be used in connection strings.
+	
+	- User is a database-wide entity. It needs to be associated to a Login, to be usable. User is not
+		directly usable in a connection string.
+		
+Best Practice
+----------------
+	- design and manage the database(s) with sa, who is dbo overall.
+	- let applications connect with Logins different from sa. Each connection string should use a login, which
+		is mapped to a user, who is dbo on-and only there- the database the application needs to use.
+		Best if each application uses a Login mapped ONLY to a user that is dbo ONLY on the database, the application
+		needs to use. Multiple ownerships are DANGEROUS.
+		NB. "datareader" and "datawriter" schemas do not allow stored procedures execution. In order to execute, the
+			"dbo" schema is required.
+
+
+
+
+-- current version: ------------------------------------------------------------------------------------|
+
+CREATE LOGIN applicationusr WITH PASSWORD = 'applicationusr',
+ DEFAULT_DATABASE = PrimeData,   --------------------------------NB. choose operations' db.
+ CHECK_EXPIRATION =OFF,
+ CHECK_POLICY = OFF;
+GO
+
+use PrimeData;   --------------------------------NB. choose operations' db.
+CREATE USER app FOR LOGIN applicationusr
+    WITH DEFAULT_SCHEMA = dbo;   ---------------------NB. grant stored procs execution privilege.-------
+
+-- end current version: ------------------------------------------------------------------------------------|
+
+
+
+/* -----start  deprecated ----------------------------------------------------------------------------------|
+sp_addlogin 'login_name','password' 
+go
+*/
+/* deprecated
+use <database name> 
+go 
+sp_adduser 'user_name','login name create in the above step' 
+*/ -----end   deprecated -----------------------------------------------------------------------------------|
+
+
+
+-- TechNet info
+/*
+SQL Server 2005 Books Online (September 2007)
+CREATE USER (Transact-SQL)
+
+Adds a user to the current database.
+
+ Transact-SQL Syntax Conventions
+
+ Syntax 
+
+CREATE USER user_name 
+    [ { { FOR | FROM }
+      { 
+        LOGIN login_name 
+        | CERTIFICATE cert_name 
+        | ASYMMETRIC KEY asym_key_name
+      } 
+      | WITHOUT LOGIN
+    ] 
+    [ WITH DEFAULT_SCHEMA = schema_name ]
+ Arguments 
+user_name 
+Specifies the name by which the user is identified inside this database. user_name is a sysname. It can be up to 128 characters long.
+
+LOGIN login_name
+Specifies the SQL Server login for which the database user is being created. login_name must be a valid login in the server. When this SQL Server login enters the database it will acquire the name and ID of the database user that is being created.
+
+CERTIFICATE cert_name
+Specifies the certificate for which the database user is being created.
+
+ASYMMETRIC KEY asym_key_name
+Specifies the asymmetric key for which the database user is being created. 
+
+WITH DEFAULT_SCHEMA = schema_name
+Specifies the first schema that will be searched by the server when it resolves the names of objects for this database user. 
+
+WITHOUT LOGIN
+Specifies that the user should not be mapped to an existing login.
+
+ Remarks 
+If FOR LOGIN is omitted, the new database user will be mapped to the SQL Server login with the same name.
+
+If DEFAULT_SCHEMA is left undefined, the database user will use dbo as its default schema. DEFAULT_SCHEMA can be set to a schema that does not currently exist in the database. DEFAULT_SCHEMA can be set before the schema that it points to is created. DEFAULT_SCHEMA cannot be specified when you are creating a user mapped to a Windows group, a certificate, or an asymmetric key.
+
+Important:  
+The value of DEFAULT_SCHEMA is ignored if the user is a member of the sysadmin fixed server role. All members of the sysadmin fixed server role have a default schema of dbo.
+ 
+
+
+The WITHOUT LOGIN clause creates a user that is not mapped to a SQL Server login. It can connect to other databases as guest. 
+
+The names of users that are mapped to SQL Server logins, certificates, or asymmetric keys cannot contain the backslash character (\).
+
+CREATE USER cannot be used to create a guest user because the guest user already exists inside every database. You can enable the guest user by granting it CONNECT permission, as shown:
+
+ Copy Code
+GRANT CONNECT TO guest;
+GO
+Information about database users is visible in the sys.database_principals (Transact-SQL) catalog view.
+
+Caution:  
+In SQL Server 2005 the behavior of schemas is different from the behavior in earlier versions of SQL Server. Code that assumes that schemas are equivalent to database users may not return correct results. Old catalog views, including sysobjects, should not be used in a database in which any of the following DDL statements has ever been used: CREATE SCHEMA, ALTER SCHEMA, DROP SCHEMA, CREATE USER, ALTER USER, DROP USER, CREATE ROLE, ALTER ROLE, DROP ROLE, CREATE APPROLE, ALTER APPROLE, DROP APPROLE, ALTER AUTHORIZATION. In a database in which any of these statements has ever been used, you must use the new catalog views. The new catalog views take into account the separation of principals and schemas that is introduced in SQL Server 2005. For more information about catalog views, see Catalog Views (Transact-SQL).
+ 
+
+
+ Permissions 
+Requires ALTER ANY USER permission on the database.
+
+ Examples 
+A. Creating a database user
+The following example first creates a server login named AbolrousHazem with a password, and then creates a corresponding database user AbolrousHazem in AdventureWorks.
+
+ Copy Code
+CREATE LOGIN AbolrousHazem 
+    WITH PASSWORD = '340$Uuxwp7Mcxo7Khy';
+USE AdventureWorks;
+CREATE USER AbolrousHazem FOR LOGIN AbolrousHazem;
+GO 
+B. Creating a database user with a default schema
+The following example first creates a server login named WanidaBenshoof with a password, and then creates a corresponding database user Wanida, with the default schema Marketing.
+
+ Copy Code
+CREATE LOGIN WanidaBenshoof 
+    WITH PASSWORD = '8fdKJl3$nlNv3049jsKK';
+USE AdventureWorks;
+CREATE USER Wanida FOR LOGIN WanidaBenshoof 
+    WITH DEFAULT_SCHEMA = Marketing;
+GO
+C. Creating a database user from a certificate
+The following example creates a database user JinghaoLiu from certificate CarnationProduction50.
+
+ Copy Code
+USE AdventureWorks;
+CREATE CERTIFICATE CarnationProduction50
+    WITH SUBJECT = 'Carnation Production Facility Supervisors',
+    EXPIRY_DATE = '11/11/2011';
+GO
+CREATE USER JinghaoLiu FOR CERTIFICATE CarnationProduction50;
+GO 
+ See Also 
+Reference
+sys.database_principals (Transact-SQL)
+ALTER USER (Transact-SQL)
+DROP USER (Transact-SQL)
+CREATE LOGIN (Transact-SQL)
+EVENTDATA (Transact-SQL)
+
+Other Resources
+User-Schema Separation
+
+
+Help and Information 
+Getting SQL Server 2005 Assistance 
+*/

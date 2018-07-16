@@ -1,0 +1,12 @@
+            //
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection =
+                DbLayer.ConnectionManager.connectWithCustomSingleXpath(
+                    "ProxyGeneratorConnections/strings",// compulsory xpath
+                    "_placeholderConnStrName_"
+                );
+            if( null==cmd.Connection)
+                return null;// no conn
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "_placeholderProcname_";
+            //
