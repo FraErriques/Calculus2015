@@ -14,11 +14,12 @@ Properties/
 *.pdb
 *.scc
 *.cache
-*.csproj
 *.vspscc
 *.csproj.vspscc
 *.resx
 *.user
 *.proj
-*.sln
 *.suo
+*.log
+*.VS2017
+*.txt
