@@ -4,86 +4,6 @@
         <name>LinearAlgebra</name>
     </assembly>
     <members>
-        <member name="T:LinearAlgebra.PointR3">
-            <summary>
-            a point vector, in R3.
-            </summary>
-        </member>
-        <member name="M:LinearAlgebra.PointR3.#ctor(System.Double,System.Double,System.Double)">
-            <summary>
-            public access point: Ctor( coordinates).
-            </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <param name="z"></param>
-        </member>
-        <member name="M:LinearAlgebra.PointR3.#ctor(System.Double[])">
-            <summary>
-            public access point: Ctor.
-            </summary>
-            <param name="thePointCoordinates"></param>
-        </member>
-        <member name="M:LinearAlgebra.PointR3.#ctor(LinearAlgebra.PointR3)">
-            <summary>
-            copy Ctor.
-            </summary>
-            <param name="theOriginal">the original, from which to copy.</param>
-        </member>
-        <member name="M:LinearAlgebra.PointR3.getPointVector">
-            <summary>
-            get the three coordinates, as a vector. 
-            </summary>
-        </member>
-        <member name="M:LinearAlgebra.PointR3.omothetia(System.Double)">
-            <summary>
-            product of a scalar for a vector, i.e. omothetia of a vector.
-            </summary>
-        </member>
-        <member name="M:LinearAlgebra.PointR3.scalarProduct(LinearAlgebra.PointR3)">
-            <summary>
-            scalar product between this and w.
-            </summary>
-            <param name="w">the second factor; the first factor is "this"</param>
-            <returns></returns>
-        </member>
-        <member name="M:LinearAlgebra.PointR3.NormaEuclidea">
-            <summary>
-            |this|==(this_scalar_this)^(1/2).
-            </summary>
-            <returns>the vector length</returns>
-        </member>
-        <member name="M:LinearAlgebra.PointR3.vectorProduct(LinearAlgebra.PointR3)">
-            <summary>
-            vector product between this and w.
-            </summary>
-            <param name="w">the second factor; the first factor is "this"</param>
-            <returns></returns>
-        </member>
-        <member name="P:LinearAlgebra.PointR3.getX">
-            <summary>
-            get the Abscissa
-            </summary>
-        </member>
-        <member name="P:LinearAlgebra.PointR3.getY">
-            <summary>
-            get the Ordinate
-            </summary>
-        </member>
-        <member name="P:LinearAlgebra.PointR3.getZ">
-            <summary>
-            get the Height
-            </summary>
-        </member>
-        <member name="P:LinearAlgebra.PointR3.getPointCoordinates">
-            <summary>
-            get the three coordinates in one-shot 
-            </summary>
-        </member>
-        <member name="T:LinearAlgebra.MatrixRank">
-            <summary>
-            a son class, intended to evaluate the MatrixRank of the father RealMatrix.
-            </summary>
-        </member>
         <member name="T:LinearAlgebra.RealMatrix">
             <summary>
             a Matrix of real numbers (double type)
@@ -408,6 +328,344 @@
             readonly column cardinality
             </summary>
         </member>
+        <member name="T:LinearAlgebra.RepresentationTechniques">
+            <summary>
+            Engine interface:
+            the sons will implement their constructors. This father is not buildable.
+            </summary>
+        </member>
+        <member name="M:LinearAlgebra.RepresentationTechniques.representedPoint(System.Double[])">
+            <summary>
+            This method will be implemented by each son, to realize the proprer algorithm
+            </summary>
+            <param name="toBeRepresentedPoint">these are the three coordinates of the point on the variety</param>
+            <returns>the three coordinates of the point on the projection board. One of these three coordinates
+            can be discarded when plotting the point on a device. It's interesting to test which
+            coordinate elimination damages less the perspective rendering. As a rule of thumb, if the board-plane
+            lies in parallel to a coordinate plane the projected points will be constant in one coordinate.
+            Such coordinate surely stores less perspective information than the other two.
+            In case the three coordinates vary together a test is necessary to understand the 
+            figure-specific geometry. Enjoy. :-)
+            </returns>
+        </member>
+        <member name="T:LinearAlgebra.PointR2">
+            <summary>
+            a point in the plane.
+            </summary>
+        </member>
+        <member name="M:LinearAlgebra.PointR2.#ctor(System.Double,System.Double)">
+            <summary>
+            Ctor
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:LinearAlgebra.PointR2.scalarProduct(LinearAlgebra.PointR2)">
+            <summary>
+            scalar product between this and w.
+            </summary>
+            <param name="w">the second factor; the first factor is "this"</param>
+            <returns></returns>
+        </member>
+        <member name="M:LinearAlgebra.PointR2.vectorProduct(LinearAlgebra.PointR2)">
+            <summary>
+            vector product between this and w, assuminig both in the x-y plane, i.e. z==0.
+            </summary>
+            <param name="w">the second factor; the first factor is "this"; the result will have the form (0,0,k) with k in R.</param>
+            <returns></returns>
+        </member>
+        <member name="P:LinearAlgebra.PointR2.getX">
+            <summary>
+            read-only x coordinate.
+            </summary>
+        </member>
+        <member name="P:LinearAlgebra.PointR2.getY">
+            <summary>
+            read only y coordinate
+            </summary>
+        </member>
+        <member name="P:LinearAlgebra.PointR2.getCoordinates">
+            <summary>
+            get the two coordinates, together.
+            </summary>
+        </member>
+        <member name="T:LinearAlgebra.Geometry_inR3">
+            <summary>
+            Geometry_inR3 is a class that exposes static calculation methods
+            for affine geometry in the ordinary space.
+            No class-wise or instance-wise data is needed, so all of the involved data is exchanged
+            through input-parameters and return-value, by each method.
+            Each method is static. There is nothing to instantiate.
+            </summary>
+        </member>
+        <member name="M:LinearAlgebra.Geometry_inR3.parametricLineForTwoPoints(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            equazioni parametriche della retta per due punti
+            </summary>
+            <param name="ax">coordinate x of point a</param>
+            <param name="ay">coordinate y of point a</param>
+            <param name="az">coordinate z of point a</param>
+            <param name="bx">coordinate x of point b</param>
+            <param name="by">coordinate y of point b</param>
+            <param name="bz">coordinate z of point b</param>
+            <returns>the result will be stored in the format {{a*t, x0},  {b*t, y0}, {c*t, z0} }</returns>
+        </member>
+        <member name="M:LinearAlgebra.Geometry_inR3.cartesianLineForTwoPoints(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            equazioni cartesiane dei due piani generatori di una retta.
+            i.e. equazioni cartesiane di due piani, appartenenti al fascio proprio generato da una retta, individuata da due suoi punti.
+            </summary>
+            <param name="ax">coordinate x of point a</param>
+            <param name="ay">coordinate y of point a</param>
+            <param name="az">coordinate z of point a</param>
+            <param name="bx">coordinate x of point b</param>
+            <param name="by">coordinate y of point b</param>
+            <param name="bz">coordinate z of point b</param>
+            <returns>the result will be stored in the format {{a*x, b*y, c*z, d}, {e*x, f*y, g*z, h}}</returns>
+        </member>
+        <member name="M:LinearAlgebra.Geometry_inR3.parametricPlanFromCartesianPlan(System.Double[])">
+            <summary>
+              Metodo che genera le equazioni parametriche di un piano a partire dalla equazione cartesiana.
+              The result will be stored in the form:
+            			   { x:{a*t, b*u, c},
+            				 y:{d*t, e*u, f},
+            				 z:{g*t, h*u, i}   }
+             particularly the Monge parametrization will be used, which is a map where a coordinate
+             function dependes monodromically on the other parameters, each of which is explicit.
+             such parametrization assumes the form:
+             x = x(t,u) = t
+             y = y(t,u) = u
+             z = z(t,u) = f(x,y) = f(x(t,u),y(t,u))= f(t,u)
+            
+             nevertheless in the input cartesian plane equation some of the coefficients may be zero.
+             So as first will be located the first non-zero coefficient, then the others will be made
+             explicit using this denominator. Suppose that in the equation ax+by+cz+d=0 c is not zero.
+             Then z = (-a/c)*x + (-b/c)*y + (-d/c)
+             { {(-a/c)}, {(-b/c)}, {(-d/c)} } this is the "ratios' array", where "c" will be the
+            first non-zero coefficient.
+            </summary>
+            <param name="cartesianPlan">the equation ax+by+cz+d=0</param>
+            <returns>the result will be stored in the form:
+            		   { x:{a*t, b*u, c},
+            			 y:{d*t, e*u, f},
+            	 		 z:{g*t, h*u, i}   }
+            </returns>
+        </member>
+        <member name="M:LinearAlgebra.Geometry_inR3.complanaritaThreeR3Points(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            se tre vettori di R3 sono linearmente dipendenti, sono complanari.
+            </summary>
+            <param name="ax">coordinate x of point a</param>
+            <param name="ay">coordinate y of point a</param>
+            <param name="az">coordinate z of point a</param>
+            <param name="bx">coordinate x of point b</param>
+            <param name="by">coordinate y of point b</param>
+            <param name="bz">coordinate z of point b</param>
+            <param name="cx">coordinate x of point c</param>
+            <param name="cy">coordinate y of point c</param>
+            <param name="cz">coordinate z of point c</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:LinearAlgebra.Geometry_inR3.parametricPlaneThroughThreePoints_withoutNormalization(System.Double[],System.Double[],System.Double[])">
+            <summary>
+            equazioni parametriche del piano, per tre vettori linermente indipendenti.
+            </summary>
+            <param name="directionCosine_A">coordinates of the vector point a</param>
+            <param name="directionCosine_B">coordinates of the vector point b</param>
+            <param name="translation">coordinates of the vector point translation</param>
+            <returns>the result will be stored in the form:
+                {
+            	    x(t,u)== t*ax + u*bx + cx
+            	    y(t,u)== t*ay + u*by + cy
+            	    z(t,u)== t*az + u*bz + cz
+            	}
+            </returns>
+        </member>
+        <member name="M:LinearAlgebra.Geometry_inR3.parametricPlaneThroughThreePoints_Normalized(System.Double[],System.Double[],System.Double[])">
+            <summary>
+            
+            </summary>
+            <param name="directionCosine_A_preNormalization"></param>
+            <param name="directionCosine_B_preNormalization"></param>
+            <param name="translation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LinearAlgebra.Geometry_inR3.cartesianPlaneThroughThreePoints_withoutNormalization(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            equazione cartesiana di un piano per tre punti non allineati; in questo metodo i tre punti sono qualsiasi terna di vettori linearmente indipendenti.
+            </summary>
+            <param name="ax">coordinate x of point a</param>
+            <param name="ay">coordinate y of point a</param>
+            <param name="az">coordinate z of point a</param>
+            <param name="bx">coordinate x of point b</param>
+            <param name="by">coordinate y of point b</param>
+            <param name="bz">coordinate z of point b</param>
+            <param name="cx">coordinate x of point c</param>
+            <param name="cy">coordinate y of point c</param>
+            <param name="cz">coordinate z of point c</param>
+            <returns>the return value is a double[4] array, whose elements are the coefficiens of the cartesian plane equation;
+            (in the order {x,y,z,k} where k is the traslation term )</returns>
+        </member>
+        <member name="M:LinearAlgebra.Geometry_inR3.cartesianPlaneThroughThreePoints_Normalized(LinearAlgebra.PointR3,LinearAlgebra.PointR3)">
+            <summary>
+            equazione cartesiana di un piano per tre punti non allineati, uno dei quali e' l'origine: quindi un piano vettoriale.
+            NB. uno dei tre punti deve essere il comune punto di applicazione degli altri due; qualora cosi'
+            non fosse, deve preoccuparsi chi chiama questa funzione, di rendere tali i parametri, mediante sottrazione. Per convenzione di assume che il punto di applicazione sia il vettore
+            (cx, cy, cz). Pertanto in uno spazio vettoriale si possono passare i vettori "a" e "b", intesi applicati nell'origine, ed il vettore nullo come "c". Qualora invece "c" fosse
+            nonnullo, si dovra' passare (a-c),(b-c),(c-c)==(a-c),(b-c),(0).
+            </summary>
+            <returns>the return value is a double[4] array, whose elements are the coefficiens of the cartesian plane equation;
+            (in the order {x,y,z,k} where k is the traslation term )</returns>
+        </member>
+        <member name="M:LinearAlgebra.Geometry_inR3.PointImageInR3_ofParametricPlan_fromParametersR2Point(System.Double[0:,0:],System.Double[])">
+            <summary>
+            this method calculates the R3 coordinates of a point, belonging to a plane whose parametric equations
+            are known. Also known are the two coordinates in the R2 space of the parameters (the (t,u) parameters
+            that describe the plane in the parametrization {{x=x(t,u)},{y=y(t,u)},{z=z(t,u)}}
+            </summary>
+            <param name="planParametricEquations">the parametrization {{x=x(t,u)},{y=y(t,u)},{z=z(t,u)}}</param>
+            <param name="parametersR2Point">the two coordinates in the R2 space of the parameters: the (t,u) parameters</param>
+            <returns>the three coordinates in the R3 space of the plane-immersion: the {x,y,z} coordinates, where {{x=x(t,u)},{y=y(t,u)},{z=z(t,u)}}</returns>
+        </member>
+        <member name="M:LinearAlgebra.Geometry_inR3.intersectionPointBetweenCartesianLineAndCartesianPlane(System.Double[],System.Double[],System.Double[])">
+            <summary>
+            this method considers the case of a line, neither belonging to a plane nor in parallel with it.
+            such line has one and only one intersection point with the plane. This is obtained by means of 
+            a non-omogeneous( in general. Some times it could be but in this case the solution is trivially
+            the null-vector) liner system 3x3. Ax=b, where A is the 3x3 matrix of the cartesian coefficients.
+            These are the three coordinates coefficients in the three input-cartesian-equations.
+            So the system is composed of the director-cosines of the considered plane and of the 
+            two planes which individuate the line. Note that this system has the same solution if the 
+            equations are changed of order, since it changes also the result vector. So Ax=b is equivalent
+            to (A~)x=(b~). Anyway A^(-1) and (A~)^(-1) will bw unique and multiplied (respectively) by
+            b and (b~) will give the same x vector.
+            Note that this method is intended for the case of incident line and plane only. If the input data
+            consist of a line contained in the input plane or in parallel with it, the method will throw the
+            appropriate exception.
+            In the former case the exception will say that the system has one-infinity of solutions, precisely
+            the aleph-one points hold by the line itself, which, being contained by the plane, solves the system
+            with all herself.
+            In the latter case the system presents no solution.
+            </summary>
+            <param name="theBoardPlane">the cartesian plane to be intersected with the line</param>
+            <param name="theFirstLineGeneratingPlane">each of the two cartesian planes belonging to the proper bundle which individuates the line</param>
+            <param name="theSecondLineGeneratingPlane">each of the two cartesian planes belonging to the proper bundle which individuates the line</param>
+            <returns>the coordinates of the intersection point</returns>
+        </member>
+        <member name="M:LinearAlgebra.Geometry_inR3.intersectionBetweenCartesianPlaneAndParametricLine(System.Double[],System.Double[0:,0:])">
+            <summary>
+            Composes a linear system devoted to find the intersection between plane and line.
+            The linear system will be composed with the cartesian equation of the plane and 
+            with the parametrization of the line.
+            The expressions that the three coordinate functions assume in the line parametrization
+            will be substituted in the cartesian equation of the plane.
+            A value of the independent parameter will be found. Substituting such value in the
+            parametric equations of the line, the three coordinate functions will assume the 
+            values of the intersection-point coordinates.
+            </summary>
+            <param name="cartesianPlane">the three coordinate-coefficients and the traslation term</param>
+            <param name="parametricLine">the three direction-cosines and the three traslation terms</param>
+            <returns>the three cartesian coordinates of the intersection between plane and line</returns>
+        </member>
+        <member name="M:LinearAlgebra.Geometry_inR3.parametricLineSubjectToAnAffinity(System.Double[0:,0:],System.Double[])">
+            <summary>
+            the algorithm consists of preserving the directive-cosines and applying an affinity,
+            to let a line in parallel to the input one, but passing through the desired point.
+            If the input line has equation:
+            {{a*t, x0},
+             {b*t, y0},
+             {c*t, z0} }
+             and the desired point has coordinates {xw,yw,zw}
+             then the resulting line will have parametric equations:
+            {{a*t, xw},
+             {b*t, yw},
+             {c*t, zw} }
+            </summary>
+            <param name="originalParametricLine">the desired orientation</param>
+            <param name="pointToPassThrough">the point to pass through</param>
+            <returns>the parametric equations of the line, having the same orientation of
+            the originalParametricLine, but passing through the pointToPassThrough</returns>
+        </member>
+        <member name="T:LinearAlgebra.PointR3">
+            <summary>
+            a point vector, in R3.
+            </summary>
+        </member>
+        <member name="M:LinearAlgebra.PointR3.#ctor(System.Double,System.Double,System.Double)">
+            <summary>
+            public access point: Ctor( coordinates).
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+        </member>
+        <member name="M:LinearAlgebra.PointR3.#ctor(System.Double[])">
+            <summary>
+            public access point: Ctor.
+            </summary>
+            <param name="thePointCoordinates"></param>
+        </member>
+        <member name="M:LinearAlgebra.PointR3.#ctor(LinearAlgebra.PointR3)">
+            <summary>
+            copy Ctor.
+            </summary>
+            <param name="theOriginal">the original, from which to copy.</param>
+        </member>
+        <member name="M:LinearAlgebra.PointR3.getPointVector">
+            <summary>
+            get the three coordinates, as a vector. 
+            </summary>
+        </member>
+        <member name="M:LinearAlgebra.PointR3.omothetia(System.Double)">
+            <summary>
+            product of a scalar for a vector, i.e. omothetia of a vector.
+            </summary>
+        </member>
+        <member name="M:LinearAlgebra.PointR3.scalarProduct(LinearAlgebra.PointR3)">
+            <summary>
+            scalar product between this and w.
+            </summary>
+            <param name="w">the second factor; the first factor is "this"</param>
+            <returns></returns>
+        </member>
+        <member name="M:LinearAlgebra.PointR3.NormaEuclidea">
+            <summary>
+            |this|==(this_scalar_this)^(1/2).
+            </summary>
+            <returns>the vector length</returns>
+        </member>
+        <member name="M:LinearAlgebra.PointR3.vectorProduct(LinearAlgebra.PointR3)">
+            <summary>
+            vector product between this and w.
+            </summary>
+            <param name="w">the second factor; the first factor is "this"</param>
+            <returns></returns>
+        </member>
+        <member name="P:LinearAlgebra.PointR3.getX">
+            <summary>
+            get the Abscissa
+            </summary>
+        </member>
+        <member name="P:LinearAlgebra.PointR3.getY">
+            <summary>
+            get the Ordinate
+            </summary>
+        </member>
+        <member name="P:LinearAlgebra.PointR3.getZ">
+            <summary>
+            get the Height
+            </summary>
+        </member>
+        <member name="P:LinearAlgebra.PointR3.getPointCoordinates">
+            <summary>
+            get the three coordinates in one-shot 
+            </summary>
+        </member>
+        <member name="T:LinearAlgebra.MatrixRank">
+            <summary>
+            a son class, intended to evaluate the MatrixRank of the father RealMatrix.
+            </summary>
+        </member>
         <member name="F:LinearAlgebra.MatrixRank.involvedDimensions">
             <summary>
             we don't know how many dimensions will be involved, until Rank is found.
@@ -681,264 +939,6 @@
             Ctor() init all.
             </summary>
             <param name="rettangolareAnalizzanda"></param>
-        </member>
-        <member name="T:LinearAlgebra.PointR2">
-            <summary>
-            a point in the plane.
-            </summary>
-        </member>
-        <member name="M:LinearAlgebra.PointR2.#ctor(System.Double,System.Double)">
-            <summary>
-            Ctor
-            </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-        </member>
-        <member name="M:LinearAlgebra.PointR2.scalarProduct(LinearAlgebra.PointR2)">
-            <summary>
-            scalar product between this and w.
-            </summary>
-            <param name="w">the second factor; the first factor is "this"</param>
-            <returns></returns>
-        </member>
-        <member name="M:LinearAlgebra.PointR2.vectorProduct(LinearAlgebra.PointR2)">
-            <summary>
-            vector product between this and w, assuminig both in the x-y plane, i.e. z==0.
-            </summary>
-            <param name="w">the second factor; the first factor is "this"; the result will have the form (0,0,k) with k in R.</param>
-            <returns></returns>
-        </member>
-        <member name="P:LinearAlgebra.PointR2.getX">
-            <summary>
-            read-only x coordinate.
-            </summary>
-        </member>
-        <member name="P:LinearAlgebra.PointR2.getY">
-            <summary>
-            read only y coordinate
-            </summary>
-        </member>
-        <member name="P:LinearAlgebra.PointR2.getCoordinates">
-            <summary>
-            get the two coordinates, together.
-            </summary>
-        </member>
-        <member name="T:LinearAlgebra.RepresentationTechniques">
-            <summary>
-            Engine interface:
-            the sons will implement their constructors. This father is not buildable.
-            </summary>
-        </member>
-        <member name="M:LinearAlgebra.RepresentationTechniques.representedPoint(System.Double[])">
-            <summary>
-            This method will be implemented by each son, to realize the proprer algorithm
-            </summary>
-            <param name="toBeRepresentedPoint">these are the three coordinates of the point on the variety</param>
-            <returns>the three coordinates of the point on the projection board. One of these three coordinates
-            can be discarded when plotting the point on a device. It's interesting to test which
-            coordinate elimination damages less the perspective rendering. As a rule of thumb, if the board-plane
-            lies in parallel to a coordinate plane the projected points will be constant in one coordinate.
-            Such coordinate surely stores less perspective information than the other two.
-            In case the three coordinates vary together a test is necessary to understand the 
-            figure-specific geometry. Enjoy. :-)
-            </returns>
-        </member>
-        <member name="T:LinearAlgebra.Geometry_inR3">
-            <summary>
-            Geometry_inR3 is a class that exposes static calculation methods
-            for affine geometry in the ordinary space.
-            No class-wise or instance-wise data is needed, so all of the involved data is exchanged
-            through input-parameters and return-value, by each method.
-            Each method is static. There is nothing to instantiate.
-            </summary>
-        </member>
-        <member name="M:LinearAlgebra.Geometry_inR3.parametricLineForTwoPoints(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
-            <summary>
-            equazioni parametriche della retta per due punti
-            </summary>
-            <param name="ax">coordinate x of point a</param>
-            <param name="ay">coordinate y of point a</param>
-            <param name="az">coordinate z of point a</param>
-            <param name="bx">coordinate x of point b</param>
-            <param name="by">coordinate y of point b</param>
-            <param name="bz">coordinate z of point b</param>
-            <returns>the result will be stored in the format {{a*t, x0},  {b*t, y0}, {c*t, z0} }</returns>
-        </member>
-        <member name="M:LinearAlgebra.Geometry_inR3.cartesianLineForTwoPoints(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
-            <summary>
-            equazioni cartesiane dei due piani generatori di una retta.
-            i.e. equazioni cartesiane di due piani, appartenenti al fascio proprio generato da una retta, individuata da due suoi punti.
-            </summary>
-            <param name="ax">coordinate x of point a</param>
-            <param name="ay">coordinate y of point a</param>
-            <param name="az">coordinate z of point a</param>
-            <param name="bx">coordinate x of point b</param>
-            <param name="by">coordinate y of point b</param>
-            <param name="bz">coordinate z of point b</param>
-            <returns>the result will be stored in the format {{a*x, b*y, c*z, d}, {e*x, f*y, g*z, h}}</returns>
-        </member>
-        <member name="M:LinearAlgebra.Geometry_inR3.parametricPlanFromCartesianPlan(System.Double[])">
-            <summary>
-              Metodo che genera le equazioni parametriche di un piano a partire dalla equazione cartesiana.
-              The result will be stored in the form:
-            			   { x:{a*t, b*u, c},
-            				 y:{d*t, e*u, f},
-            				 z:{g*t, h*u, i}   }
-             particularly the Monge parametrization will be used, which is a map where a coordinate
-             function dependes monodromically on the other parameters, each of which is explicit.
-             such parametrization assumes the form:
-             x = x(t,u) = t
-             y = y(t,u) = u
-             z = z(t,u) = f(x,y) = f(x(t,u),y(t,u))= f(t,u)
-            
-             nevertheless in the input cartesian plane equation some of the coefficients may be zero.
-             So as first will be located the first non-zero coefficient, then the others will be made
-             explicit using this denominator. Suppose that in the equation ax+by+cz+d=0 c is not zero.
-             Then z = (-a/c)*x + (-b/c)*y + (-d/c)
-             { {(-a/c)}, {(-b/c)}, {(-d/c)} } this is the "ratios' array", where "c" will be the
-            first non-zero coefficient.
-            </summary>
-            <param name="cartesianPlan">the equation ax+by+cz+d=0</param>
-            <returns>the result will be stored in the form:
-            		   { x:{a*t, b*u, c},
-            			 y:{d*t, e*u, f},
-            	 		 z:{g*t, h*u, i}   }
-            </returns>
-        </member>
-        <member name="M:LinearAlgebra.Geometry_inR3.complanaritaThreeR3Points(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
-            <summary>
-            se tre vettori di R3 sono linearmente dipendenti, sono complanari.
-            </summary>
-            <param name="ax">coordinate x of point a</param>
-            <param name="ay">coordinate y of point a</param>
-            <param name="az">coordinate z of point a</param>
-            <param name="bx">coordinate x of point b</param>
-            <param name="by">coordinate y of point b</param>
-            <param name="bz">coordinate z of point b</param>
-            <param name="cx">coordinate x of point c</param>
-            <param name="cy">coordinate y of point c</param>
-            <param name="cz">coordinate z of point c</param>
-            <returns>bool</returns>
-        </member>
-        <member name="M:LinearAlgebra.Geometry_inR3.parametricPlaneThroughThreePoints_withoutNormalization(System.Double[],System.Double[],System.Double[])">
-            <summary>
-            equazioni parametriche del piano, per tre vettori linermente indipendenti.
-            </summary>
-            <param name="directionCosine_A">coordinates of the vector point a</param>
-            <param name="directionCosine_B">coordinates of the vector point b</param>
-            <param name="translation">coordinates of the vector point translation</param>
-            <returns>the result will be stored in the form:
-                {
-            	    x(t,u)== t*ax + u*bx + cx
-            	    y(t,u)== t*ay + u*by + cy
-            	    z(t,u)== t*az + u*bz + cz
-            	}
-            </returns>
-        </member>
-        <member name="M:LinearAlgebra.Geometry_inR3.parametricPlaneThroughThreePoints_Normalized(System.Double[],System.Double[],System.Double[])">
-            <summary>
-            
-            </summary>
-            <param name="directionCosine_A_preNormalization"></param>
-            <param name="directionCosine_B_preNormalization"></param>
-            <param name="translation"></param>
-            <returns></returns>
-        </member>
-        <member name="M:LinearAlgebra.Geometry_inR3.cartesianPlaneThroughThreePoints_withoutNormalization(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
-            <summary>
-            equazione cartesiana di un piano per tre punti non allineati; in questo metodo i tre punti sono qualsiasi terna di vettori linearmente indipendenti.
-            </summary>
-            <param name="ax">coordinate x of point a</param>
-            <param name="ay">coordinate y of point a</param>
-            <param name="az">coordinate z of point a</param>
-            <param name="bx">coordinate x of point b</param>
-            <param name="by">coordinate y of point b</param>
-            <param name="bz">coordinate z of point b</param>
-            <param name="cx">coordinate x of point c</param>
-            <param name="cy">coordinate y of point c</param>
-            <param name="cz">coordinate z of point c</param>
-            <returns>the return value is a double[4] array, whose elements are the coefficiens of the cartesian plane equation;
-            (in the order {x,y,z,k} where k is the traslation term )</returns>
-        </member>
-        <member name="M:LinearAlgebra.Geometry_inR3.cartesianPlaneThroughThreePoints_Normalized(LinearAlgebra.PointR3,LinearAlgebra.PointR3)">
-            <summary>
-            equazione cartesiana di un piano per tre punti non allineati, uno dei quali e' l'origine: quindi un piano vettoriale.
-            NB. uno dei tre punti deve essere il comune punto di applicazione degli altri due; qualora cosi'
-            non fosse, deve preoccuparsi chi chiama questa funzione, di rendere tali i parametri, mediante sottrazione. Per convenzione di assume che il punto di applicazione sia il vettore
-            (cx, cy, cz). Pertanto in uno spazio vettoriale si possono passare i vettori "a" e "b", intesi applicati nell'origine, ed il vettore nullo come "c". Qualora invece "c" fosse
-            nonnullo, si dovra' passare (a-c),(b-c),(c-c)==(a-c),(b-c),(0).
-            </summary>
-            <returns>the return value is a double[4] array, whose elements are the coefficiens of the cartesian plane equation;
-            (in the order {x,y,z,k} where k is the traslation term )</returns>
-        </member>
-        <member name="M:LinearAlgebra.Geometry_inR3.PointImageInR3_ofParametricPlan_fromParametersR2Point(System.Double[0:,0:],System.Double[])">
-            <summary>
-            this method calculates the R3 coordinates of a point, belonging to a plane whose parametric equations
-            are known. Also known are the two coordinates in the R2 space of the parameters (the (t,u) parameters
-            that describe the plane in the parametrization {{x=x(t,u)},{y=y(t,u)},{z=z(t,u)}}
-            </summary>
-            <param name="planParametricEquations">the parametrization {{x=x(t,u)},{y=y(t,u)},{z=z(t,u)}}</param>
-            <param name="parametersR2Point">the two coordinates in the R2 space of the parameters: the (t,u) parameters</param>
-            <returns>the three coordinates in the R3 space of the plane-immersion: the {x,y,z} coordinates, where {{x=x(t,u)},{y=y(t,u)},{z=z(t,u)}}</returns>
-        </member>
-        <member name="M:LinearAlgebra.Geometry_inR3.intersectionPointBetweenCartesianLineAndCartesianPlane(System.Double[],System.Double[],System.Double[])">
-            <summary>
-            this method considers the case of a line, neither belonging to a plane nor in parallel with it.
-            such line has one and only one intersection point with the plane. This is obtained by means of 
-            a non-omogeneous( in general. Some times it could be but in this case the solution is trivially
-            the null-vector) liner system 3x3. Ax=b, where A is the 3x3 matrix of the cartesian coefficients.
-            These are the three coordinates coefficients in the three input-cartesian-equations.
-            So the system is composed of the director-cosines of the considered plane and of the 
-            two planes which individuate the line. Note that this system has the same solution if the 
-            equations are changed of order, since it changes also the result vector. So Ax=b is equivalent
-            to (A~)x=(b~). Anyway A^(-1) and (A~)^(-1) will bw unique and multiplied (respectively) by
-            b and (b~) will give the same x vector.
-            Note that this method is intended for the case of incident line and plane only. If the input data
-            consist of a line contained in the input plane or in parallel with it, the method will throw the
-            appropriate exception.
-            In the former case the exception will say that the system has one-infinity of solutions, precisely
-            the aleph-one points hold by the line itself, which, being contained by the plane, solves the system
-            with all herself.
-            In the latter case the system presents no solution.
-            </summary>
-            <param name="theBoardPlane">the cartesian plane to be intersected with the line</param>
-            <param name="theFirstLineGeneratingPlane">each of the two cartesian planes belonging to the proper bundle which individuates the line</param>
-            <param name="theSecondLineGeneratingPlane">each of the two cartesian planes belonging to the proper bundle which individuates the line</param>
-            <returns>the coordinates of the intersection point</returns>
-        </member>
-        <member name="M:LinearAlgebra.Geometry_inR3.intersectionBetweenCartesianPlaneAndParametricLine(System.Double[],System.Double[0:,0:])">
-            <summary>
-            Composes a linear system devoted to find the intersection between plane and line.
-            The linear system will be composed with the cartesian equation of the plane and 
-            with the parametrization of the line.
-            The expressions that the three coordinate functions assume in the line parametrization
-            will be substituted in the cartesian equation of the plane.
-            A value of the independent parameter will be found. Substituting such value in the
-            parametric equations of the line, the three coordinate functions will assume the 
-            values of the intersection-point coordinates.
-            </summary>
-            <param name="cartesianPlane">the three coordinate-coefficients and the traslation term</param>
-            <param name="parametricLine">the three direction-cosines and the three traslation terms</param>
-            <returns>the three cartesian coordinates of the intersection between plane and line</returns>
-        </member>
-        <member name="M:LinearAlgebra.Geometry_inR3.parametricLineSubjectToAnAffinity(System.Double[0:,0:],System.Double[])">
-            <summary>
-            the algorithm consists of preserving the directive-cosines and applying an affinity,
-            to let a line in parallel to the input one, but passing through the desired point.
-            If the input line has equation:
-            {{a*t, x0},
-             {b*t, y0},
-             {c*t, z0} }
-             and the desired point has coordinates {xw,yw,zw}
-             then the resulting line will have parametric equations:
-            {{a*t, xw},
-             {b*t, yw},
-             {c*t, zw} }
-            </summary>
-            <param name="originalParametricLine">the desired orientation</param>
-            <param name="pointToPassThrough">the point to pass through</param>
-            <returns>the parametric equations of the line, having the same orientation of
-            the originalParametricLine, but passing through the pointToPassThrough</returns>
         </member>
     </members>
 </doc>
