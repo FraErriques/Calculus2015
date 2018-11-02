@@ -2,11 +2,11 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="TestConsole/Program.cs">
     <Files>
-      <File FileName="TestConsole/Program.cs" Line="52" Column="1" />
-      <File FileName="Common/LogSinkFs/LogWrappers.cs" Line="13" Column="1" />
-      <File FileName="Common/Template_Singleton/TSingleton.cs" Line="74" Column="1" />
-      <File FileName="Common/LogSinkFs/SinkFs.cs" Line="195" Column="1" />
-      <File FileName="Common/Configuration/ConfigurationService2005.cs" Line="178" Column="1" />
+      <File FileName="TestConsole/Program.cs" Line="53" Column="21" />
+      <File FileName="Common/LogSinkFs/LogWrappers.cs" Line="1" Column="1" />
+      <File FileName="Common/Template_Singleton/TSingleton.cs" Line="1" Column="1" />
+      <File FileName="Common/LogSinkFs/SinkFs.cs" Line="1" Column="1" />
+      <File FileName="Common/Configuration/ConfigurationService2005.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
