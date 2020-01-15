@@ -45,8 +45,6 @@
             this.logIntegralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.percentileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.isolatedNaturalEvaluationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.factorFinderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.factorOmegaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopAllCalculationThreadsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,7 +55,7 @@
             this.dbreadPrimeAtOrdinalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dbreadRangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtBoard = new System.Windows.Forms.TextBox();
-            this.fractionReducerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.factorFinderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,28 +86,28 @@
             // availableThresholdToolStripMenuItem
             // 
             this.availableThresholdToolStripMenuItem.Name = "availableThresholdToolStripMenuItem";
-            this.availableThresholdToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.availableThresholdToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.availableThresholdToolStripMenuItem.Text = "available threshold";
             this.availableThresholdToolStripMenuItem.Click += new System.EventHandler(this.mnuAvailableThreshold_Click);
             // 
             // readPrimeAtOrdinalToolStripMenuItem
             // 
             this.readPrimeAtOrdinalToolStripMenuItem.Name = "readPrimeAtOrdinalToolStripMenuItem";
-            this.readPrimeAtOrdinalToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.readPrimeAtOrdinalToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.readPrimeAtOrdinalToolStripMenuItem.Text = "read prime at ordinal";
             this.readPrimeAtOrdinalToolStripMenuItem.Click += new System.EventHandler(this.mnuRead_Click);
             // 
             // readRangeToolStripMenuItem
             // 
             this.readRangeToolStripMenuItem.Name = "readRangeToolStripMenuItem";
-            this.readRangeToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.readRangeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.readRangeToolStripMenuItem.Text = "read range";
             this.readRangeToolStripMenuItem.Click += new System.EventHandler(this.mnuReadRange_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.exitToolStripMenuItem.Text = "exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.mnuExit_Click);
             // 
@@ -125,14 +123,14 @@
             // enrichCollectionToolStripMenuItem
             // 
             this.enrichCollectionToolStripMenuItem.Name = "enrichCollectionToolStripMenuItem";
-            this.enrichCollectionToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.enrichCollectionToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.enrichCollectionToolStripMenuItem.Text = "enrich collection";
             this.enrichCollectionToolStripMenuItem.Click += new System.EventHandler(this.mnuEnrich_Click);
             // 
             // stopCalculationToolStripMenuItem
             // 
             this.stopCalculationToolStripMenuItem.Name = "stopCalculationToolStripMenuItem";
-            this.stopCalculationToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.stopCalculationToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.stopCalculationToolStripMenuItem.Text = "stop file-system data production";
             this.stopCalculationToolStripMenuItem.Click += new System.EventHandler(this.mnuStopCalculation_Click);
             // 
@@ -147,8 +145,6 @@
             this.percentileToolStripMenuItem,
             this.isolatedNaturalEvaluationToolStripMenuItem,
             this.factorFinderToolStripMenuItem,
-            this.factorOmegaToolStripMenuItem,
-            this.fractionReducerToolStripMenuItem,
             this.stopAllCalculationThreadsToolStripMenuItem,
             this.checkLogToolStripMenuItem,
             this.clearBoardToolStripMenuItem});
@@ -159,84 +155,70 @@
             // dirichletSeriesToolStripMenuItem
             // 
             this.dirichletSeriesToolStripMenuItem.Name = "dirichletSeriesToolStripMenuItem";
-            this.dirichletSeriesToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.dirichletSeriesToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.dirichletSeriesToolStripMenuItem.Text = "Dirichlet Series";
             this.dirichletSeriesToolStripMenuItem.Click += new System.EventHandler(this.dirichletSeriesToolStripMenuItem_Click);
             // 
             // eulerProductToolStripMenuItem
             // 
             this.eulerProductToolStripMenuItem.Name = "eulerProductToolStripMenuItem";
-            this.eulerProductToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.eulerProductToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.eulerProductToolStripMenuItem.Text = "Euler  Product";
             this.eulerProductToolStripMenuItem.Click += new System.EventHandler(this.eulerProductToolStripMenuItem_Click);
             // 
             // eulerRiemannEquationToolStripMenuItem
             // 
             this.eulerRiemannEquationToolStripMenuItem.Name = "eulerRiemannEquationToolStripMenuItem";
-            this.eulerRiemannEquationToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.eulerRiemannEquationToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.eulerRiemannEquationToolStripMenuItem.Text = "Euler Riemann equation";
             this.eulerRiemannEquationToolStripMenuItem.Click += new System.EventHandler(this.mnuEulerRiemannEquation_Click);
             // 
             // riemannZetaToolStripMenuItem
             // 
             this.riemannZetaToolStripMenuItem.Name = "riemannZetaToolStripMenuItem";
-            this.riemannZetaToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.riemannZetaToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.riemannZetaToolStripMenuItem.Text = "Riemann  Zeta";
             this.riemannZetaToolStripMenuItem.Click += new System.EventHandler(this.riemannZetaToolStripMenuItem_Click);
             // 
             // logIntegralToolStripMenuItem
             // 
             this.logIntegralToolStripMenuItem.Name = "logIntegralToolStripMenuItem";
-            this.logIntegralToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.logIntegralToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.logIntegralToolStripMenuItem.Text = "Log Integral on Real axis";
             this.logIntegralToolStripMenuItem.Click += new System.EventHandler(this.logIntegralToolStripMenuItem_Click);
             // 
             // percentileToolStripMenuItem
             // 
             this.percentileToolStripMenuItem.Name = "percentileToolStripMenuItem";
-            this.percentileToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.percentileToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.percentileToolStripMenuItem.Text = "Percentile LogIntegral";
             this.percentileToolStripMenuItem.Click += new System.EventHandler(this.percentileToolStripMenuItem_Click);
             // 
             // isolatedNaturalEvaluationToolStripMenuItem
             // 
             this.isolatedNaturalEvaluationToolStripMenuItem.Name = "isolatedNaturalEvaluationToolStripMenuItem";
-            this.isolatedNaturalEvaluationToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.isolatedNaturalEvaluationToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.isolatedNaturalEvaluationToolStripMenuItem.Text = "Isolated Natural evaluation";
             this.isolatedNaturalEvaluationToolStripMenuItem.Click += new System.EventHandler(this.isolatedNaturalEvaluationToolStripMenuItem_Click);
-            // 
-            // factorFinderToolStripMenuItem
-            // 
-            this.factorFinderToolStripMenuItem.Name = "factorFinderToolStripMenuItem";
-            this.factorFinderToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.factorFinderToolStripMenuItem.Text = "Factor researcher";
-            this.factorFinderToolStripMenuItem.Click += new System.EventHandler(this.factorFinderToolStripMenuItem_Click);
-            // 
-            // factorOmegaToolStripMenuItem
-            // 
-            this.factorOmegaToolStripMenuItem.Name = "factorOmegaToolStripMenuItem";
-            this.factorOmegaToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.factorOmegaToolStripMenuItem.Text = "Factor Omega";
-            this.factorOmegaToolStripMenuItem.Click += new System.EventHandler(this.factorOmegaToolStripMenuItem_Click);
             // 
             // stopAllCalculationThreadsToolStripMenuItem
             // 
             this.stopAllCalculationThreadsToolStripMenuItem.Name = "stopAllCalculationThreadsToolStripMenuItem";
-            this.stopAllCalculationThreadsToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.stopAllCalculationThreadsToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.stopAllCalculationThreadsToolStripMenuItem.Text = "Stop all calculation threads";
             this.stopAllCalculationThreadsToolStripMenuItem.Click += new System.EventHandler(this.stopAllCalculationThreadsToolStripMenuItem_Click);
             // 
             // checkLogToolStripMenuItem
             // 
             this.checkLogToolStripMenuItem.Name = "checkLogToolStripMenuItem";
-            this.checkLogToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.checkLogToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.checkLogToolStripMenuItem.Text = "Check Log";
             this.checkLogToolStripMenuItem.Click += new System.EventHandler(this.checkLogToolStripMenuItem_Click);
             // 
             // clearBoardToolStripMenuItem
             // 
             this.clearBoardToolStripMenuItem.Name = "clearBoardToolStripMenuItem";
-            this.clearBoardToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.clearBoardToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.clearBoardToolStripMenuItem.Text = "Clear Board";
             this.clearBoardToolStripMenuItem.Click += new System.EventHandler(this.clearBoardToolStripMenuItem_Click);
             // 
@@ -255,35 +237,35 @@
             // dbenrichCollectionToolStripMenuItem
             // 
             this.dbenrichCollectionToolStripMenuItem.Name = "dbenrichCollectionToolStripMenuItem";
-            this.dbenrichCollectionToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.dbenrichCollectionToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.dbenrichCollectionToolStripMenuItem.Text = "enrich collection";
             this.dbenrichCollectionToolStripMenuItem.Click += new System.EventHandler(this.dbenrichCollectionToolStripMenuItem_Click);
             // 
             // dbstopCalculationToolStripMenuItem
             // 
             this.dbstopCalculationToolStripMenuItem.Name = "dbstopCalculationToolStripMenuItem";
-            this.dbstopCalculationToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.dbstopCalculationToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.dbstopCalculationToolStripMenuItem.Text = "stop calculation";
             this.dbstopCalculationToolStripMenuItem.Click += new System.EventHandler(this.dbstopCalculationToolStripMenuItem_Click);
             // 
             // dbavailableThresholdToolStripMenuItem
             // 
             this.dbavailableThresholdToolStripMenuItem.Name = "dbavailableThresholdToolStripMenuItem";
-            this.dbavailableThresholdToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.dbavailableThresholdToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.dbavailableThresholdToolStripMenuItem.Text = "available threshold";
             this.dbavailableThresholdToolStripMenuItem.Click += new System.EventHandler(this.dbavailableThresholdToolStripMenuItem_Click);
             // 
             // dbreadPrimeAtOrdinalToolStripMenuItem
             // 
             this.dbreadPrimeAtOrdinalToolStripMenuItem.Name = "dbreadPrimeAtOrdinalToolStripMenuItem";
-            this.dbreadPrimeAtOrdinalToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.dbreadPrimeAtOrdinalToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.dbreadPrimeAtOrdinalToolStripMenuItem.Text = "read prime at ordinal";
             this.dbreadPrimeAtOrdinalToolStripMenuItem.Click += new System.EventHandler(this.dbreadPrimeAtOrdinalToolStripMenuItem_Click);
             // 
             // dbreadRangeToolStripMenuItem
             // 
             this.dbreadRangeToolStripMenuItem.Name = "dbreadRangeToolStripMenuItem";
-            this.dbreadRangeToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.dbreadRangeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.dbreadRangeToolStripMenuItem.Text = "read range";
             this.dbreadRangeToolStripMenuItem.Click += new System.EventHandler(this.dbreadRangeToolStripMenuItem_Click);
             // 
@@ -298,12 +280,12 @@
             this.txtBoard.TabIndex = 1;
             this.txtBoard.WordWrap = false;
             // 
-            // fractionReducerToolStripMenuItem
+            // factorFinderToolStripMenuItem
             // 
-            this.fractionReducerToolStripMenuItem.Name = "fractionReducerToolStripMenuItem";
-            this.fractionReducerToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.fractionReducerToolStripMenuItem.Text = "Fraction Reducer";
-            this.fractionReducerToolStripMenuItem.Click += new System.EventHandler(this.fractionReducerToolStripMenuItem_Click);
+            this.factorFinderToolStripMenuItem.Name = "factorFinderToolStripMenuItem";
+            this.factorFinderToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.factorFinderToolStripMenuItem.Text = "Factor researcher";
+            this.factorFinderToolStripMenuItem.Click += new System.EventHandler(this.factorFinderToolStripMenuItem_Click);
             // 
             // frmWinPrimes
             // 
@@ -355,8 +337,6 @@
         private System.Windows.Forms.ToolStripMenuItem clearBoardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dirichletSeriesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem factorFinderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem factorOmegaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fractionReducerToolStripMenuItem;
     }
 }
 
