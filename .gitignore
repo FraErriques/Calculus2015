@@ -15,9 +15,7 @@ Release/
 *.cache
 *.vspscc
 *.csproj.vspscc
-*.resx
 *.user
-*.proj
 *.suo
 *.log
 *.VS2017

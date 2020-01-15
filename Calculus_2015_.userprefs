@@ -1,0 +1,19 @@
+﻿<Properties StartupItem="winPrimes/winPrimes.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestConsole/Program.cs">
+    <Files>
+      <File FileName="TestConsole/Program.cs" Line="53" Column="21" />
+      <File FileName="Common/LogSinkFs/LogWrappers.cs" Line="1" Column="1" />
+      <File FileName="Common/Template_Singleton/TSingleton.cs" Line="1" Column="1" />
+      <File FileName="Common/LogSinkFs/SinkFs.cs" Line="1" Column="1" />
+      <File FileName="Common/Configuration/ConfigurationService2005.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/home/fra/src/GitHubSandBox/Calculus2015/TestConsole/Program.cs" line="18" column="8" />
+      <Breakpoint file="/home/fra/src/GitHubSandBox/Calculus2015/TestConsole/Program.cs" line="50" column="4" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
