@@ -15,36 +15,24 @@ namespace TestConsole
         static void Main( string[] args )
         {
             LogSinkFs.Wrappers.LogWrappers.SectionOpen("Main()", 0);
-            double t = 0.0;
-            double Delta_t = +1.0E-1;
-            double x = default(double);
-            double y = default(double);
-            //
-            for (; t <= System.Math.PI; t += Delta_t)
+
+            PrimesFinder.Primes primeCoreClassInstance = new PrimesFinder.Primes();
+            //for (int c = 100; c < 1000; c += 100)
+            // 2.000.000.000
+            // 3.000.000.000
+            //   100.000.000
+            for (long c = 2000; c < 3000; c += 10 )
             {
-                x = Math.Cos(t);// assume the Radius==+1.
-                y = Math.Sin(t);// assume the Radius==+1.
-                //
-                double arg = System.Math.Atan2(y, x);
-                double partOfPi = arg / Math.PI;
-                //
-                // output
-                System.Text.StringBuilder sb = new System.Text.StringBuilder();
-                sb.Append( "\n\t t=");
-                sb.Append( t.ToString() );
-                sb.Append( " x=Cos(t)=");
-                sb.Append( x.ToString() );
-                sb.Append( " y=Sin(t)=");
-                sb.Append( y.ToString() );
-                sb.Append( " arg=Atan2(y, x)=");
-                sb.Append( arg.ToString() );
-                sb.Append( " partOfPi=arg/Math.PI=");
-                sb.Append( partOfPi.ToString() );
-                string theMessage = sb.ToString();
-                LogSinkFs.Wrappers.LogWrappers.SectionContent(theMessage, 0);
-                Console.WriteLine("\n\t t={0} x=Cos(t)={1} y=Sin(t)={2} arg=Atan2(y, x)={3} partOfPi=arg/Math.PI={4}"
-                    , t, x, y, arg, partOfPi);
-            }// end for.
+                double tmpCalc_Pi_calculated_onJ = primeCoreClassInstance.Pi_calculated_onJ(c);
+                double tmpCalc_Pi_Greco = primeCoreClassInstance.Pi_Greco(c);
+                Console.WriteLine(" n in N, n={0} \t P(J({1}))={2} \t Pi_Greco({1})={3} \t Round[P(J({1}))]={4} \t Delta={5}"
+                     , c, c, tmpCalc_Pi_calculated_onJ
+                     , tmpCalc_Pi_Greco
+                     //, primeCoreClassInstance.Pi_Greco_nonInterpolata(c)
+                     , Math.Round(tmpCalc_Pi_calculated_onJ)
+                     , tmpCalc_Pi_calculated_onJ - tmpCalc_Pi_Greco
+                 );
+            }
             //
             //---########################################################################
             System.Console.WriteLine("\n\n\t Strike \"Enter\" to leave ");
@@ -58,7 +46,83 @@ namespace TestConsole
 
 
 
+
+
 #region cantina
+
+//int c = 1;
+//for( ; c < 30; c++)
+//{
+//    Console.WriteLine(" Moebius_mi({0})== {1}",c, PrimesFinder.ElementFullCalculation.Moebius_Mi(c));
+//}
+
+//const int righe_num = 4;
+//const int righe_den = 2;
+//long[,] num = new long[righe_num, 2] { { +1, 7 }, { 2, 2 }, { -3, 23 }, { 5, 4 } };
+//long[,] den = new long[righe_den, 2] { { 2, 9 }, { 3, 19 } };
+//long[, ,] theRedFraction = PrimesFinder.ElementFullCalculation.RationalReductionOnOmegaData(num, den);
+
+//Console.WriteLine("\r\n\r\n\r\n");
+//int max_factor_cardinality = Math.Max(righe_num, righe_den);
+//for( c = 0; c < righe_num; c++)
+//{
+//    if (c > 0)
+//    {
+//        Console.Write(" * ");
+//    }// else don't.
+//    Console.Write("{0}^{1}", num[c, 0], num[c, 1]);
+//}
+//Console.WriteLine();
+//for (int k = 0; k < max_factor_cardinality * 3 * 2 + 1; k++)
+//{
+//    Console.Write("-");
+//}
+//Console.WriteLine();
+//for (c = 0; c < righe_den; c++)
+//{
+//    if (c > 0)
+//    {
+//        Console.Write(" * ");
+//    }// else don't.
+//    Console.Write("{0}^{1}", den[c, 0], den[c, 1]);
+//}
+
+            //LinearAlgebra.RealMatrix Mata = new LinearAlgebra.RealMatrix(3, 3, @"C:\root\projects\Calculus_2015_\TestConsole\dat\mata3x3_20170315_.txt");
+            //Mata.show();
+            //double det = Mata.det();
+            //LinearAlgebra.RealMatrix Mata_diagonalized_ = Mata.Gauss_Jordan_elimination();
+            //Mata_diagonalized_.show();
+
+            //double t = 0.0;
+            //double Delta_t = +1.0E-1;
+            //double x = default(double);
+            //double y = default(double);
+            ////
+            //for (; t <= System.Math.PI; t += Delta_t)
+            //{
+            //    x = Math.Cos(t);// assume the Radius==+1.
+            //    y = Math.Sin(t);// assume the Radius==+1.
+            //    //
+            //    double arg = System.Math.Atan2(y, x);
+            //    double partOfPi = arg / Math.PI;
+            //    //
+            //    // output
+            //    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            //    sb.Append( "\n\t t=");
+            //    sb.Append( t.ToString() );
+            //    sb.Append( " x=Cos(t)=");
+            //    sb.Append( x.ToString() );
+            //    sb.Append( " y=Sin(t)=");
+            //    sb.Append( y.ToString() );
+            //    sb.Append( " arg=Atan2(y, x)=");
+            //    sb.Append( arg.ToString() );
+            //    sb.Append( " partOfPi=arg/Math.PI=");
+            //    sb.Append( partOfPi.ToString() );
+            //    string theMessage = sb.ToString();
+            //    LogSinkFs.Wrappers.LogWrappers.SectionContent(theMessage, 0);
+            //    Console.WriteLine("\n\t t={0} x=Cos(t)={1} y=Sin(t)={2} arg=Atan2(y, x)={3} partOfPi=arg/Math.PI={4}"
+            //        , t, x, y, arg, partOfPi);
+            //}// end for.
 
 //double[,] proto = new double[9, 3]
 //    {
