@@ -51,7 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Complex.cs" />
+    <Compile Include="ContourIntegral.cs" />
     <Compile Include="Functions.cs" />
+    <Compile Include="GammaViaIntegral.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

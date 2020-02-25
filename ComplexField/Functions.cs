@@ -147,18 +147,17 @@ namespace ComplexField
             //
             if (
                 esse.get_real > 0.0
-            // TODO    && esse.get_real <= 1.0
-                )
+              )
             {
                 ComplexField.Complex numeratore = eta_Dirichlet(esse, threshold);
                 ComplexField.Complex denominatore = new ComplexField.Complex(
                     1.0 - (2.0 ^ (1.0 - esse)));// NB. le precedenze vanno esplicitate.
                 res = new ComplexField.Complex(numeratore / denominatore);
             }
-            else if (esse.get_real > 1.0)
-            {
-                // TODO  return Dirichlet series; the one with all positive terms: faster convergence.
-            }
+            //else if (esse.get_real > 1.0) NB. coperto dal caso "eta" : esse.get_real > 0.0
+            //{
+            //    // TODO  return Dirichlet series; the one with all positive terms: faster convergence.
+            //}
             else // i.e. esse.get_real <= 0.0 ovvero sigma<=0
             {
                 /* s =: sigma + I*t
@@ -170,7 +169,7 @@ namespace ComplexField
                  *      L'intersezione vuota fra i due insiemi 
                  *      garantisce che la call-back non inneschi un ciclo infinito.
                  */
-                res = functional_equation(esse, threshold);
+                res = Zeta_functionalEquation( esse, threshold);
             }
             // ready
             return res;
@@ -192,7 +191,7 @@ namespace ComplexField
         /// </summary>
         /// <param name="esse"></param>
         /// <returns></returns>
-        private static ComplexField.Complex functional_equation(
+        public static ComplexField.Complex Zeta_functionalEquation(
             ComplexField.Complex esse,
             long threshold
           )
@@ -200,11 +199,11 @@ namespace ComplexField
             ComplexField.Complex factor_a = new ComplexField.Complex(2.0 ^ esse);
             ComplexField.Complex factor_b = new ComplexField.Complex(System.Math.PI ^ (esse - 1));
             ComplexField.Complex factor_c = new ComplexField.Complex(
-                ComplexField.Functions.Sin(System.Math.PI * esse / 2));
+                ComplexField.Functions.Sin(System.Math.PI * esse / 2.0));
             ComplexField.Complex factor_gamma = new ComplexField.Complex(
-                ComplexField.Functions.Gamma_function( 1 - esse, threshold));
+                ComplexField.Functions.Gamma_function( 1.0 - esse, threshold));
             ComplexField.Complex factor_zeta = new ComplexField.Complex(
-                ComplexField.Functions.zeta_Riemann( 1 - esse, threshold));//NB. zeta is the caller: avoid loops on call-back!
+                ComplexField.Functions.zeta_Riemann( 1.0 - esse, threshold));//NB. zeta is the caller: avoid loops on call-back!
             ComplexField.Complex res =
                 factor_a
                 * factor_b

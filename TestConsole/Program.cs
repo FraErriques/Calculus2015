@@ -21,17 +21,24 @@ namespace TestConsole
             // 2.000.000.000
             // 3.000.000.000
             //   100.000.000
-            for (long c = 2000; c < 3000; c += 10 )
+            for (double c = 9200; c < 9300; c += .7 )
             {
                 double tmpCalc_Pi_calculated_onJ = primeCoreClassInstance.Pi_calculated_onJ(c);
                 double tmpCalc_Pi_Greco = primeCoreClassInstance.Pi_Greco(c);
-                Console.WriteLine(" n in N, n={0} \t P(J({1}))={2} \t Pi_Greco({1})={3} \t Round[P(J({1}))]={4} \t Delta={5}"
-                     , c, c, tmpCalc_Pi_calculated_onJ
+                double J = primeCoreClassInstance.J(c);
+                Console.WriteLine(" n={0} P(J({0}))={1} Pi_Greco({0})={2} J({0})={4} \t Delta_Pi-Pi(J)={3} "
+                     , c
+                     , tmpCalc_Pi_calculated_onJ
                      , tmpCalc_Pi_Greco
-                     //, primeCoreClassInstance.Pi_Greco_nonInterpolata(c)
-                     , Math.Round(tmpCalc_Pi_calculated_onJ)
                      , tmpCalc_Pi_calculated_onJ - tmpCalc_Pi_Greco
+                     , J
                  );
+                //Console.WriteLine(" n={0} \t P({0})={1} \t J({0})={2} \t J-P={3}"
+                //   , c
+                //   , tmpCalc_Pi_Greco
+                //   , J
+                //   , J - tmpCalc_Pi_Greco
+                //);
             }
             //
             //---########################################################################
