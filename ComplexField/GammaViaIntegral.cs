@@ -145,7 +145,7 @@ namespace ComplexField
             res = 0.0,
             x = DeltaX;// start from DeltaX
             // kordell starts here.
-            for (; x < xRplus_threshold; x += DeltaX)
+            for (; x < xRplus_threshold; x += DeltaX)// strictly x<xRplus_threshold because x==xRplus_threshold is the boundary, which gets evaluaeted after.
             {// sum all the internal sides
                 res += GammaIntegrand_v_part(sigma, t,// these values are the same in each trapezium. They are not integrated towards.
                     x);// this is the only value that gets updated between calls, since it's the integration variable,

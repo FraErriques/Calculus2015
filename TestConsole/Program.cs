@@ -16,30 +16,28 @@ namespace TestConsole
         {
             LogSinkFs.Wrappers.LogWrappers.SectionOpen("Main()", 0);
 
-            PrimesFinder.Primes primeCoreClassInstance = new PrimesFinder.Primes();
-            //for (int c = 100; c < 1000; c += 100)
-            // 2.000.000.000
-            // 3.000.000.000
-            //   100.000.000
-            for (double c = 9200; c < 9300; c += .7 )
-            {
-                double tmpCalc_Pi_calculated_onJ = primeCoreClassInstance.Pi_calculated_onJ(c);
-                double tmpCalc_Pi_Greco = primeCoreClassInstance.Pi_Greco(c);
-                double J = primeCoreClassInstance.J(c);
-                Console.WriteLine(" n={0} P(J({0}))={1} Pi_Greco({0})={2} J({0})={4} \t Delta_Pi-Pi(J)={3} "
-                     , c
-                     , tmpCalc_Pi_calculated_onJ
-                     , tmpCalc_Pi_Greco
-                     , tmpCalc_Pi_calculated_onJ - tmpCalc_Pi_Greco
-                     , J
-                 );
-                //Console.WriteLine(" n={0} \t P({0})={1} \t J({0})={2} \t J-P={3}"
-                //   , c
-                //   , tmpCalc_Pi_Greco
-                //   , J
-                //   , J - tmpCalc_Pi_Greco
-                //);
-            }
+            // TODO : memo per change extrema parameters :
+
+            //In[7]:= x[t_] = t
+            //In[8]:= y[t_] = (2*t + 1)
+
+            //In[12]:= {x[0], y[0]}
+            //Out[12]= {0, 1}
+
+            //In[11]:= {x[11], y[11]}
+            //Out[11]= {11, 23}
+
+            ComplexField.Complex res =
+                ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(0.0, 11.0, 999);
+
+            //ComplexField.Complex res =
+            //     ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral(+4.0, +0.0, 9999, 99000);// successo pieno!!!
+            //// ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral( -3.9, +11.85, 9999, 20000);// NO : Re[s]>0 
+            ////ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral(+3.9, +11.85, 9999, 990000);// errore == 1.31926*10^-7 - 5.8894*10^-8 \[ImaginaryI]  OK
+            //// ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral(+39.9, +181.15, 9999, 999999999 );// 
+            //ComplexField.Complex prodGamma = ComplexField.Functions.Gamma_function(new ComplexField.Complex(+4.0, +0.0), 99000);// NB! converge anche per Re[s]<0
+
+
             //
             //---########################################################################
             System.Console.WriteLine("\n\n\t Strike \"Enter\" to leave ");
@@ -56,6 +54,47 @@ namespace TestConsole
 
 
 #region cantina
+
+//double t = +0.0;
+//for (double sigma = +0.81; sigma < 1.21; sigma += +0.01)
+//{
+//    Console.WriteLine("Zeta[{0}+I*{1}]== {2}", sigma, t,
+//        ComplexField.Functions.Zeta_functionalEquation(
+//            new ComplexField.Complex(sigma, t)
+//            , 99999L)
+//    );
+//}
+
+
+
+
+//In[5]:= Gamma[3.19`+ 6.2` \[ImaginaryI]]
+//Out[5]= -0.0172331 + 0.0130457 \[ImaginaryI] 
+//Console.WriteLine(ComplexField.Functions.Gamma_function(
+//    new ComplexField.Complex(+3.19, +6.2)
+//    , 99999L
+//));
+
+// TODO PrimesFinder.Integrate.
+
+
+//PrimesFinder.Primes primeCoreClassInstance = new PrimesFinder.Primes();
+////for (int c = 100; c < 1000; c += 100)
+//// 2.000.000.000
+//// 3.000.000.000
+////   100.000.000
+//for (long c = 2; c < 300; c += 1 )
+//{
+//    double tmpCalc_Pi_calculated_onJ = primeCoreClassInstance.Pi_calculated_onJ(c);
+//    double tmpCalc_Pi_Greco = primeCoreClassInstance.Pi_Greco(c);
+//    Console.WriteLine(" n in N, n={0} \t P(J({1}))={2} \t Pi_Greco({1})={3} \t Round[P(J({1}))]={4} \t Delta={5}"
+//         , c, c, tmpCalc_Pi_calculated_onJ
+//         , tmpCalc_Pi_Greco
+//         //, primeCoreClassInstance.Pi_Greco_nonInterpolata(c)
+//         , Math.Round(tmpCalc_Pi_calculated_onJ)
+//         , tmpCalc_Pi_calculated_onJ - tmpCalc_Pi_Greco
+//     );
+//}
 
 //int c = 1;
 //for( ; c < 30; c++)
