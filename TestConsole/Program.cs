@@ -9,12 +9,66 @@ namespace TestConsole
     class Program
     {
 
+#region ContourIntg_delegates
+        private static double x( double t )
+        {// x(t) cerchio di raggio 2.1 e centro (3,5).
+            return (+3.0 + 2.1 * Math.Cos(t));
+        }// x(t)
+        private static double y( double t )
+        {// y(t)
+            return (+5.0 + 2.1 * Math.Sin(t));
+        }// y(t)
+        private static double dx( double t )
+        {// dx(t)=x'(t)dt=...
+            return (-2.1 * Math.Sin(t));
+        }// dx(t)
+        private static double dy( double t )
+        {// dy(y)=y'(t)dt==...
+            return (+2.1 * Math.Cos(t));
+        }// dy(t)
+
+
+        /// <summary>
+        /// the functions choosen for the example are f(z)=z which implies u(x,y)=x, v(x,y)=y; 
+        /// the choice for the contour is x(t)=t,y(t)=2*t+1,dx=dt which means dx=1
+        /// dy=2*dt which means dy=2.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        private static double genericIntegrand_u_part( double x, double y )
+        {// f(z)==z^2 -> Re(f(z))==Re((x+I*y)^2)==x^2-y^2
+            return x*x-y*y;
+        }// u(x,y)
+        //
+        private static double genericIntegrand_v_part( double x, double y )
+        {// f(z)==z^2 -> Im(f(z))==Im((x+I*y)^2)==2*x*y
+            return 2.0*x*y;
+        }// v(x,y)
+#endregion ContourIntg_delegates
 
 
 
         static void Main( string[] args )
         {
             LogSinkFs.Wrappers.LogWrappers.SectionOpen("Main()", 0);
+
+            ComplexField.Complex res =
+                ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(
+                    new ComplexField.Complex(+3.0 + 2.1, +5.0)
+                    , new ComplexField.Complex(+3.0 - 2.1, +5.0)
+                    , 0.0
+                    , +1.0*Math.PI
+                    , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_u_part)
+                    , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_v_part)
+                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(x)
+                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(y)
+                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dx)
+                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dy)
+                    , 99999); // # dx
+
+            //double areaTrapezio =
+            //    RealField.Integrate.Integrate_equi_trapezium(0, 2, 9);
 
             // TODO : memo per change extrema parameters :
 
@@ -27,8 +81,8 @@ namespace TestConsole
             //In[11]:= {x[11], y[11]}
             //Out[11]= {11, 23}
 
-            ComplexField.Complex res =
-                ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(0.0, 11.0, 999);
+            //ComplexField.Complex res =
+            //    ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(0.0, 11.0, 999);
 
             //ComplexField.Complex res =
             //     ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral(+4.0, +0.0, 9999, 99000);// successo pieno!!!
