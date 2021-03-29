@@ -61,7 +61,7 @@ namespace TestConsole
             double Pi_64 = P.Pi_Greco(64);
             double J_64 = P.J(64); // NB. J(x)>=Pi(x)
 
-            for (long thresholdInNaturals = 0; thresholdInNaturals < 100; thresholdInNaturals++)
+            for (long thresholdInNaturals = 0; thresholdInNaturals < 10; thresholdInNaturals++)
             {
                 double pollutedInteger = thresholdInNaturals + myGenerator.NextDouble();
                 //Console.Write("\t GetCumulatedOrdinalNotOverThreshold({0}) == {1}  the Inf={2}"
