@@ -15,37 +15,51 @@ namespace TestConsole
         static void Main( string[] args )
         {
             LogSinkFs.Wrappers.LogWrappers.SectionOpen("Main()", 0);
-            double t = 0.0;
-            double Delta_t = +1.0E-1;
-            double x = default(double);
-            double y = default(double);
-            //
-            for (; t <= System.Math.PI; t += Delta_t)
+
+            System.Random myGenerator = new Random();
+            double previousPiG_Level = 0.0;
+            double PiG_Level = 0.0;
+            PrimesFinder.Primes P = new PrimesFinder.Primes();// default Ctor is the one for reading the log.
+            double Pi_64 = P.Pi_Greco(64);
+            double J_64 = P.J(64); // NB. J(x)>=Pi(x)
+
+            for (long thresholdInNaturals = 0; thresholdInNaturals < 100; thresholdInNaturals++)
             {
-                x = Math.Cos(t);// assume the Radius==+1.
-                y = Math.Sin(t);// assume the Radius==+1.
+                double pollutedInteger = thresholdInNaturals + myGenerator.NextDouble();
+                //Console.Write("\t GetCumulatedOrdinalNotOverThreshold({0}) == {1}  the Inf={2}"
+                //    , thresholdInNaturals
+                //    , P.GetCumulatedOrdinalNotOverThreshold(thresholdInNaturals, out theInf)
+                //    , theInf
+                //    );
+                PiG_Level = P.Pi_Greco(thresholdInNaturals);
+                if (Math.Abs(PiG_Level - previousPiG_Level) > double.Epsilon)
+                {
+                    Console.WriteLine();
+                }// else continue on the same line;
+                previousPiG_Level = PiG_Level;// update the PiGreco level.
+                Console.Write("____\t PiGreco({0}) == {1} "
+                    , thresholdInNaturals
+                    , P.Pi_Greco(thresholdInNaturals)
+                    );
+                PiG_Level = P.Pi_Greco(pollutedInteger);
+                if (Math.Abs(PiG_Level - previousPiG_Level) > double.Epsilon)
+                {
+                    Console.WriteLine();
+                }// else continue on the same line;
+                previousPiG_Level = PiG_Level;// update the PiGreco level.
                 //
-                double arg = System.Math.Atan2(y, x);
-                double partOfPi = arg / Math.PI;
+                Console.Write("____\t PiGreco({0}) == {1} \t Pi_calculated_onJ({0})=={2}"
+                    , pollutedInteger
+                    , P.Pi_Greco( pollutedInteger)
+                    , P.Pi_calculated_onJ( pollutedInteger)
+                    );
                 //
-                // output
-                System.Text.StringBuilder sb = new System.Text.StringBuilder();
-                sb.Append( "\n\t t=");
-                sb.Append( t.ToString() );
-                sb.Append( " x=Cos(t)=");
-                sb.Append( x.ToString() );
-                sb.Append( " y=Sin(t)=");
-                sb.Append( y.ToString() );
-                sb.Append( " arg=Atan2(y, x)=");
-                sb.Append( arg.ToString() );
-                sb.Append( " partOfPi=arg/Math.PI=");
-                sb.Append( partOfPi.ToString() );
-                string theMessage = sb.ToString();
-                LogSinkFs.Wrappers.LogWrappers.SectionContent(theMessage, 0);
-                Console.WriteLine("\n\t t={0} x=Cos(t)={1} y=Sin(t)={2} arg=Atan2(y, x)={3} partOfPi=arg/Math.PI={4}"
-                    , t, x, y, arg, partOfPi);
-            }// end for.
-            //
+                Console.Write("____\t J({0}) == {1}"
+                    , pollutedInteger
+                    , P.J(pollutedInteger) // NB. J(x)>=Pi(x)
+                    );
+            }
+
             //---########################################################################
             System.Console.WriteLine("\n\n\t Strike \"Enter\" to leave ");
             System.Console.ReadLine();
@@ -59,6 +73,50 @@ namespace TestConsole
 
 
 #region cantina
+
+
+
+//long[,] num = new long[2, 2]{{+2,+1}, {+3,+2}};
+//long[,] den = new long[2, 2]{{+2,+1}, {+3,+1}};
+//RealField.RatioReducingInstrument Q = new RealField.RatioReducingInstrument( num, den);
+//RealField.RatioReducingResults res = Q.RationalReductionOnOmegaData();
+
+
+
+//double t = 0.0;
+//double Delta_t = +1.0E-1;
+//double x = default(double);
+//double y = default(double);
+////
+//for (; t <= System.Math.PI; t += Delta_t)
+//{
+//    x = Math.Cos(t);// assume the Radius==+1.
+//    y = Math.Sin(t);// assume the Radius==+1.
+//    //
+//    double arg = System.Math.Atan2(y, x);
+//    double partOfPi = arg / Math.PI;
+//    //
+//    // output
+//    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+//    sb.Append( "\n\t t=");
+//    sb.Append( t.ToString() );
+//    sb.Append( " x=Cos(t)=");
+//    sb.Append( x.ToString() );
+//    sb.Append( " y=Sin(t)=");
+//    sb.Append( y.ToString() );
+//    sb.Append( " arg=Atan2(y, x)=");
+//    sb.Append( arg.ToString() );
+//    sb.Append( " partOfPi=arg/Math.PI=");
+//    sb.Append( partOfPi.ToString() );
+//    string theMessage = sb.ToString();
+//    LogSinkFs.Wrappers.LogWrappers.SectionContent(theMessage, 0);
+//    Console.WriteLine("\n\t t={0} x=Cos(t)={1} y=Sin(t)={2} arg=Atan2(y, x)={3} partOfPi=arg/Math.PI={4}"
+//        , t, x, y, arg, partOfPi);
+//}// end for.
+////
+
+
+
 
 //double[,] proto = new double[9, 3]
 //    {

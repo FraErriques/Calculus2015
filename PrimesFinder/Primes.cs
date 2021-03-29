@@ -1078,6 +1078,41 @@ namespace PrimesFinder
         }// end public double J( double arg )
 
 
+        public double Pi_calculated_onJ( double x_thresholdInR )
+        {
+            double primeCardinalityUntilThresholdInR = 0.0;// init
+            //-------
+            // NB. this is not yet a result, since Pi is still counted in the first place. So J is fed with a counted Pi(x). But then, by means of Moebius inversion,
+            //     the Pi gets calculated on the J -which although was still tabulated on the counted Pi(x)-
+            //     The crucial step by Riemann, will be to obtain J=J(Z(s)) by a Mellin transform of J(x), which gives 1/s*Log(Z(s))
+            //     and then, having J=J(Z(s)) there will be a fully calculated version of Pi(x)=Pi(J(Z(s)) where no more tabulated versions 
+            //     of neither of Pi nor of J appear. The whole package is computed by means of Z-Analysis.
+            //
+            System.Collections.ArrayList theNthRoots = new System.Collections.ArrayList();
+            int c = 1;
+            double NthRoot = 0.0;
+            for (; ; )
+            {
+                NthRoot = Math.Pow( x_thresholdInR, 1.0 / c);
+                if (NthRoot < +2.0) { break; }
+                else
+                {
+                    theNthRoots.Add(NthRoot);
+                    c++;
+                }
+            }// end for
+            double sumRes = 0.0;// init
+            for (int n = 1; n < theNthRoots.Count; n++)
+            {
+                sumRes += (1.0 / n) * PrimesFinder.ElementFullCalculation.Moebius_Mi(n) * this.J(Math.Pow(x_thresholdInR, 1.0 / n));
+            }
+            //throw new System.Exception("TODO : implement Pi=Pi(J), the Pi calculated on J=J(Pi).");
+            //
+            primeCardinalityUntilThresholdInR = sumRes;
+            return primeCardinalityUntilThresholdInR;
+        }// Pi_calculated_onJ
+
+
         # endregion calculation
 
 
