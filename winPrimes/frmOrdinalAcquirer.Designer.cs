@@ -54,13 +54,13 @@
             this.AcceptButton = this.btnAcquirer;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(272, 69);
+            this.ClientSize = new System.Drawing.Size(269, 66);
             this.Controls.Add(this.btnAcquirer);
             this.Controls.Add(this.txtAcquirer);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(280, 96);
+            this.MaximumSize = new System.Drawing.Size(285, 105);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(280, 96);
+            this.MinimumSize = new System.Drawing.Size(285, 105);
             this.Name = "frmOrdinalAcquirer";
             this.Text = "Ordinal  Acquirer";
             this.ResumeLayout(false);

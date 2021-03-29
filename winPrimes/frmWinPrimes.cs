@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+
 using System.Text;
 using System.Windows.Forms;
 
@@ -52,27 +53,21 @@ namespace winPrimes
 
 
 
-        /// <summary>
-        /// legge dal file integrale. Quindi se un thread di calcolo e' attivo, il file e' locked e la risposta non
-        /// puo' essere fornita.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void mnuRead_Click(object sender, EventArgs e)
         {
             string board_message;
-            bool canStartNewCalc = Process.DataProduction.checkWorkerThreadStatus(out board_message);// check calculation thread.
+            bool canStartNewCalc = Process.DataProduction.checkWorkerThreadStatus(out board_message);
             this.txtBoard.Text += board_message;
-            if (!canStartNewCalc)// if calculation thread is active
-            {// then the integral file is locked
-                return;// on the form, because the integral file is locked, due to calc thread, and so the integral file cannot be accessed.
+            if (!canStartNewCalc)
+            {
+                return;// on the form.
             }
-            else// no cal thread is working, so we can read the integral file
-            {// and get the answer
+            else
+            {
                 frmOrdinalAcquirer ordAcq = new frmOrdinalAcquirer();
                 ordAcq.ShowDialog(this);
                 // on re-entry
-                this.txtBoard.Text += Process.Consultation.readAtSpecifiedOrdinal(ordAcq.theOrdinal);// this is the call to get the prime at a specified ordinal.
+                this.txtBoard.Text += Process.Consultation.readAtSpecifiedOrdinal(ordAcq.theOrdinal);
             }
         }
 
@@ -344,46 +339,7 @@ namespace winPrimes
             Int64 theIsolatedNatural = ordAcq.theOrdinal;
             //
             this.txtBoard.Text += Process.Calculation.FactorResearcher( theIsolatedNatural);
-        }// end private void factorFinderToolStripMenuItem_Click(object sender, EventArgs e)
-
-
-        /// <summary>
-        /// voluntarily not threaded. Fraction Reducer.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void fractionReducerToolStripMenuItem_Click( object sender, EventArgs e )
-        {
-            frmOrdinalAcquirer numeratorAcq = new frmOrdinalAcquirer();
-            numeratorAcq.Text = "Numerator";
-            numeratorAcq.ShowDialog(this);
-            // on re-entry
-            Int64 theNumerator = numeratorAcq.theOrdinal;
-            //
-            frmOrdinalAcquirer denominatorAcq = new frmOrdinalAcquirer();
-            denominatorAcq.Text = "Denominator";
-            denominatorAcq.ShowDialog(this);
-            // on re-entry
-            Int64 theDenominator = denominatorAcq.theOrdinal;
-            //
-            // ready.
-            // TODO this.txtBoard.Text += Process.Calculation.FractionReducer(theNumerator, theDenominator);
-            this.txtBoard.Text = "not yet.";
-        }// end private void fractionReducerToolStripMenuItem_Click( object sender, EventArgs e )
-
-
-
-
-        private void factorOmegaToolStripMenuItem_Click( object sender, EventArgs e )
-        {
-            frmOrdinalAcquirer ordAcq = new frmOrdinalAcquirer();
-            ordAcq.Text = "Isolated Natural to be evaluated.";
-            ordAcq.ShowDialog(this);
-            // on re-entry
-            Int64 theIsolatedNatural = ordAcq.theOrdinal;
-            //
-            this.txtBoard.Text += Process.Calculation.FactorOmegaInformation(theIsolatedNatural);
-        }// end private void factorOmegaToolStripMenuItem_Click( object sender, EventArgs e )
+        }
 
 
 
@@ -565,6 +521,7 @@ namespace winPrimes
 
 
         # endregion database
+
 
 
 

@@ -91,7 +91,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(386, 88);
+            this.ClientSize = new System.Drawing.Size(378, 81);
             this.Controls.Add(this.lblJoint);
             this.Controls.Add(this.lblImmaginary);
             this.Controls.Add(this.lblReal);
@@ -99,8 +99,8 @@
             this.Controls.Add(this.txtImmaginary);
             this.Controls.Add(this.txtReal);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(394, 115);
-            this.MinimumSize = new System.Drawing.Size(394, 115);
+            this.MaximumSize = new System.Drawing.Size(394, 120);
+            this.MinimumSize = new System.Drawing.Size(394, 120);
             this.Name = "frmComplexAcquirer";
             this.Text = "s =: sigma +i*t";
             this.ResumeLayout(false);

@@ -9,12 +9,50 @@ namespace TestConsole
     class Program
     {
 
+#region ContourIntg_delegates
+        private static double x( double t )
+        {// x(t) cerchio di raggio 2.1 e centro (3,5).
+            return (+3.0 + 2.1 * Math.Cos(t));
+        }// x(t)
+        private static double y( double t )
+        {// y(t)
+            return (+5.0 + 2.1 * Math.Sin(t));
+        }// y(t)
+        private static double dx( double t )
+        {// dx(t)=x'(t)dt=...
+            return (-2.1 * Math.Sin(t));
+        }// dx(t)
+        private static double dy( double t )
+        {// dy(y)=y'(t)dt==...
+            return (+2.1 * Math.Cos(t));
+        }// dy(t)
+
+
+        /// <summary>
+        /// the functions choosen for the example are f(z)=z which implies u(x,y)=x, v(x,y)=y; 
+        /// the choice for the contour is x(t)=t,y(t)=2*t+1,dx=dt which means dx=1
+        /// dy=2*dt which means dy=2.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        private static double genericIntegrand_u_part( double x, double y )
+        {// f(z)==z^2 -> Re(f(z))==Re((x+I*y)^2)==x^2-y^2
+            return x*x-y*y;
+        }// u(x,y)
+        //
+        private static double genericIntegrand_v_part( double x, double y )
+        {// f(z)==z^2 -> Im(f(z))==Im((x+I*y)^2)==2*x*y
+            return 2.0*x*y;
+        }// v(x,y)
+#endregion ContourIntg_delegates
 
 
 
         static void Main( string[] args )
         {
             LogSinkFs.Wrappers.LogWrappers.SectionOpen("Main()", 0);
+
 
             System.Random myGenerator = new Random();
             double previousPiG_Level = 0.0;
@@ -60,6 +98,8 @@ namespace TestConsole
                     );
             }
 
+
+
             //---########################################################################
             System.Console.WriteLine("\n\n\t Strike \"Enter\" to leave ");
             System.Console.ReadLine();
@@ -72,9 +112,49 @@ namespace TestConsole
 
 
 
+
+
 #region cantina
 
 
+
+            //ComplexField.Complex res =
+            //    ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(
+            //        new ComplexField.Complex(+3.0 + 2.1, +5.0)
+            //        , new ComplexField.Complex(+3.0 - 2.1, +5.0)
+            //        , 0.0
+            //        , +1.0*Math.PI
+            //        , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_u_part)
+            //        , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_v_part)
+            //        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(x)
+            //        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(y)
+            //        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dx)
+            //        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dy)
+            //        , 99999); // # dx
+
+            ////double areaTrapezio =
+            ////    RealField.Integrate.Integrate_equi_trapezium(0, 2, 9);
+
+            //// TODO : memo per change extrema parameters :
+
+            ////In[7]:= x[t_] = t
+            ////In[8]:= y[t_] = (2*t + 1)
+
+            ////In[12]:= {x[0], y[0]}
+            ////Out[12]= {0, 1}
+
+            ////In[11]:= {x[11], y[11]}
+            ////Out[11]= {11, 23}
+
+            ////ComplexField.Complex res =
+            ////    ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(0.0, 11.0, 999);
+
+            ////ComplexField.Complex res =
+            ////     ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral(+4.0, +0.0, 9999, 99000);// successo pieno!!!
+            ////// ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral( -3.9, +11.85, 9999, 20000);// NO : Re[s]>0 
+            //////ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral(+3.9, +11.85, 9999, 990000);// errore == 1.31926*10^-7 - 5.8894*10^-8 \[ImaginaryI]  OK
+            ////// ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral(+39.9, +181.15, 9999, 999999999 );// 
+            ////ComplexField.Complex prodGamma = ComplexField.Functions.Gamma_function(new ComplexField.Complex(+4.0, +0.0), 99000);// NB! converge anche per Re[s]<0
 
 //long[,] num = new long[2, 2]{{+2,+1}, {+3,+2}};
 //long[,] den = new long[2, 2]{{+2,+1}, {+3,+1}};
@@ -116,6 +196,120 @@ namespace TestConsole
 ////
 
 
+//double t = +0.0;
+//for (double sigma = +0.81; sigma < 1.21; sigma += +0.01)
+//{
+//    Console.WriteLine("Zeta[{0}+I*{1}]== {2}", sigma, t,
+//        ComplexField.Functions.Zeta_functionalEquation(
+//            new ComplexField.Complex(sigma, t)
+//            , 99999L)
+//    );
+//}
+
+
+
+
+//In[5]:= Gamma[3.19`+ 6.2` \[ImaginaryI]]
+//Out[5]= -0.0172331 + 0.0130457 \[ImaginaryI] 
+//Console.WriteLine(ComplexField.Functions.Gamma_function(
+//    new ComplexField.Complex(+3.19, +6.2)
+//    , 99999L
+//));
+
+// TODO PrimesFinder.Integrate.
+
+
+//PrimesFinder.Primes primeCoreClassInstance = new PrimesFinder.Primes();
+////for (int c = 100; c < 1000; c += 100)
+//// 2.000.000.000
+//// 3.000.000.000
+////   100.000.000
+//for (long c = 2; c < 300; c += 1 )
+//{
+//    double tmpCalc_Pi_calculated_onJ = primeCoreClassInstance.Pi_calculated_onJ(c);
+//    double tmpCalc_Pi_Greco = primeCoreClassInstance.Pi_Greco(c);
+//    Console.WriteLine(" n in N, n={0} \t P(J({1}))={2} \t Pi_Greco({1})={3} \t Round[P(J({1}))]={4} \t Delta={5}"
+//         , c, c, tmpCalc_Pi_calculated_onJ
+//         , tmpCalc_Pi_Greco
+//         //, primeCoreClassInstance.Pi_Greco_nonInterpolata(c)
+//         , Math.Round(tmpCalc_Pi_calculated_onJ)
+//         , tmpCalc_Pi_calculated_onJ - tmpCalc_Pi_Greco
+//     );
+//}
+
+//int c = 1;
+//for( ; c < 30; c++)
+//{
+//    Console.WriteLine(" Moebius_mi({0})== {1}",c, PrimesFinder.ElementFullCalculation.Moebius_Mi(c));
+//}
+
+//const int righe_num = 4;
+//const int righe_den = 2;
+//long[,] num = new long[righe_num, 2] { { +1, 7 }, { 2, 2 }, { -3, 23 }, { 5, 4 } };
+//long[,] den = new long[righe_den, 2] { { 2, 9 }, { 3, 19 } };
+//long[, ,] theRedFraction = PrimesFinder.ElementFullCalculation.RationalReductionOnOmegaData(num, den);
+
+//Console.WriteLine("\r\n\r\n\r\n");
+//int max_factor_cardinality = Math.Max(righe_num, righe_den);
+//for( c = 0; c < righe_num; c++)
+//{
+//    if (c > 0)
+//    {
+//        Console.Write(" * ");
+//    }// else don't.
+//    Console.Write("{0}^{1}", num[c, 0], num[c, 1]);
+//}
+//Console.WriteLine();
+//for (int k = 0; k < max_factor_cardinality * 3 * 2 + 1; k++)
+//{
+//    Console.Write("-");
+//}
+//Console.WriteLine();
+//for (c = 0; c < righe_den; c++)
+//{
+//    if (c > 0)
+//    {
+//        Console.Write(" * ");
+//    }// else don't.
+//    Console.Write("{0}^{1}", den[c, 0], den[c, 1]);
+//}
+
+            //LinearAlgebra.RealMatrix Mata = new LinearAlgebra.RealMatrix(3, 3, @"C:\root\projects\Calculus_2015_\TestConsole\dat\mata3x3_20170315_.txt");
+            //Mata.show();
+            //double det = Mata.det();
+            //LinearAlgebra.RealMatrix Mata_diagonalized_ = Mata.Gauss_Jordan_elimination();
+            //Mata_diagonalized_.show();
+
+            //double t = 0.0;
+            //double Delta_t = +1.0E-1;
+            //double x = default(double);
+            //double y = default(double);
+            ////
+            //for (; t <= System.Math.PI; t += Delta_t)
+            //{
+            //    x = Math.Cos(t);// assume the Radius==+1.
+            //    y = Math.Sin(t);// assume the Radius==+1.
+            //    //
+            //    double arg = System.Math.Atan2(y, x);
+            //    double partOfPi = arg / Math.PI;
+            //    //
+            //    // output
+            //    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            //    sb.Append( "\n\t t=");
+            //    sb.Append( t.ToString() );
+            //    sb.Append( " x=Cos(t)=");
+            //    sb.Append( x.ToString() );
+            //    sb.Append( " y=Sin(t)=");
+            //    sb.Append( y.ToString() );
+            //    sb.Append( " arg=Atan2(y, x)=");
+            //    sb.Append( arg.ToString() );
+            //    sb.Append( " partOfPi=arg/Math.PI=");
+            //    sb.Append( partOfPi.ToString() );
+            //    string theMessage = sb.ToString();
+            //    LogSinkFs.Wrappers.LogWrappers.SectionContent(theMessage, 0);
+            //    Console.WriteLine("\n\t t={0} x=Cos(t)={1} y=Sin(t)={2} arg=Atan2(y, x)={3} partOfPi=arg/Math.PI={4}"
+            //        , t, x, y, arg, partOfPi);
+            //}// end for.
 
 
 //double[,] proto = new double[9, 3]
