@@ -73,6 +73,7 @@ namespace PrimesFinder
             if (true == isStillPotentialPrime)
             {
                 // dbg LogSinkFs.Wrappers.LogWrappers.SectionContent(String.Format("{0} is prime.\r\n", ToBeDivided), 0);
+                LastCandidateDivider--;//NB for primes the right value is before last increment.
                 return true;
             }
             else
