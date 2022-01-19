@@ -19,5 +19,5 @@ Release/
 *.suo
 *.log
 *.VS2017
-*.txt
+*FileListAbsolute.txt
 *.config

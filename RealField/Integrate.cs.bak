@@ -2,7 +2,7 @@
 
 
 
-namespace PrimesFinder
+namespace RealField
 {
 
     public static class Integrate
@@ -26,9 +26,13 @@ namespace PrimesFinder
         /// <returns></returns>
         public static double IntegrandoGamma(double t)
         {
-            double z = 7.0;// Gamma(7)==6!=720
+            double z = 7.0;// Gamma(7)==6!=720  TODO customize, after the implementation of a new equi_trapezium for Complex functions.
             return Math.Pow(t, z - 1) * Math.Exp(-t);
         }//
+        // TODO : implement an equi_trapezium with a different signature of the integrand. We need co-chains that take a ral variable, and a Complex one.
+        //Complex.C Integrando_Zeta_Real_part()
+        //{
+        //}
 
 
         /// <summary>
@@ -43,14 +47,14 @@ namespace PrimesFinder
             Functional_form functional_form = new Functional_form( f);// NB. default==LogIntegral. Modificare questa riga del sorgente per variare l'integrando.
             double delta = (b - a) / (double)n,
             res = 0.0,
-            x = a + delta;// start from inf + delta
+            x = a + delta;
             //
             for (; x < b; x += delta)
             {// sum all the internal sides
                 res += functional_form(x);
             }
             res *= delta; // multiply them for the common base
-            res += (functional_form(a) + functional_form(b)) * 0.5 * delta; // (add extrema) * base/2
+            res += (functional_form(a) + functional_form(b)) * 0.5 * delta; // add extrema * base/2
             //
             return res;
         }//

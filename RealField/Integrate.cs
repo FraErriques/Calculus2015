@@ -10,11 +10,11 @@ namespace RealField
         public delegate double Functional_form(double x);
 
 
-
         public static double f(double x)
         {
             return 1.0 / Math.Log(x);
         }//
+
         public static double f1(double x)
         {
             return  Math.Sin( x);
@@ -26,9 +26,14 @@ namespace RealField
         /// <returns></returns>
         public static double IntegrandoGamma(double t)
         {
-            double z = 7.0;// Gamma(7)==6!=720
+            double z = 7.0;// Gamma(7)==6!=720  TODO customize, after the implementation of a new equi_trapezium for Complex functions.
             return Math.Pow(t, z - 1) * Math.Exp(-t);
         }//
+
+        // TODO : implement an equi_trapezium with a different signature of the integrand. We need co-chains that take a ral variable, and a Complex one.
+        //Complex.C Integrando_Zeta_Real_part()
+        //{
+        //}
 
 
         /// <summary>
