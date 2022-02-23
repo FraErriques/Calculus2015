@@ -53,50 +53,39 @@ namespace TestConsole
         {
             LogSinkFs.Wrappers.LogWrappers.SectionOpen("Main()", 0);
 
+            //##
 
-            System.Random myGenerator = new Random();
-            double previousPiG_Level = 0.0;
-            double PiG_Level = 0.0;
-            PrimesFinder.Primes P = new PrimesFinder.Primes();// default Ctor is the one for reading the log.
-            double Pi_64 = P.Pi_Greco(64);
-            double J_64 = P.J(64); // NB. J(x)>=Pi(x)
+            ComplexField.Complex res =
+                ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(
+                    new ComplexField.Complex(+3.0 + 2.1, +5.0)
+                    , new ComplexField.Complex(+3.0 - 2.1, +5.0)
+                    , 0.0
+                    , +1.0 * Math.PI
+                    , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_u_part)
+                    , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_v_part)
+                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(x)
+                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(y)
+                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dx)
+                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dy)
+                    , 99999); // # dx
 
-            for (long thresholdInNaturals = 0; thresholdInNaturals < 10; thresholdInNaturals++)
-            {
-                double pollutedInteger = thresholdInNaturals + myGenerator.NextDouble();
-                //Console.Write("\t GetCumulatedOrdinalNotOverThreshold({0}) == {1}  the Inf={2}"
-                //    , thresholdInNaturals
-                //    , P.GetCumulatedOrdinalNotOverThreshold(thresholdInNaturals, out theInf)
-                //    , theInf
-                //    );
-                PiG_Level = P.Pi_Greco(thresholdInNaturals);
-                if (Math.Abs(PiG_Level - previousPiG_Level) > double.Epsilon)
-                {
-                    Console.WriteLine();
-                }// else continue on the same line;
-                previousPiG_Level = PiG_Level;// update the PiGreco level.
-                Console.Write("____\t PiGreco({0}) == {1} "
-                    , thresholdInNaturals
-                    , P.Pi_Greco(thresholdInNaturals)
-                    );
-                PiG_Level = P.Pi_Greco(pollutedInteger);
-                if (Math.Abs(PiG_Level - previousPiG_Level) > double.Epsilon)
-                {
-                    Console.WriteLine();
-                }// else continue on the same line;
-                previousPiG_Level = PiG_Level;// update the PiGreco level.
-                //
-                Console.Write("____\t PiGreco({0}) == {1} \t Pi_calculated_onJ({0})=={2}"
-                    , pollutedInteger
-                    , P.Pi_Greco( pollutedInteger)
-                    , P.Pi_calculated_onJ( pollutedInteger)
-                    );
-                //
-                Console.Write("____\t J({0}) == {1}"
-                    , pollutedInteger
-                    , P.J(pollutedInteger) // NB. J(x)>=Pi(x)
-                    );
-            }
+            //double areaTrapezio =
+            //    RealField.Integrate.Integrate_equi_trapezium(0, 2, 9);
+
+            // TODO : memo per change extrema parameters :
+
+            //In[7]:= x[t_] = t
+            //In[8]:= y[t_] = (2*t + 1)
+
+            //In[12]:= {x[0], y[0]}
+            //Out[12]= {0, 1}
+
+            //In[11]:= {x[11], y[11]}
+            //Out[11]= {11, 23}
+
+            //ComplexField.Complex res =
+            //    ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(0.0, 11.0, 999);
+            //##
 
 
 
@@ -116,6 +105,50 @@ namespace TestConsole
 
 #region cantina
 
+
+//System.Random myGenerator = new Random();
+//double previousPiG_Level = 0.0;
+//double PiG_Level = 0.0;
+//PrimesFinder.Primes P = new PrimesFinder.Primes();// default Ctor is the one for reading the log.
+//double Pi_64 = P.Pi_Greco(64);
+//double J_64 = P.J(64); // NB. J(x)>=Pi(x)
+
+//for (long thresholdInNaturals = 0; thresholdInNaturals < 10; thresholdInNaturals++)
+//{
+//    double pollutedInteger = thresholdInNaturals + myGenerator.NextDouble();
+//    //Console.Write("\t GetCumulatedOrdinalNotOverThreshold({0}) == {1}  the Inf={2}"
+//    //    , thresholdInNaturals
+//    //    , P.GetCumulatedOrdinalNotOverThreshold(thresholdInNaturals, out theInf)
+//    //    , theInf
+//    //    );
+//    PiG_Level = P.Pi_Greco(thresholdInNaturals);
+//    if (Math.Abs(PiG_Level - previousPiG_Level) > double.Epsilon)
+//    {
+//        Console.WriteLine();
+//    }// else continue on the same line;
+//    previousPiG_Level = PiG_Level;// update the PiGreco level.
+//    Console.Write("____\t PiGreco({0}) == {1} "
+//        , thresholdInNaturals
+//        , P.Pi_Greco(thresholdInNaturals)
+//        );
+//    PiG_Level = P.Pi_Greco(pollutedInteger);
+//    if (Math.Abs(PiG_Level - previousPiG_Level) > double.Epsilon)
+//    {
+//        Console.WriteLine();
+//    }// else continue on the same line;
+//    previousPiG_Level = PiG_Level;// update the PiGreco level.
+//    //
+//    Console.Write("____\t PiGreco({0}) == {1} \t Pi_calculated_onJ({0})=={2}"
+//        , pollutedInteger
+//        , P.Pi_Greco( pollutedInteger)
+//        , P.Pi_calculated_onJ( pollutedInteger)
+//        );
+//    //
+//    Console.Write("____\t J({0}) == {1}"
+//        , pollutedInteger
+//        , P.J(pollutedInteger) // NB. J(x)>=Pi(x)
+//        );
+//}
 
 
             //ComplexField.Complex res =
