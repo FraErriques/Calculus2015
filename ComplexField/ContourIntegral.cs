@@ -190,14 +190,27 @@ namespace ComplexField
         }// extremaCheck
 
 
+        
         /// <summary>
-        /// 
+        /// This function evaluates a contour integral in the complex plane, via the numerical method of Riemann partition
+        /// on the pullback of a parametrization of the Chain.
+        /// The caller is required to provide suitable function-pointers to the real and the immaginary part of the CoChain.
+        /// f[z]==f[x+I*y]==u(x,y)+I*v(x,y) the u() and the v() have to be implemented, before calling this function.
+        /// The implementation is:
+        /// (u(x,y)+I*v(x,y))*(dx+I*dy)==u*dx-v*dy + I*( u*dy+v*dx)
         /// </summary>
-        /// <param name="sigma">the Real part of the complex argument</param>
-        /// <param name="t">the Immaginary part of the complex argument</param>
-        /// <param name="xRplus_threshold">the x0 in R+ used as stop-value in the improper integration to +Infinity</param>
-        /// <param name="n">the number of DeltaX to step into, i.e. the number of trapezia to be calculated in the decomposition</param>
-        /// <returns>the Complex value of the Gamma[sigma+I*t]</returns>
+        /// <param name="z0">start point of the Chain, in the argument plane</param>
+        /// <param name="z1">end point of the Chain, in the argument plane</param>
+        /// <param name="t0">start point in the pullback of the chain</param>
+        /// <param name="tn">end point in the pullback of the chain</param>
+        /// <param name="u_Part">real part of the image</param>
+        /// <param name="v_Part">immaginary part of the image</param>
+        /// <param name="x_coordinate">the first(abscissa) coordinate function, in the parametrization</param>
+        /// <param name="y_coordinate">the second(ordinate) coordinate function, in the parametrization</param>
+        /// <param name="dx_differential">the differential(i.e. measure) of the first(abscissa) coordinate function, in the parametrization</param>
+        /// <param name="dy_differential">the differential(i.e. measure) of the second(ordinate) coordinate function, in the parametrization</param>
+        /// <param name="n">the cardinality of the Riemann style partition, in the pullback of the Chain</param>
+        /// <returns> a Complex:: instance, containing the integral result</returns>
         public static ComplexField.Complex ContourIntegral_ManagementMethod(
             ComplexField.Complex z0,
             ComplexField.Complex z1,

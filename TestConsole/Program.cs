@@ -54,7 +54,11 @@ namespace TestConsole
             LogSinkFs.Wrappers.LogWrappers.SectionOpen("Main()", 0);
 
             //##
-
+            //Integrazione di f[z] == 
+            //f[x + I*y] == (x + I*y)^2 sulla semicirconferenza superiore
+            //x[t] == +3.0 + 2.1*Cos[t]
+            //y[t] == +5.0 + 2.1*Sin[t]
+            //t in [0, +Pi]
             ComplexField.Complex res =
                 ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(
                     new ComplexField.Complex(+3.0 + 2.1, +5.0)
