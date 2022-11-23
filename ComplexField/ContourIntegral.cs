@@ -57,39 +57,45 @@ namespace ComplexField
         // fPtr Types
         //general setting for contour-integrals of elementary functions.
         public delegate double fPtr_U_or_V_( double x, double y );// the real or immaginary part of the image.
+        public delegate ComplexField.Complex fPtr_ComplexAsScalar_( double x, double y );
         public delegate double fPtr_Jordan_parametriz_( double t );// the x(t) or y(t) or dx(t) or dy(t) of the Jordan parametric contour.
 
         #region exampleFunctions
-        //private static double x( double t)
-        //{// x(t)=t
-        //    return t;
-        //}// x(t)
-        //private static double y( double t )
-        //{// y(t)=2*t+1
-        //    return 2 * t + 1;
-        //}// y(t)
-        //private static double dx( double t )
-        //{// x(t)=t->dx(t)=x'(t)dt=1*dt
-        //    return +1.0;
-        //}// x(t)
-        //private static double dy( double t )
-        //{// y(t)=2*t+1 ->dy(y)=y'(t)dt==2*dt
-        //    return +2.0;
-        //}// y(t)
-        ///// <summary>
-        ///// the functions choosen for the example are f(z)=z which implies u(x,y)=x, v(x,y)=y; 
-        ///// the choice for the contour is x(t)=t,y(t)=2*t+1,dx=dt which means dx=1
-        ///// dy=2*dt which means dy=2.
-        ///// </summary>
-        //private static double genericIntegrand_u_part( double x, double y )
-        //{// f(z)==z -> Re(f(z))==Re(f(x+I*y))==x.
-        //    return x;
-        //}// u(x,y)
-        ////
-        //private static double genericIntegrand_v_part( double x, double y )
-        //{// f(z)==z -> Im(f(z))==Im(f(x+I*y))==y.
-        //    return y;
-        //}// v(x,y)
+        private static double x( double t )
+        {// x(t)=t
+            return t;
+        }// x(t)
+        private static double y( double t )
+        {// y(t)=2*t+1
+            return 2 * t + 1;
+        }// y(t)
+        private static double dx( double t )
+        {// x(t)=t->dx(t)=x'(t)dt=1*dt
+            return +1.0;
+        }// x(t)
+        private static double dy( double t )
+        {// y(t)=2*t+1 ->dy(y)=y'(t)dt==2*dt
+            return +2.0;
+        }// y(t)
+        /// <summary>
+        /// the functions choosen for the example are f(z)=z which implies u(x,y)=x, v(x,y)=y; 
+        /// the choice for the contour is x(t)=t,y(t)=2*t+1,dx=dt which means dx=1
+        /// dy=2*dt which means dy=2.
+        /// </summary>
+        private static double genericIntegrand_u_part( double x, double y )
+        {// f(z)==z -> Re(f(z))==Re(f(x+I*y))==x.
+            return x;
+        }// u(x,y)
+        private static double genericIntegrand_v_part( double x, double y )
+        {// f(z)==z -> Im(f(z))==Im(f(x+I*y))==y.
+            return y;
+        }// v(x,y)
+        //
+        private static ComplexField.Complex zSquared_AsScalar_( double x, double y )
+        {
+            ComplexField.Complex z = new ComplexField.Complex(x, y);
+            return z * z;// z^2
+        }// fPtr_ComplexAsScalar_
         #endregion exampleFunctions
 
 
@@ -108,9 +114,9 @@ namespace ComplexField
             fPtr_Jordan_parametriz_ dy_differential,
             Int64 n )// #trapezia in the partition
         {// RealPart == ==u*dx-v*dy
-            double DeltaT = (tn - t0) / (double)n,
-            res = 0.0,
-            t = DeltaT;// the boundaries {t0,tn} are computed separately, after the core-loop. So trapezium starts at 1*DeltaT.
+            double DeltaT = (tn - t0) / (double)n;
+            double res = 0.0;
+            double t = t0 + DeltaT;// the boundaries {t0,tn} are computed separately, after the core-loop. So trapezium starts at 1*DeltaT.
             // kordell starts here.
             for (; t < tn; t += DeltaT)// stop at the second to last, i.e. <tn. The boudaries are computed separately: t=t0, t=tn.
             {// sum all the internal sides
@@ -141,9 +147,9 @@ namespace ComplexField
             fPtr_Jordan_parametriz_ dy_differential,
             Int64 n )// #trapezia in the partition
         {// ImmaginaryPart== [I*]( u*dy+v*dx)
-            double DeltaT = (tn - t0) / (double)n,
-            res = 0.0,
-            t = DeltaT;// the boundaries {t0,tn} are computed separately, after the core-loop. So trapezium starts at 1*DeltaT.
+            double DeltaT = (tn - t0) / (double)n;
+            double res = 0.0;
+            double t = t0 + DeltaT;// the boundaries {t0,tn} are computed separately, after the core-loop. So trapezium starts at 1*DeltaT.
             // kordell starts here.
             for (; t < tn; t += DeltaT)// stop at the second to last, i.e. <tn. The boudaries are computed separately: t=t0, t=tn.
             {// sum all the internal sides
@@ -160,6 +166,53 @@ namespace ComplexField
         }//
 
 
+
+        /// <summary>
+        /// Trapezium Integration. NB.: f(z)*(dx+I*dy)
+        /// ComplexImageAsScalar
+        /// </summary>
+        private static ComplexField.Complex Integrate_equi_trapezium_ComplexImageAsScalar(
+            double t0, double tn, // extrema in the pull-back t in [t0,tn]
+            fPtr_ComplexAsScalar_ complexAsScalar,
+            fPtr_Jordan_parametriz_ x_coordinate,
+            fPtr_Jordan_parametriz_ y_coordinate,
+            fPtr_Jordan_parametriz_ dx_differential,
+            fPtr_Jordan_parametriz_ dy_differential,
+            Int64 n )// #trapezia in the partition
+        {// RealPart == ==u*dx-v*dy
+            double DeltaT = (tn - t0) / (double)n;
+            double t = t0 + DeltaT;// the boundaries {t0,tn} are computed separately, after the core-loop. So trapezium starts at 1*DeltaT.
+            ComplexField.Complex res = new ComplexField.Complex(0,0);
+            // kordell starts here.
+            for (; t < tn; t += DeltaT)// stop at the second to last, i.e. <tn. The boudaries are computed separately: t=t0, t=tn.
+            {// sum all the internal sides
+                res += complexAsScalar(x_coordinate(t), y_coordinate(t)) * new ComplexField.Complex(dx_differential(t),dy_differential(t));
+            }
+            // post kordell adjustments
+            res *= DeltaT; // multiply them for the common base
+            res += (
+                    complexAsScalar(x_coordinate(t0), y_coordinate(t0)) * new ComplexField.Complex(dx_differential(t0),dy_differential(t0))+
+                    complexAsScalar(x_coordinate(tn), y_coordinate(tn)) * new ComplexField.Complex(dx_differential(tn), dy_differential(tn))
+                    ) * 0.5 * DeltaT; // add extrema * base/2
+            // ready
+            return res;
+        }//
+
+
+
+        /// <summary>
+        /// le coordinate sono riferite al piano ARGOMENTO, non al piano immagine.
+        /// gli estremi sulla CoCatena e sulla Catena devono coincidere come segue:
+        /// z0=={x[t0]+I*y[t0]}
+        /// z1=={x[tn]+I*y[tn]}
+        /// </summary>
+        /// <param name="z0"> z0=={x[t0]+I*y[t0]} in the ARGUMENT plane</param>
+        /// <param name="z1"> z1=={x[tn]+I*y[tn]} in the ARGUMENT plane</param>
+        /// <param name="t0">questi punti sono nello spazio separato del Pull-Back</param>
+        /// <param name="tn">questi punti sono nello spazio separato del Pull-Back</param>
+        /// <param name="x_coordinate">function pointer to a coordinate function x[t]</param>
+        /// <param name="y_coordinate">function pointer to a coordinate function y[t]</param>
+        /// <returns></returns>
         private static bool extremaCheck(
             ComplexField.Complex z0,
             ComplexField.Complex z1,
@@ -257,6 +310,44 @@ namespace ComplexField
         }// ContourIntegral_ManagementMethod
 
 
+
+        public static ComplexField.Complex ContourIntegral_AsScalar_ManagementMethod(
+            ComplexField.Complex z0,
+            ComplexField.Complex z1,
+            double t0, double tn, // extrema in the pull-back
+            fPtr_ComplexAsScalar_ complexAsScalar,
+            fPtr_Jordan_parametriz_ x_coordinate,
+            fPtr_Jordan_parametriz_ y_coordinate,
+            fPtr_Jordan_parametriz_ dx_differential,
+            fPtr_Jordan_parametriz_ dy_differential,
+            Int64 n )// #trapezia in the partition
+        {
+            bool extremaAdequacy = extremaCheck(
+                z0, z1,
+                t0, tn,
+                x_coordinate,
+                y_coordinate
+            );
+            if (!extremaAdequacy)//NB. le coordinate sono riferite al piano dell'argomento
+            {// log & return null
+                //Process::LogWrappers::SectionContent_fromMultipleStrings(0,1,new std::string("Integration extrema do not match, between coChain and Jordan-path."));
+                //return nullptr;
+            }//{ throw new System.Exception("Integration extrema do not match, between coChain and Jordan-path."); }
+            //
+            ComplexField.Complex res = new ComplexField.Complex(
+                Integrate_equi_trapezium_ComplexImageAsScalar(
+                    t0,tn
+                    ,complexAsScalar
+                    , x_coordinate
+                    , y_coordinate
+                    , dx_differential
+                    , dy_differential
+                    ,n )
+            );
+            //Process::LogWrappers::SectionClose();
+            // ready.
+            return res;// Caller has to delete.
+        }// ContourIntegral_AsScalar_ManagementMethod
          
 
     }// class

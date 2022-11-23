@@ -40,11 +40,16 @@ namespace TestConsole
         {// f(z)==z^2 -> Re(f(z))==Re((x+I*y)^2)==x^2-y^2
             return x*x-y*y;
         }// u(x,y)
-        //
         private static double genericIntegrand_v_part( double x, double y )
         {// f(z)==z^2 -> Im(f(z))==Im((x+I*y)^2)==2*x*y
             return 2.0*x*y;
         }// v(x,y)
+        //
+        private static ComplexField.Complex zSquared_AsScalar_( double x, double y )
+        {
+            ComplexField.Complex z = new ComplexField.Complex(x, y);
+            return z * z;// z^2
+        }// fPtr_ComplexAsScalar_
 #endregion ContourIntg_delegates
 
 
@@ -67,6 +72,25 @@ namespace TestConsole
                     , +1.0 * Math.PI
                     , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_u_part)
                     , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_v_part)
+                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(x)
+                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(y)
+                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dx)
+                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dy)
+                    , 99999); // # dx
+
+            //##
+            //Integrazione di f[z] == 
+            //f[x + I*y] == (x + I*y)^2 sulla semicirconferenza superiore
+            //x[t] == +3.0 + 2.1*Cos[t]
+            //y[t] == +5.0 + 2.1*Sin[t]
+            //t in [0, +Pi]
+            ComplexField.Complex res_asAscalar =
+                ComplexField.ContourIntegral.ContourIntegral_AsScalar_ManagementMethod(
+                    new ComplexField.Complex(+3.0 + 2.1, +5.0)
+                    , new ComplexField.Complex(+3.0 - 2.1, +5.0)
+                    , 0.0
+                    , +1.0 * Math.PI
+                    , new ComplexField.ContourIntegral.fPtr_ComplexAsScalar_(zSquared_AsScalar_)
                     , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(x)
                     , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(y)
                     , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dx)
