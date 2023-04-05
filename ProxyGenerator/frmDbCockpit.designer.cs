@@ -32,6 +32,8 @@ namespace ProxyGenerator
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chooseWorkingFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lbxProcedures = new System.Windows.Forms.ListBox();
             this.btnConfirmSelection = new System.Windows.Forms.Button();
             this.rbtMultipleResultset = new System.Windows.Forms.RadioButton();
@@ -51,8 +53,6 @@ namespace ProxyGenerator
             this.txtServer = new System.Windows.Forms.TextBox();
             this.txtDatabase = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.fileSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chooseWorkingFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnExit = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.grbReadWrite.SuspendLayout();
@@ -66,7 +66,7 @@ namespace ProxyGenerator
             this.fileSystemToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(760, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(768, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -76,22 +76,37 @@ namespace ProxyGenerator
             this.selectDatabaseToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.databaseToolStripMenuItem.Name = "databaseToolStripMenuItem";
-            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.databaseToolStripMenuItem.Text = "Database";
             // 
             // selectDatabaseToolStripMenuItem
             // 
             this.selectDatabaseToolStripMenuItem.Name = "selectDatabaseToolStripMenuItem";
-            this.selectDatabaseToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.selectDatabaseToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.selectDatabaseToolStripMenuItem.Text = "Bind to Database";
             this.selectDatabaseToolStripMenuItem.Click += new System.EventHandler(this.selectDatabaseToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // fileSystemToolStripMenuItem
+            // 
+            this.fileSystemToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.chooseWorkingFolderToolStripMenuItem});
+            this.fileSystemToolStripMenuItem.Name = "fileSystemToolStripMenuItem";
+            this.fileSystemToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
+            this.fileSystemToolStripMenuItem.Text = "FileSystem";
+            // 
+            // chooseWorkingFolderToolStripMenuItem
+            // 
+            this.chooseWorkingFolderToolStripMenuItem.Name = "chooseWorkingFolderToolStripMenuItem";
+            this.chooseWorkingFolderToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.chooseWorkingFolderToolStripMenuItem.Text = "Choose Working Folder";
+            this.chooseWorkingFolderToolStripMenuItem.Click += new System.EventHandler(this.chooseWorkingFolderToolStripMenuItem_Click);
             // 
             // lbxProcedures
             // 
@@ -277,21 +292,6 @@ namespace ProxyGenerator
             this.txtDatabase.TabIndex = 0;
             this.txtDatabase.WordWrap = false;
             // 
-            // fileSystemToolStripMenuItem
-            // 
-            this.fileSystemToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.chooseWorkingFolderToolStripMenuItem});
-            this.fileSystemToolStripMenuItem.Name = "fileSystemToolStripMenuItem";
-            this.fileSystemToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.fileSystemToolStripMenuItem.Text = "FileSystem";
-            // 
-            // chooseWorkingFolderToolStripMenuItem
-            // 
-            this.chooseWorkingFolderToolStripMenuItem.Name = "chooseWorkingFolderToolStripMenuItem";
-            this.chooseWorkingFolderToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.chooseWorkingFolderToolStripMenuItem.Text = "Choose Working Folder";
-            this.chooseWorkingFolderToolStripMenuItem.Click += new System.EventHandler(this.chooseWorkingFolderToolStripMenuItem_Click);
-            // 
             // btnExit
             // 
             this.btnExit.Location = new System.Drawing.Point(679, 344);
@@ -306,7 +306,7 @@ namespace ProxyGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(760, 373);
+            this.ClientSize = new System.Drawing.Size(768, 375);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.grbConnectionString);
             this.Controls.Add(this.grbReadWrite);
@@ -315,8 +315,8 @@ namespace ProxyGenerator
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(768, 400);
-            this.MinimumSize = new System.Drawing.Size(768, 400);
+            this.MaximumSize = new System.Drawing.Size(790, 420);
+            this.MinimumSize = new System.Drawing.Size(784, 414);
             this.Name = "frmDbCockpit";
             this.Text = "Proxy Generator";
             this.Load += new System.EventHandler(this.DbCockpit_Load);
