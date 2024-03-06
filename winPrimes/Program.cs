@@ -95,6 +95,7 @@ namespace winPrimes
         /// <summary>
         /// The main entry point for the application.
         /// tests passed on ITFORS1011 on 2024.02.26
+        /// tests passed on ITFORS1011 on 2024.03.06
         /// </summary>
         [STAThread]
         static void Main()
