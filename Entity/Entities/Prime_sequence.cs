@@ -69,6 +69,11 @@ namespace Entity.Entities
         {
             System.Data.DataTable lastCouple =
                 Entity.Proxies.volatile_Prime_sequence_LOAD_atMaxOrdinal_SERVICE.volatile_Prime_sequence_LOAD_atMaxOrdinal();
+            if(null == lastCouple) 
+            {
+                LogSinkFs.Wrappers.LogWrappers.SectionContent("failed to retrieve the resultset. It is NULL.",0);
+                throw new System.Exception("failed to retrieve the resultset.It is NULL.");
+            }
             try
             {
                 this.prime = (Int64)(lastCouple.Rows[0]["prime"]);
@@ -76,7 +81,7 @@ namespace Entity.Entities
             }
             catch (System.Exception ex)
             {
-                LogSinkFs.Wrappers.LogWrappers.SectionContent("failed trying to connect to db. Ex=" + ex.Message,0);
+                LogSinkFs.Wrappers.LogWrappers.SectionContent("failed to connect to db, or to retrieve the resultset. Ex=" + ex.Message,0);
             }
             //
             return this.ordinal;
@@ -88,10 +93,21 @@ namespace Entity.Entities
             System.Data.DataTable specifiedCouple =
             Entity.Proxies.volatile_Prime_sequence_LOAD_SINGLE_SERVICE.volatile_Prime_sequence_LOAD_SINGLE(
                 specifiedOrdinal );
-            //
-            this.prime = (Int64)(specifiedCouple.Rows[0]["prime"]);
-            this.ordinal = (Int64)(specifiedCouple.Rows[0]["ordinal"]);
-        }//
+            if (null == specifiedCouple)
+            {
+                LogSinkFs.Wrappers.LogWrappers.SectionContent("failed to retrieve the resultset. It is NULL.", 0);
+                throw new System.Exception("failed to retrieve the resultset.It is NULL.");
+            }
+            try
+            {
+                this.prime = (Int64)(specifiedCouple.Rows[0]["prime"]);
+                this.ordinal = (Int64)(specifiedCouple.Rows[0]["ordinal"]);
+            }
+            catch (System.Exception ex)
+            {
+                LogSinkFs.Wrappers.LogWrappers.SectionContent("failed to connect to db, or to retrieve the resultset. Ex=" + ex.Message, 0);
+            }
+        }// end dbSeekingEngine
 
 
 
