@@ -30,7 +30,7 @@
 		<add key="Kronecker\Delta_materie" value="Database=materie;Server=Kronecker\Delta;User=applicationuser;Password=curricula;"/>
 		<add key="Kronecker\Delta_cvDb" value="Database=cv_db;Server=Kronecker\Delta;User=applicationuser;Password=curricula;"/>
 		<add key="Cantor_cvDb" value="Database=cv_db;Server=Cantor;User=applicationuser;Password=curricula;"/>
-		<add key="ITFORS1011_SUZE_dotazioni" value="Database=dotazioni;Server=192.168.4.50;User=applicationuser;Password=curricula;"/>
+		<add key="ITFORS1011_SUZEdotazioni" value="Database=dotazioni;Server=192.168.4.50;User=applicationuser;Password=curricula;"/>
     </strings>
   </ProxyGeneratorConnections>
 
