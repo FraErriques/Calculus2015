@@ -478,6 +478,7 @@ namespace winPrimes
         {
             try
             {
+                Process.db_DataProduction.db_calculationThread.Suspend();
                 this.txtBoard.Text += Process.db_DataProduction.db_voluntarilyStopCalculation( );
             }
             catch (System.Exception ex)
