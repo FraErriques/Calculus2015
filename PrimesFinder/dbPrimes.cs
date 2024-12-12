@@ -257,6 +257,9 @@ namespace PrimesFinder
             {
                 // NB. this enum lives in both namespaces: System.Diagnostics.ThreadState.
                 // System.Threading.ThreadState.
+                LoggingToolsContainerNamespace.LoggingToolsContainer.LogSinkFileSystem(
+                    "Thread.CurrentThread.ThreadState ==  " + Thread.CurrentThread.ThreadState.ToString()
+                    , 0);
                 if (Thread.CurrentThread.ThreadState == System.Threading.ThreadState.AbortRequested )
                 {
                     break;// AbortRequested
@@ -274,8 +277,11 @@ namespace PrimesFinder
                     // no increment whatsoever.
                     )
                 {
-                    // NB. this enum lives in both namespaces: System.Diagnostics.ThreadState.
-                    // System.Threading.ThreadState.
+                // NB. this enum lives in both namespaces: System.Diagnostics.ThreadState.
+                // System.Threading.ThreadState.
+                    LoggingToolsContainerNamespace.LoggingToolsContainer.LogSinkFileSystem(
+                        "Thread.CurrentThread.ThreadState ==  " + Thread.CurrentThread.ThreadState.ToString()
+                        , 0);
                     if (Thread.CurrentThread.ThreadState == System.Threading.ThreadState.AbortRequested)
                     {
                         break;// AbortRequested

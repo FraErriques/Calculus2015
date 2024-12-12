@@ -120,8 +120,10 @@ namespace Process
             {
                 try
                 {
-                    if( Thread.CurrentThread.ThreadState == ThreadState.AbortRequested)
+                    //if( Thread.CurrentThread.ThreadState == ThreadState.AbortRequested)
+                    if (Thread.CurrentThread.ThreadState != ThreadState.Running)
                     {
+                        System.Threading.ThreadState curState = Thread.CurrentThread.ThreadState;
                         //TODO Process.db_DataProduction.db_calculationThread.ThreadState.
                         //int i = 2;//do something
                         //if ((currentThread.ThreadState & ThreadState.AbortRequested) == 0)
