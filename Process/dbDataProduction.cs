@@ -73,11 +73,11 @@ namespace Process
                 //
                 if (null != db_DataProduction.db_primesCalculationInstance)
                 {
-                    //// NB. crucial unlock. Necessary on voluntarily stop.
-                    //db_DataProduction.db_primesCalculationInstance.Dispose();// this unlocks the data-file.
-                    //db_DataProduction.db_primesCalculationInstance = null;
-                    //// end NB. crucial unlock. Necessary on voluntarily stop.
-                    //boardMessage += "\r\n calculation instance has been disposed.";
+                    // NB. crucial unlock. Necessary on voluntarily stop.
+                    db_DataProduction.db_primesCalculationInstance.Dispose();// this unlocks the data-file.
+                    db_DataProduction.db_primesCalculationInstance = null;
+                    // end NB. crucial unlock. Necessary on voluntarily stop.
+                    boardMessage += "\r\n calculation instance has been disposed.";
                 }
                 else
                 {
@@ -125,6 +125,9 @@ namespace Process
                         //TODO Process.db_DataProduction.db_calculationThread.ThreadState.
                         //int i = 2;//do something
                         //if ((currentThread.ThreadState & ThreadState.AbortRequested) == 0)
+                        //db_DataProduction.db_calculationThread.Interrupt();// better than .Join(TimeSpan.FromMilliseconds(1800.0));// avoid immediate stop; try exit safely from loops.
+                        //db_DataProduction.db_calculationThread.Abort();
+                        //db_DataProduction.db_calculationThread = null;
                     }
                     db_DataProduction.db_calculationThread.Interrupt();// better than .Join(TimeSpan.FromMilliseconds(1800.0));// avoid immediate stop; try exit safely from loops.
                     db_DataProduction.db_calculationThread.Abort();
