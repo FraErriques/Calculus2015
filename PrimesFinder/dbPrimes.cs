@@ -280,8 +280,9 @@ namespace PrimesFinder
                 // NB. this enum lives in both namespaces: System.Diagnostics.ThreadState.
                 // System.Threading.ThreadState.
                     LoggingToolsContainerNamespace.LoggingToolsContainer.LogSinkFileSystem(
-                        "Thread.CurrentThread.ThreadState ==  " + Thread.CurrentThread.ThreadState.ToString()
+                        "Thread.CurrentThread.ThreadState ==  " + System.Threading.Thread.CurrentThread.ThreadState.ToString()
                         , 0);
+                    // TODO   ___  ____    Thread.CurrentThread.
                     if (Thread.CurrentThread.ThreadState == System.Threading.ThreadState.AbortRequested)
                     {
                         break;// AbortRequested
