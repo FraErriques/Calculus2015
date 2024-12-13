@@ -26,15 +26,19 @@ namespace TestConsole
                             + "___localThread.ThreadState== " + localThread.ThreadState.ToString());
                         // do something
                     }// while !suspended
+                    if (localThread.ThreadState == System.Threading.ThreadState.SuspendRequested)
+                    {
+                        System.Console.WriteLine("\n Suspended.");
+                    }
                     // when here thread has been suspended
                 }
                 catch(ThreadAbortException thrEx)
                 {
-
+                    System.Console.WriteLine("\n Specialized Exception ThreadAbortException : "+ thrEx.Message); 
                 }// specific catch
-                catch(System.Exception)
+                catch(System.Exception ex)
                 {
-
+                    System.Console.WriteLine("\n Generic Exception : " + ex.Message);
                 }// general catch
                 return;
             }// calcBkLoop()
@@ -56,8 +60,9 @@ namespace TestConsole
             System.Console.WriteLine("\n from caller after Start CurrentThread.ThreadState== " + System.Threading.Thread.CurrentThread.ThreadState.ToString()
                 + "___localThread.ThreadState== " + localThread.ThreadState.ToString());
             //
-            // Program.localThread.Abort();
-            // Program.localThread.Join();
+            //Program.localThread.Suspend();
+            Program.localThread.Abort();
+            //Program.localThread.Join();
             System.Console.WriteLine("\n from caller after Abort CurrentThread.ManagedThreadId== " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString()
                 + "___localThread.ManagedThreadId== " + localThread.ManagedThreadId.ToString());
             System.Console.WriteLine("\n from caller after Abort CurrentThread.ThreadState== " + System.Threading.Thread.CurrentThread.ThreadState.ToString()
