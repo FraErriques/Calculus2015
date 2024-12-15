@@ -127,6 +127,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{a8fd6dfc-3c34-4db1-85e3-fb1baa74a691}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Process\Process.csproj">
       <Project>{CF391E67-6FDF-4156-9769-2C2B8553F09D}</Project>
       <Name>Process</Name>

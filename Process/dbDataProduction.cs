@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 
@@ -17,13 +18,13 @@ namespace Process
         /// </summary>
         /// <param name="theOrdinal"></param>
         /// <returns></returns>
-        public static string db_startCalculationThread( Int64 threshold )
+        public static string db_startCalculationThread( Int64 threshold , System.Data.SqlClient.SqlConnection stickyConnection )
         {
             // all in critical section.
             lock (typeof(db_DataProduction))// critical section for the worker thread.
             {
                 string boardMessage = "";// in append.
-                db_DataProduction.db_primesCalculationInstance = new PrimesFinder.dbPrimes( );
+                db_DataProduction.db_primesCalculationInstance = new PrimesFinder.dbPrimes( stickyConnection );
                 db_DataProduction.db_primesCalculationInstance.InitThreshold( threshold);//--set working threshold.
                 //
                 if (db_DataProduction.db_primesCalculationInstance.getCanOperateStatus())

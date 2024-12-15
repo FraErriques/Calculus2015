@@ -14,7 +14,7 @@ namespace winPrimes
 
     public partial class frmWinPrimes : Form
     {
-
+        private System.Data.SqlClient.SqlConnection stickyConnection = null;
 
         /// <summary>
         /// Ctor
@@ -456,20 +456,41 @@ namespace winPrimes
 
         private void dbenrichCollectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string board_message;
-            bool canStartNewCalc = Process.db_DataProduction.db_checkWorkerThreadStatus( out board_message);
-            this.txtBoard.Text += board_message;
-            if (!canStartNewCalc)
-            {
-                return;// on the form.
+            try
+            {// trap all; for Abort related exceptions (that do not harm the database, anyway).
+                string board_message;
+                bool canStartNewCalc = Process.db_DataProduction.db_checkWorkerThreadStatus( out board_message);
+                this.txtBoard.Text += board_message;
+                if (!canStartNewCalc)
+                {
+                    return;// on the form.
+                }
+                else
+                {
+                    frmOrdinalAcquirer ordAcq = new frmOrdinalAcquirer();
+                    ordAcq.Text = "Threshold";
+                    ordAcq.ShowDialog(this);
+                    //// on re-entry
+                    this.stickyConnection =
+                        DbLayer.ConnectionManager.connectWithCustomSingleXpath(
+                            "ProxyGeneratorConnections/strings",// compulsory xpath
+                            "PrimeDataApp"
+                        );
+                    if (null == stickyConnection)
+                    {
+                        LogSinkDb.Wrappers.LogWrappers.SectionContent("connection acquisition failed.", 0);
+                        // this.canOperate = false;
+                        LogSinkFs.Wrappers.LogWrappers.SectionContent(
+                            "PrimesFinder::dbPrimes::ctor  connection acquisition failed.", 0);
+                        this.txtBoard.Text += "\n\n SEVERITY : connection acquisition failed.\n\n";
+                        return;
+                    }// else continue
+                    this.txtBoard.Text += Process.db_DataProduction.db_startCalculationThread( ordAcq.theOrdinal, stickyConnection);
+                }
             }
-            else
-            {
-                frmOrdinalAcquirer ordAcq = new frmOrdinalAcquirer();
-                ordAcq.Text = "Threshold";
-                ordAcq.ShowDialog(this);
-                //// on re-entry
-                this.txtBoard.Text += Process.db_DataProduction.db_startCalculationThread( ordAcq.theOrdinal);
+            catch (System.Exception ex)
+            {// trap all. Tested that such Abort related exceptions do not harm the database.
+                string s = ex.Message;//dbg
             }
         }//
 
@@ -478,6 +499,8 @@ namespace winPrimes
         {
             try
             {
+                stickyConnection.Close();
+                stickyConnection = null;
                 this.txtBoard.Text += Process.db_DataProduction.db_voluntarilyStopCalculation( );
             }
             catch (System.Exception ex)
