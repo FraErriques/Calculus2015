@@ -499,8 +499,6 @@ namespace winPrimes
         {
             try
             {
-                stickyConnection.Close();
-                stickyConnection = null;
                 this.txtBoard.Text += Process.db_DataProduction.db_voluntarilyStopCalculation( );
             }
             catch (System.Exception ex)

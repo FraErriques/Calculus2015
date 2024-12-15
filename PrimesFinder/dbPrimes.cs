@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
+using System.Threading;
 
 
 namespace PrimesFinder
@@ -69,6 +71,7 @@ namespace PrimesFinder
         ///     is wrong, then all subsequent calculation will be wrong.
         /// Ctor for an operation mode, consisting of:
         ///     - create in RAM an array of {ordinal \t prime}
+        ///     BCP =: Bulk Copy Program.
         ///     - BCP into the "Prime_sequence_noIdentity" table.
         ///     - insert into the table with the identity.
         /// </summary>
@@ -187,13 +190,13 @@ namespace PrimesFinder
 
         ~dbPrimes()
         {
-            this.connection_closer();
+            // try not to; so as to allow the user to stop and restart. // this.connection_closer();
         }
 
 
         public void Dispose()
         {
-            this.connection_closer();
+            // try not to; so as to allow the user to stop and restart. // this.connection_closer();
         }
 
 
@@ -261,6 +264,15 @@ namespace PrimesFinder
                 ToBeDivided++
                )
             {
+                // NB. this enum lives in both namespaces: System.Diagnostics.ThreadState.
+                // System.Threading.ThreadState.
+                LoggingToolsContainerNamespace.LoggingToolsContainer.LogSinkFileSystem(
+                    "Thread.CurrentThread.ThreadState ==  " + Thread.CurrentThread.ThreadState.ToString()
+                    , 0);
+                if (Thread.CurrentThread.ThreadState == System.Threading.ThreadState.AbortRequested )
+                {
+                    break;// AbortRequested
+                }
                 // INNER LOOP: try to divide "ToBeDivided" for know primes, searching a Diophantine quotient in the
                 //             open set (1,n). So 2 is the smallest possible.
                 for (
@@ -274,6 +286,16 @@ namespace PrimesFinder
                     // no increment whatsoever.
                     )
                 {
+                // NB. this enum lives in both namespaces: System.Diagnostics.ThreadState.
+                // System.Threading.ThreadState.
+                    LoggingToolsContainerNamespace.LoggingToolsContainer.LogSinkFileSystem(
+                        "Thread.CurrentThread.ThreadState ==  " + System.Threading.Thread.CurrentThread.ThreadState.ToString()
+                        , 0);
+                    // TODO   ___  ____    Thread.CurrentThread.
+                    if (Thread.CurrentThread.ThreadState == System.Threading.ThreadState.AbortRequested)
+                    {
+                        break;// AbortRequested
+                    }
                     divider = read_prime_withoutOrdinal( ++innerLoopPrimeIndex);// each step require next ordinal P[i].
                     //
                     quotient = (double)ToBeDivided / (double)divider;
@@ -308,7 +330,7 @@ namespace PrimesFinder
                 }
             }// end outer loop. Threshold reached.------primes' subsequence built.-----------------------------
             //
-            this.connection_closer();
+            // try not to; so as to allow the user to stop and restart. // this.connection_closer();
             //-----------
             //ready
         }// end CoreLoop.
