@@ -12,7 +12,7 @@ namespace PrimesFinder
     {
         #region Data
 
-        private System.Data.SqlClient.SqlConnection stickyConnection = null;
+        private static System.Data.SqlClient.SqlConnection stickyConnection = null;
         private Int64 ToBeDivided = 2L;// start from two. One is invariant of the operator.
         private Int64 threshold;
         private Int64 primeOrdinal = 0L;
@@ -81,11 +81,9 @@ namespace PrimesFinder
             Int64 lastKnown_Prime,
             Int64 lastKnown_Ordinal,
             string tmp_BCP_stream_fullpath,
-            Int32 BCP_cardinality,
-            System.Data.SqlClient.SqlConnection stickyConnection
+            Int32 BCP_cardinality
         )
         {
-            this.stickyConnection = stickyConnection;
             this.primeOrdinal = lastKnown_Ordinal + BCP_cardinality;// the ordinal, where the search will stop.
             this.actualPrime = lastKnown_Prime;
             this.actualOrdinal = lastKnown_Ordinal;
@@ -103,32 +101,30 @@ namespace PrimesFinder
         }// end Ctor
 
 
-        public dbPrimes(System.Data.SqlClient.SqlConnection stickyConnection)
+        public dbPrimes()
         {
             LogSinkDb.Wrappers.LogWrappers.SectionOpen("PrimesFinder::dbPrimes::ctor", 0);
             LogSinkDb.Wrappers.LogWrappers.SectionContent("Entering from PrimesFinder::dbPrimes::ctor critical section.", 0);
             lock (typeof(PrimesFinder.dbPrimes))
             {
-                //PrimesFinder.dbPrimes.stickyConnection =
-                //    DbLayer.ConnectionManager.connectWithCustomSingleXpath(
-                //        "ProxyGeneratorConnections/strings",// compulsory xpath
-                //        "PrimeDataApp"
-                //    );
-                this.stickyConnection = stickyConnection;
-                if (null == this.stickyConnection)
+                PrimesFinder.dbPrimes.stickyConnection =
+                    DbLayer.ConnectionManager.connectWithCustomSingleXpath(
+                        "ProxyGeneratorConnections/strings",// compulsory xpath
+                        "PrimeDataApp"
+                    );
+                if (null == stickyConnection)
                 {
                     LogSinkDb.Wrappers.LogWrappers.SectionContent("connection acquisition failed.", 0);
                     this.canOperate = false;
                     LogSinkFs.Wrappers.LogWrappers.SectionContent(
                         "PrimesFinder::dbPrimes::ctor  connection acquisition failed.", 0);
-                    return;// noStickyConnection->No-DB-enrichment.
                 }
                 else
                 {
                     LogSinkDb.Wrappers.LogWrappers.SectionContent("connection acquisition succeeded.", 0);
                     System.Data.DataTable maxCouple_Prime_at_Ordinal =
                         Entity.Proxies.Prime_sequence_LOAD_atMaxOrdinal_SERVICE.Prime_sequence_LOAD_atMaxOrdinal(
-                            this.stickyConnection// NB. same for all, i.e. sticky.
+                            PrimesFinder.dbPrimes.stickyConnection// NB. same for all, i.e. sticky.
                         );
                     try
                     {
@@ -146,7 +142,7 @@ namespace PrimesFinder
                         int res =
                             Entity.Proxies.Prime_sequence_INSERT_SERVICE.Prime_sequence_INSERT(
                                 this.actualPrime,
-                                this.stickyConnection// NB. same for all, i.e. sticky.
+                                PrimesFinder.dbPrimes.stickyConnection// NB. same for all, i.e. sticky.
                             );
                         this.canOperate = false;
                     }
@@ -204,17 +200,16 @@ namespace PrimesFinder
         {
             lock (typeof(PrimesFinder.dbPrimes))
             {
-                if (null != this.stickyConnection)
+                if (null != PrimesFinder.dbPrimes.stickyConnection)
                 {
                     if (System.Data.ConnectionState.Open == stickyConnection.State)
                     {
                         stickyConnection.Close();
                         stickyConnection = null;// can garbage-collect it.
                     }//else already closed.
-                    stickyConnection = null;// can garbage-collect it.
                 }//else already nullified.
             }// end critical section.
-        }// connection_closer()
+        }//
 
 
         #endregion Ctor
@@ -225,14 +220,10 @@ namespace PrimesFinder
 
         private Int64 read_prime_withoutOrdinal( Int64 requiredOrdinal)
         {
-            if(null==this.stickyConnection)
-            {
-                throw new System.Exception("DB worker thread stopped.");
-            }// else continue
             System.Data.DataTable required_prime_dt =
                 Entity.Proxies.Prime_sequence_LOAD_SINGLE_SERVICE.Prime_sequence_LOAD_SINGLE(
                     requiredOrdinal,
-                    this.stickyConnection
+                    PrimesFinder.dbPrimes.stickyConnection
                 );
             Int64 res = (Int64)(required_prime_dt.Rows[0].ItemArray[0]);
             return res;

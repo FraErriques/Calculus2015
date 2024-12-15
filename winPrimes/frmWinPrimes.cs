@@ -485,7 +485,7 @@ namespace winPrimes
                         this.txtBoard.Text += "\n\n SEVERITY : connection acquisition failed.\n\n";
                         return;
                     }// else continue
-                    this.txtBoard.Text += Process.db_DataProduction.db_startCalculationThread( ordAcq.theOrdinal, stickyConnection);
+                    this.txtBoard.Text += Process.db_DataProduction.db_startCalculationThread( ordAcq.theOrdinal);
                 }
             }
             catch (System.Exception ex)
