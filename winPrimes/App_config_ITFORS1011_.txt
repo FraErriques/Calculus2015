@@ -33,10 +33,14 @@
   <FileSystemCash>
     <fullpath>
       <!-- active one -->
-      <add key="dumpfile" value="C:\Users\fra\data\root\Primes\dump.txt"/>
-	  <!-- inactive ones follow -->
+      <add key="dumpfile" value="D:\root\projects\primeDump\dump.txt"/>
+		<!-- inactive ones follow -->
       <!-- switch between -->
       <!-- <add key="dumpfile" value="C:\root\projects\Solution_Primes\data\dump.txt"/> -->
+      <!--<add key="dumpfile"   value="C:\root\projects\primes\data\dump.txt"/>-->
+      <!--<add key="dumpfile"   value="Z:\root\projects\primes\gino\gino.txt"/>-->
+      <!--<add key="dumpfile"   value="D:\util\projects\training\C#\current\primes\data\dump.txt"/>-->
+      <!--<add key="dumpfile"   value="D:\util\projects\training\C#\current\primes\gino\gino.txt"/>-->
     </fullpath>
   </FileSystemCash>
 
@@ -47,19 +51,27 @@
       <add key="kkkey_key" value="0"/>
       <add key="vkkey_key" value="0"/>
       <!-- active one    ITBZOW1071_Siegel_   -->
-      <add key="PrimeDataApp" value="Database=PrimeData;Server=Riemann;User=appuser;Password=app;"/>
+      <add key="PrimeDataApp" value="Database=PrimeData;Server=ITFORS1011\SUZE;User=applicationuser;Password=curricula;"/>
       <!-- inactive ones follow   switch between -->
 	  <!--	<add key="PrimeDataApp" value="Database=PrimeData;Server=Kronecker\Delta;User=applicationuser;Password=curricula;"/> -->
+      <!-- <add key="PrimeDataApp"       value="R2J3YmFicGY+U3FqbmZHYndiOFBmcXVmcT5KV0FZTFQyMzQyX1BqZmRmbzhWcGZxPmJzc29qYGJ3amxtdnBxOFNicHB0bHFnPklJeXR5Inl0eUlJNDM4"/>  -->
+      <!--<add key="ITBZOW1071_Siegel_PrimeDataApp"  value="R2J3YmFicGY+U3FqbmZHYndiOFBmcXVmcT5KV0FZTFQyMzQyX1BqZmRmbzhWcGZxPmJzc29qYGJ3amxtdnBxOFNicHB0bHFnPklJeXR5Inl0eUlJNDM4"/>  ITBZOW1071_Siegel_ -->
+      <!--<add key="Laplace_default_PrimeDataApp"    value="R2J3YmFicGY+U3FqbmZHYndiOFBmcXVmcT5PYnNvYmBmOFZwZnE+YnNzb2pgYndqbG12cHE4U2JwcHRscWc+SUl5dHkieXR5SUk0Mzg="/> Laplace_default_ -->
     </strings>
   </ProxyGeneratorConnections>
 
 
   <LogSinkFs>
     <LogSinkFsConfig>
-    <!-- Beta11:: -->
-	  <add key="path" value="C:\Users\fra\data\root\Primes\Log\Calculus2015_win_"/>
-      <add key="semaphore" value="on"/><!-- on off; off cuts the whole logging activity, so it sppeds up more than a high tracing level-->
-      <!-- threshold above which tracings are considered: zero means trace everything. Higher levels cut something. -->
+      
+		<add key="path" value="D:\root\dataPrimes\Log\win_"/>
+		
+	  <!-- inactive ones follow -->    <!-- switch between -->
+	  <!--<add key="path"   value="C:\root\projects\primes\log\win_"/> -->
+      <!--<add key="path"   value="Z:\root\projects\primes\log\win_"/>-->
+      <!--<add key="path"   value="D:\util\projects\training\C#\current\primes\log\win_"/>-->
+      <add key="semaphore" value="on"/><!-- on off-->
+      <!-- threshold above which tracings are considered -->
       <!-- soglia dalla quale in su vengono considerati i tracciamenti -->
       <add key="verbosity" value="0"/>
     </LogSinkFsConfig>
@@ -67,20 +79,20 @@
 
 
   <LogSinkDb>
-    <!-- active one on Beta11 -->
+    <!-- active one on ITFORS1011 -->
     <connection>
       <add key="kkkey_key" value="0"/>
       <add key="vkkey_key" value="0"/>
-      <add key="hostname_sql_instance" value="Riemann"/>
+      <add key="hostname_sql_instance" value="192.168.4.50\SUZE"/>
       <add key="db_name" value="Logging"/>
-      <add key="sql_instance" value=""/> <!--default instance on Linux - no named instance.-->
-      <add key="usr" value="appuser"/>
-      <add key="pwd" value="app"/>
+      <add key="sql_instance" value="SUZE"/>
+      <add key="usr" value="applicationuser"/>
+      <add key="pwd" value="curricula"/>
     </connection>
     <!---->
     <logger_application>
       <!-- custom for each application; no dots allowed -->
-      <add key="table_name" value="Calculus2015_uilocalhostBeta11_dbRiemann"/><!--syntax: app_interfacehost_dbServer -->
+      <add key="table_name" value="PrimeData"/><!--choosen the name of the db which the log refers to-->
       <add key="semaphore" value="on"/><!-- on off-->
       <!-- threshold above which tracings are considered -->
       <!-- soglia dalla quale in su vengono considerati i tracciamenti -->

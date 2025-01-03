@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 
 
 namespace Process
@@ -8,8 +10,8 @@ namespace Process
 
     public static class db_DataProduction
     {
-        private static System.Threading.Thread db_calculationThread = null;// calc worker thread.
-        private static PrimesFinder.dbPrimes db_primesCalculationInstance = null;// instance devoted to calculation only.
+        public static System.Threading.Thread db_calculationThread = null;// calc worker thread.
+        public static PrimesFinder.dbPrimes db_primesCalculationInstance = null;// instance devoted to calculation only.
 
 
         /// <summary>
@@ -17,14 +19,14 @@ namespace Process
         /// </summary>
         /// <param name="theOrdinal"></param>
         /// <returns></returns>
-        public static string db_startCalculationThread( Int64 threshold )
+        public static string db_startCalculationThread(Int64 threshold)
         {
             // all in critical section.
             lock (typeof(db_DataProduction))// critical section for the worker thread.
             {
                 string boardMessage = "";// in append.
-                db_DataProduction.db_primesCalculationInstance = new PrimesFinder.dbPrimes( );
-                db_DataProduction.db_primesCalculationInstance.InitThreshold( threshold);//--set working threshold.
+                db_DataProduction.db_primesCalculationInstance = new PrimesFinder.dbPrimes();
+                db_DataProduction.db_primesCalculationInstance.InitThreshold(threshold);//--set working threshold.
                 //
                 if (db_DataProduction.db_primesCalculationInstance.getCanOperateStatus())
                 {
@@ -119,6 +121,17 @@ namespace Process
             {
                 try
                 {
+                    //if( Thread.CurrentThread.ThreadState == ThreadState.AbortRequested)
+                    if (Thread.CurrentThread.ThreadState != ThreadState.Running)
+                    {
+                        System.Threading.ThreadState curState = Thread.CurrentThread.ThreadState;
+                        //TODO Process.db_DataProduction.db_calculationThread.ThreadState.
+                        //int i = 2;//do something
+                        //if ((currentThread.ThreadState & ThreadState.AbortRequested) == 0)
+                        //db_DataProduction.db_calculationThread.Interrupt();// better than .Join(TimeSpan.FromMilliseconds(1800.0));// avoid immediate stop; try exit safely from loops.
+                        //db_DataProduction.db_calculationThread.Abort();
+                        //db_DataProduction.db_calculationThread = null;
+                    }
                     db_DataProduction.db_calculationThread.Interrupt();// better than .Join(TimeSpan.FromMilliseconds(1800.0));// avoid immediate stop; try exit safely from loops.
                     db_DataProduction.db_calculationThread.Abort();
                     db_DataProduction.db_calculationThread = null;
@@ -179,8 +192,93 @@ namespace Process
             }// end critical section for the worker thread.
         }//
 
+    }// class
 
-    }//
+    }// nmsp
 
 
+
+/*  --- cantina ---threading----------------------
+ *  
+ *  public enum ThreadState
+{
+Running = 0,
+StopRequested = 1,
+SuspendRequested = 2,
+Background = 4,
+Unstarted = 8,
+Stopped = 0x10,
+WaitSleepJoin = 0x20,
+Suspended = 0x40,
+AbortRequested = 0x80,
+Aborted = 0x100
 }
+ *  
+ *  
+ *  
+ *  
+ *  
+using System;
+using System.Security.Permissions;
+using System.Threading;
+
+class ThreadInterrupt
+{
+    static void Main()
+    {
+        StayAwake stayAwake = new StayAwake();
+        Thread newThread =
+            new Thread(new ThreadStart(stayAwake.ThreadMethod));
+        newThread.Start();
+
+        // The following line causes an exception to be thrown 
+        // in ThreadMethod if newThread is currently blocked
+        // or becomes blocked in the future.
+        newThread.Interrupt();
+        Console.WriteLine("Main thread calls Interrupt on newThread.");
+
+        // Tell newThread to go to sleep.
+        stayAwake.SleepSwitch = true;
+
+        // Wait for newThread to end.
+        newThread.Join();
+    }
+}
+
+class StayAwake
+{
+    bool sleepSwitch = false;
+
+    public bool SleepSwitch
+    {
+        set { sleepSwitch = value; }
+    }
+
+    public StayAwake() { }
+
+    public void ThreadMethod()
+    {
+        Console.WriteLine("newThread is executing ThreadMethod.");
+        while (!sleepSwitch)
+        {
+            // Use SpinWait instead of Sleep to demonstrate the 
+            // effect of calling Interrupt on a running thread.
+            Thread.SpinWait(10000000);
+        }
+        try
+        {
+            Console.WriteLine("newThread going to sleep.");
+
+            // When newThread goes to sleep, it is immediately 
+            // woken up by a ThreadInterruptedException.
+            Thread.Sleep(Timeout.Infinite);
+        }
+        catch (ThreadInterruptedException e)
+        {
+            Console.WriteLine("newThread cannot go to sleep - " +
+                "interrupted by main thread.");
+        }
+    }
+}
+*/
+

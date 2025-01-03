@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<configuration>
+
+	<!--interface-->
+	<configSections>
+		<!-- -->
+		<sectionGroup name="FileSystemCash">
+			<section name="fullpath" type="System.Configuration.NameValueSectionHandler, System, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+		</sectionGroup>
+		<!-- -->
+		<sectionGroup name="ProxyGeneratorConnections">
+			<section name="strings" type="System.Configuration.NameValueSectionHandler, System, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+		</sectionGroup>
+		<!-- -->
+		<sectionGroup name="LogSinkFs">
+			<section name="LogSinkFsConfig" type="System.Configuration.NameValueSectionHandler, System, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+		</sectionGroup>
+		<!-- -->
+		<sectionGroup name="LogSinkDb">
+			<section name="connection" type="System.Configuration.NameValueSectionHandler, System, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+			<section name="logger_application" type="System.Configuration.NameValueSectionHandler, System, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+		</sectionGroup>
+		<!-- -->
+		<sectionGroup name="CalculationAsynchronousThreads">
+			<section name="parallel" type="System.Configuration.NameValueSectionHandler, System, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+		</sectionGroup>
+		<!-- -->
+	</configSections>
+
+
+
+<<<<<<< HEAD
+	<!--implementation-->
+	<FileSystemCash>
+		<fullpath>
+			<!-- active one -->
+			<add key="dumpfile" value="D:\root\projects\primeDump\dump.txt"/>
+			<!-- inactive ones follow -->
+			<!-- switch between -->
+			<!-- <add key="dumpfile" value="C:\root\projects\Solution_Primes\data\dump.txt"/> -->
+			<!--<add key="dumpfile"   value="C:\root\projects\primes\data\dump.txt"/>-->
+			<!--<add key="dumpfile"   value="Z:\root\projects\primes\gino\gino.txt"/>-->
+			<!--<add key="dumpfile"   value="D:\util\projects\training\C#\current\primes\data\dump.txt"/>-->
+			<!--<add key="dumpfile"   value="D:\util\projects\training\C#\current\primes\gino\gino.txt"/>-->
+		</fullpath>
+	</FileSystemCash>
+=======
+  <ProxyGeneratorConnections>
+    <strings>
+      <add key="kkkey_key" value="0"/>
+      <add key="vkkey_key" value="0"/>
+      <!-- active one    ITBZOW1071_Siegel_   -->
+      <add key="PrimeDataApp" value="Database=PrimeData;Server=Frechet;User=appuser;Password=curricula;"/>
+      <!-- inactive ones follow   switch between -->
+	  <!--	<add key="PrimeDataApp" value="Database=PrimeData;Server=Kronecker\Delta;User=applicationuser;Password=curricula;"/> -->
+      <!-- <add key="PrimeDataApp"       value="R2J3YmFicGY+U3FqbmZHYndiOFBmcXVmcT5KV0FZTFQyMzQyX1BqZmRmbzhWcGZxPmJzc29qYGJ3amxtdnBxOFNicHB0bHFnPklJeXR5Inl0eUlJNDM4"/>  -->
+      <!--<add key="ITBZOW1071_Siegel_PrimeDataApp"  value="R2J3YmFicGY+U3FqbmZHYndiOFBmcXVmcT5KV0FZTFQyMzQyX1BqZmRmbzhWcGZxPmJzc29qYGJ3amxtdnBxOFNicHB0bHFnPklJeXR5Inl0eUlJNDM4"/>  ITBZOW1071_Siegel_ -->
+      <!--<add key="Laplace_default_PrimeDataApp"    value="R2J3YmFicGY+U3FqbmZHYndiOFBmcXVmcT5PYnNvYmBmOFZwZnE+YnNzb2pgYndqbG12cHE4U2JwcHRscWc+SUl5dHkieXR5SUk0Mzg="/> Laplace_default_ -->
+    </strings>
+  </ProxyGeneratorConnections>
+
+
+  <LogSinkFs>
+    <LogSinkFsConfig>
+      
+		<add key="path" value="C:\root\Primes\Log\win_"/>
+		
+	  <!-- inactive ones follow -->    <!-- switch between -->
+	  <!--<add key="path"   value="C:\root\projects\primes\log\win_"/> -->
+      <!--<add key="path"   value="Z:\root\projects\primes\log\win_"/>-->
+      <!--<add key="path"   value="D:\util\projects\training\C#\current\primes\log\win_"/>-->
+      <add key="semaphore" value="on"/><!-- on off-->
+      <!-- threshold above which tracings are considered -->
+      <!-- soglia dalla quale in su vengono considerati i tracciamenti -->
+      <add key="verbosity" value="0"/>
+    </LogSinkFsConfig>
+  </LogSinkFs>
+
+
+  <LogSinkDb>
+    <!-- active one on ITFORS1011 -->
+    <connection>
+      <add key="kkkey_key" value="0"/>
+      <add key="vkkey_key" value="0"/>
+      <add key="hostname_sql_instance" value="Frechet"/>
+      <add key="db_name" value="Logging"/>
+      <add key="sql_instance" value=""/> <!-- not named-->
+      <add key="usr" value="appuser"/>
+      <add key="pwd" value="curricula"/>
+    </connection>
+    <!---->
+    <logger_application>
+      <!-- custom for each application; no dots allowed -->
+      <add key="table_name" value="PrimeData_Frechet"/><!--choosen the name of the db which the log refers to-->
+      <add key="semaphore" value="on"/><!-- on off-->
+      <!-- threshold above which tracings are considered -->
+      <!-- soglia dalla quale in su vengono considerati i tracciamenti -->
+      <add key="verbosity" value="0"/>
+    </logger_application>
+  </LogSinkDb>
+>>>>>>> refs/remotes/origin/master
+
+
+
+	<ProxyGeneratorConnections>
+		<strings>
+			<add key="kkkey_key" value="0"/>
+			<add key="vkkey_key" value="0"/>
+			<!-- active one    ITBZOW1071_Siegel_   -->
+			<add key="PrimeDataApp" value="Database=PrimeData;Server=ITFORS1011\SUZE;User=applicationuser;Password=curricula;"/>
+			<!-- inactive ones follow   switch between -->
+			<!--	<add key="PrimeDataApp" value="Database=PrimeData;Server=Kronecker\Delta;User=applicationuser;Password=curricula;"/> -->
+			<!-- <add key="PrimeDataApp"       value="R2J3YmFicGY+U3FqbmZHYndiOFBmcXVmcT5KV0FZTFQyMzQyX1BqZmRmbzhWcGZxPmJzc29qYGJ3amxtdnBxOFNicHB0bHFnPklJeXR5Inl0eUlJNDM4"/>  -->
+			<!--<add key="ITBZOW1071_Siegel_PrimeDataApp"  value="R2J3YmFicGY+U3FqbmZHYndiOFBmcXVmcT5KV0FZTFQyMzQyX1BqZmRmbzhWcGZxPmJzc29qYGJ3amxtdnBxOFNicHB0bHFnPklJeXR5Inl0eUlJNDM4"/>  ITBZOW1071_Siegel_ -->
+			<!--<add key="Laplace_default_PrimeDataApp"    value="R2J3YmFicGY+U3FqbmZHYndiOFBmcXVmcT5PYnNvYmBmOFZwZnE+YnNzb2pgYndqbG12cHE4U2JwcHRscWc+SUl5dHkieXR5SUk0Mzg="/> Laplace_default_ -->
+		</strings>
+	</ProxyGeneratorConnections>
+
+
+	<LogSinkFs>
+		<LogSinkFsConfig>
+
+			<add key="path" value="D:\root\dataPrimes\Log\win_"/>
+
+			<!-- inactive ones follow -->
+			<!-- switch between -->
+			<!--<add key="path"   value="C:\root\projects\primes\log\win_"/> -->
+			<!--<add key="path"   value="Z:\root\projects\primes\log\win_"/>-->
+			<!--<add key="path"   value="D:\util\projects\training\C#\current\primes\log\win_"/>-->
+			<add key="semaphore" value="on"/>
+			<!-- on off-->
+			<!-- threshold above which tracings are considered -->
+			<!-- soglia dalla quale in su vengono considerati i tracciamenti -->
+			<add key="verbosity" value="0"/>
+		</LogSinkFsConfig>
+	</LogSinkFs>
+
+
+	<LogSinkDb>
+		<!-- active one on ITFORS1011 -->
+		<connection>
+			<add key="kkkey_key" value="0"/>
+			<add key="vkkey_key" value="0"/>
+			<add key="hostname_sql_instance" value="192.168.4.50\SUZE"/>
+			<add key="db_name" value="Logging"/>
+			<add key="sql_instance" value="SUZE"/>
+			<add key="usr" value="applicationuser"/>
+			<add key="pwd" value="curricula"/>
+		</connection>
+		<!---->
+		<logger_application>
+			<!-- custom for each application; no dots allowed -->
+			<add key="table_name" value="PrimeData"/>
+			<!--choosen the name of the db which the log refers to-->
+			<add key="semaphore" value="on"/>
+			<!-- on off-->
+			<!-- threshold above which tracings are considered -->
+			<!-- soglia dalla quale in su vengono considerati i tracciamenti -->
+			<add key="verbosity" value="0"/>
+		</logger_application>
+	</LogSinkDb>
+
+
+
+	<CalculationAsynchronousThreads>
+		<parallel>
+			<add key="cardinality" value="8"/>
+			<!-- on quad core -->
+			<!-- <add key="cardinality"   value="4"/> -->
+			<!-- on dual core -->
+			<!--<add key="cardinality"   value="2"/>-->
+			<!-- on monoprocessor -->
+		</parallel>
+	</CalculationAsynchronousThreads>
+
+	<startup>
+		<supportedRuntime version="v2.0.50727"/>
+	</startup>
+</configuration>

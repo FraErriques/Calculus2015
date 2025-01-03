@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+using System.Threading;
 
 
 namespace TestConsole
@@ -8,49 +10,64 @@ namespace TestConsole
     
     class Program
     {
+        public static System.Threading.Thread localThread = null;
 
-#region ContourIntg_delegates
-        private static double x( double t )
-        {// x(t) cerchio di raggio 2.1 e centro (3,5).
-            return (+3.0 + 2.1 * Math.Cos(t));
-        }// x(t)
-        private static double y( double t )
-        {// y(t)
-            return (+5.0 + 2.1 * Math.Sin(t));
-        }// y(t)
-        private static double dx( double t )
-        {// dx(t)=x'(t)dt=...
-            return (-2.1 * Math.Sin(t));
-        }// dx(t)
-        private static double dy( double t )
-        {// dy(y)=y'(t)dt==...
-            return (+2.1 * Math.Cos(t));
-        }// dy(t)
-
-
-        /// <summary>
-        /// the functions choosen for the example are f(z)=z which implies u(x,y)=x, v(x,y)=y; 
-        /// the choice for the contour is x(t)=t,y(t)=2*t+1,dx=dt which means dx=1
-        /// dy=2*dt which means dy=2.
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        private static double genericIntegrand_u_part( double x, double y )
-        {// f(z)==z^2 -> Re(f(z))==Re((x+I*y)^2)==x^2-y^2
-            return x*x-y*y;
-        }// u(x,y)
-        private static double genericIntegrand_v_part( double x, double y )
-        {// f(z)==z^2 -> Im(f(z))==Im((x+I*y)^2)==2*x*y
-            return 2.0*x*y;
-        }// v(x,y)
-        //
-        private static ComplexField.Complex zSquared_AsScalar_( double x, double y )
+        public class workerContainer
         {
-            ComplexField.Complex z = new ComplexField.Complex(x, y);
-            return z * z;// z^2
-        }// fPtr_ComplexAsScalar_
-#endregion ContourIntg_delegates
+            public static void calcBkLoop()
+            {
+                try
+                {
+                    while ( localThread.ThreadState != System.Threading.ThreadState.SuspendRequested)
+                    {
+                        System.Console.WriteLine("\n from calcBkLoop CurrentThread.ManagedThreadId== " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString()
+                            +"___localThread.ManagedThreadId== " + localThread.ManagedThreadId.ToString() );
+                        System.Console.WriteLine("\n from calcBkLoop CurrentThread.ThreadState== " + System.Threading.Thread.CurrentThread.ThreadState.ToString()
+                            + "___localThread.ThreadState== " + localThread.ThreadState.ToString());
+                        // do something
+                    }// while !suspended
+                    if (localThread.ThreadState == System.Threading.ThreadState.SuspendRequested)
+                    {
+                        System.Console.WriteLine("\n Suspended.");
+                    }
+                    // when here thread has been suspended
+                }
+                catch(ThreadAbortException thrEx)
+                {
+                    System.Console.WriteLine("\n Specialized Exception ThreadAbortException : "+ thrEx.Message); 
+                }// specific catch
+                catch(System.Exception ex)
+                {
+                    System.Console.WriteLine("\n Generic Exception : " + ex.Message);
+                }// general catch
+                return;
+            }// calcBkLoop()
+        }// class workerContainer
+
+        public static void caller()
+        {
+            workerContainer wk = new workerContainer();
+            // ThreadStart  delegate
+            Program.localThread = new Thread(Program.workerContainer.calcBkLoop);
+            System.Console.WriteLine("\n from caller  before Start CurrentThread.ManagedThreadId== " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString()
+                + "___localThread.ManagedThreadId== " + localThread.ManagedThreadId.ToString());
+            System.Console.WriteLine("\n from caller  before Start CurrentThread.ThreadState== " + System.Threading.Thread.CurrentThread.ThreadState.ToString()
+                + "___localThread.ThreadState== " + localThread.ThreadState.ToString());
+            // do something
+            Program.localThread.Start();
+            System.Console.WriteLine("\n from caller after Start CurrentThread.ManagedThreadId== " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString()
+                + "___localThread.ManagedThreadId== " + localThread.ManagedThreadId.ToString());
+            System.Console.WriteLine("\n from caller after Start CurrentThread.ThreadState== " + System.Threading.Thread.CurrentThread.ThreadState.ToString()
+                + "___localThread.ThreadState== " + localThread.ThreadState.ToString());
+            //
+            //Program.localThread.Suspend();
+            Program.localThread.Abort();
+            //Program.localThread.Join();
+            System.Console.WriteLine("\n from caller after Abort CurrentThread.ManagedThreadId== " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString()
+                + "___localThread.ManagedThreadId== " + localThread.ManagedThreadId.ToString());
+            System.Console.WriteLine("\n from caller after Abort CurrentThread.ThreadState== " + System.Threading.Thread.CurrentThread.ThreadState.ToString()
+                + "___localThread.ThreadState== " + localThread.ThreadState.ToString());
+        }// caller
 
 
 
@@ -58,64 +75,7 @@ namespace TestConsole
         {
             LogSinkFs.Wrappers.LogWrappers.SectionOpen("Main()", 0);
 
-            //##
-            //Integrazione di f[z] == 
-            //f[x + I*y] == (x + I*y)^2 sulla semicirconferenza superiore
-            //x[t] == +3.0 + 2.1*Cos[t]
-            //y[t] == +5.0 + 2.1*Sin[t]
-            //t in [0, +Pi]
-            ComplexField.Complex res =
-                ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(
-                    new ComplexField.Complex(+3.0 + 2.1, +5.0)
-                    , new ComplexField.Complex(+3.0 - 2.1, +5.0)
-                    , 0.0
-                    , +1.0 * Math.PI
-                    , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_u_part)
-                    , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_v_part)
-                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(x)
-                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(y)
-                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dx)
-                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dy)
-                    , 99999); // # dx
-
-            //##
-            //Integrazione di f[z] == 
-            //f[x + I*y] == (x + I*y)^2 sulla semicirconferenza superiore
-            //x[t] == +3.0 + 2.1*Cos[t]
-            //y[t] == +5.0 + 2.1*Sin[t]
-            //t in [0, +Pi]
-            ComplexField.Complex res_asAscalar =
-                ComplexField.ContourIntegral.ContourIntegral_AsScalar_ManagementMethod(
-                    new ComplexField.Complex(+3.0 + 2.1, +5.0)
-                    , new ComplexField.Complex(+3.0 - 2.1, +5.0)
-                    , 0.0
-                    , +1.0 * Math.PI
-                    , new ComplexField.ContourIntegral.fPtr_ComplexAsScalar_(zSquared_AsScalar_)
-                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(x)
-                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(y)
-                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dx)
-                    , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dy)
-                    , 99999); // # dx
-
-            //double areaTrapezio =
-            //    RealField.Integrate.Integrate_equi_trapezium(0, 2, 9);
-
-            // TODO : memo per change extrema parameters :
-
-            //In[7]:= x[t_] = t
-            //In[8]:= y[t_] = (2*t + 1)
-
-            //In[12]:= {x[0], y[0]}
-            //Out[12]= {0, 1}
-
-            //In[11]:= {x[11], y[11]}
-            //Out[11]= {11, 23}
-
-            //ComplexField.Complex res =
-            //    ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(0.0, 11.0, 999);
-            //##
-
-
+            caller();
 
             //---########################################################################
             System.Console.WriteLine("\n\n\t Strike \"Enter\" to leave ");
@@ -131,7 +91,113 @@ namespace TestConsole
 
 
 
-#region cantina
+//#region cantina
+
+
+
+//#region ContourIntg_delegates
+//private static double x(double t)
+//{// x(t) cerchio di raggio 2.1 e centro (3,5).
+//    return (+3.0 + 2.1 * Math.Cos(t));
+//}// x(t)
+//private static double y(double t)
+//{// y(t)
+//    return (+5.0 + 2.1 * Math.Sin(t));
+//}// y(t)
+//private static double dx(double t)
+//{// dx(t)=x'(t)dt=...
+//    return (-2.1 * Math.Sin(t));
+//}// dx(t)
+//private static double dy(double t)
+//{// dy(y)=y'(t)dt==...
+//    return (+2.1 * Math.Cos(t));
+//}// dy(t)
+
+
+/// <summary>
+/// the functions choosen for the example are f(z)=z which implies u(x,y)=x, v(x,y)=y; 
+/// the choice for the contour is x(t)=t,y(t)=2*t+1,dx=dt which means dx=1
+/// dy=2*dt which means dy=2.
+/// </summary>
+/// <param name="x"></param>
+/// <param name="y"></param>
+/// <returns></returns>
+//private static double genericIntegrand_u_part(double x, double y)
+//{// f(z)==z^2 -> Re(f(z))==Re((x+I*y)^2)==x^2-y^2
+//    return x * x - y * y;
+//}// u(x,y)
+//private static double genericIntegrand_v_part(double x, double y)
+//{// f(z)==z^2 -> Im(f(z))==Im((x+I*y)^2)==2*x*y
+//    return 2.0 * x * y;
+//}// v(x,y)
+// //
+//private static ComplexField.Complex zSquared_AsScalar_(double x, double y)
+//{
+//    ComplexField.Complex z = new ComplexField.Complex(x, y);
+//    return z * z;// z^2
+//}// fPtr_ComplexAsScalar_
+//#endregion ContourIntg_delegates
+
+
+
+
+//##
+//Integrazione di f[z] == 
+//f[x + I*y] == (x + I*y)^2 sulla semicirconferenza superiore
+//x[t] == +3.0 + 2.1*Cos[t]
+//y[t] == +5.0 + 2.1*Sin[t]
+//t in [0, +Pi]
+//ComplexField.Complex res =
+//    ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(
+//        new ComplexField.Complex(+3.0 + 2.1, +5.0)
+//        , new ComplexField.Complex(+3.0 - 2.1, +5.0)
+//        , 0.0
+//        , +1.0 * Math.PI
+//        , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_u_part)
+//        , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_v_part)
+//        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(x)
+//        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(y)
+//        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dx)
+//        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dy)
+//        , 99999); // # dx
+
+//##
+//Integrazione di f[z] == 
+//f[x + I*y] == (x + I*y)^2 sulla semicirconferenza superiore
+//x[t] == +3.0 + 2.1*Cos[t]
+//y[t] == +5.0 + 2.1*Sin[t]
+//t in [0, +Pi]
+//ComplexField.Complex res_asAscalar =
+//    ComplexField.ContourIntegral.ContourIntegral_AsScalar_ManagementMethod(
+//        new ComplexField.Complex(+3.0 + 2.1, +5.0)
+//        , new ComplexField.Complex(+3.0 - 2.1, +5.0)
+//        , 0.0
+//        , +1.0 * Math.PI
+//        , new ComplexField.ContourIntegral.fPtr_ComplexAsScalar_(zSquared_AsScalar_)
+//        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(x)
+//        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(y)
+//        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dx)
+//        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dy)
+//        , 99999); // # dx
+
+//double areaTrapezio =
+//    RealField.Integrate.Integrate_equi_trapezium(0, 2, 9);
+
+// TODO : memo per change extrema parameters :
+
+//In[7]:= x[t_] = t
+//In[8]:= y[t_] = (2*t + 1)
+
+//In[12]:= {x[0], y[0]}
+//Out[12]= {0, 1}
+
+//In[11]:= {x[11], y[11]}
+//Out[11]= {11, 23}
+
+//ComplexField.Complex res =
+//    ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(0.0, 11.0, 999);
+//##
+
 
 
 //System.Random myGenerator = new Random();
@@ -179,43 +245,43 @@ namespace TestConsole
 //}
 
 
-            //ComplexField.Complex res =
-            //    ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(
-            //        new ComplexField.Complex(+3.0 + 2.1, +5.0)
-            //        , new ComplexField.Complex(+3.0 - 2.1, +5.0)
-            //        , 0.0
-            //        , +1.0*Math.PI
-            //        , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_u_part)
-            //        , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_v_part)
-            //        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(x)
-            //        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(y)
-            //        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dx)
-            //        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dy)
-            //        , 99999); // # dx
+//ComplexField.Complex res =
+//    ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(
+//        new ComplexField.Complex(+3.0 + 2.1, +5.0)
+//        , new ComplexField.Complex(+3.0 - 2.1, +5.0)
+//        , 0.0
+//        , +1.0*Math.PI
+//        , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_u_part)
+//        , new ComplexField.ContourIntegral.fPtr_U_or_V_(genericIntegrand_v_part)
+//        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(x)
+//        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(y)
+//        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dx)
+//        , new ComplexField.ContourIntegral.fPtr_Jordan_parametriz_(dy)
+//        , 99999); // # dx
 
-            ////double areaTrapezio =
-            ////    RealField.Integrate.Integrate_equi_trapezium(0, 2, 9);
+////double areaTrapezio =
+////    RealField.Integrate.Integrate_equi_trapezium(0, 2, 9);
 
-            //// TODO : memo per change extrema parameters :
+//// TODO : memo per change extrema parameters :
 
-            ////In[7]:= x[t_] = t
-            ////In[8]:= y[t_] = (2*t + 1)
+////In[7]:= x[t_] = t
+////In[8]:= y[t_] = (2*t + 1)
 
-            ////In[12]:= {x[0], y[0]}
-            ////Out[12]= {0, 1}
+////In[12]:= {x[0], y[0]}
+////Out[12]= {0, 1}
 
-            ////In[11]:= {x[11], y[11]}
-            ////Out[11]= {11, 23}
+////In[11]:= {x[11], y[11]}
+////Out[11]= {11, 23}
 
-            ////ComplexField.Complex res =
-            ////    ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(0.0, 11.0, 999);
+////ComplexField.Complex res =
+////    ComplexField.ContourIntegral.ContourIntegral_ManagementMethod(0.0, 11.0, 999);
 
-            ////ComplexField.Complex res =
-            ////     ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral(+4.0, +0.0, 9999, 99000);// successo pieno!!!
-            ////// ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral( -3.9, +11.85, 9999, 20000);// NO : Re[s]>0 
-            //////ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral(+3.9, +11.85, 9999, 990000);// errore == 1.31926*10^-7 - 5.8894*10^-8 \[ImaginaryI]  OK
-            ////// ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral(+39.9, +181.15, 9999, 999999999 );// 
-            ////ComplexField.Complex prodGamma = ComplexField.Functions.Gamma_function(new ComplexField.Complex(+4.0, +0.0), 99000);// NB! converge anche per Re[s]<0
+////ComplexField.Complex res =
+////     ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral(+4.0, +0.0, 9999, 99000);// successo pieno!!!
+////// ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral( -3.9, +11.85, 9999, 20000);// NO : Re[s]>0 
+//////ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral(+3.9, +11.85, 9999, 990000);// errore == 1.31926*10^-7 - 5.8894*10^-8 \[ImaginaryI]  OK
+////// ComplexField.GammaViaIntegral.GammaSpecialF_viaIntegral(+39.9, +181.15, 9999, 999999999 );// 
+////ComplexField.Complex prodGamma = ComplexField.Functions.Gamma_function(new ComplexField.Complex(+4.0, +0.0), 99000);// NB! converge anche per Re[s]<0
 
 //long[,] num = new long[2, 2]{{+2,+1}, {+3,+2}};
 //long[,] den = new long[2, 2]{{+2,+1}, {+3,+1}};
@@ -335,42 +401,42 @@ namespace TestConsole
 //    Console.Write("{0}^{1}", den[c, 0], den[c, 1]);
 //}
 
-            //LinearAlgebra.RealMatrix Mata = new LinearAlgebra.RealMatrix(3, 3, @"C:\root\projects\Calculus_2015_\TestConsole\dat\mata3x3_20170315_.txt");
-            //Mata.show();
-            //double det = Mata.det();
-            //LinearAlgebra.RealMatrix Mata_diagonalized_ = Mata.Gauss_Jordan_elimination();
-            //Mata_diagonalized_.show();
+//LinearAlgebra.RealMatrix Mata = new LinearAlgebra.RealMatrix(3, 3, @"C:\root\projects\Calculus_2015_\TestConsole\dat\mata3x3_20170315_.txt");
+//Mata.show();
+//double det = Mata.det();
+//LinearAlgebra.RealMatrix Mata_diagonalized_ = Mata.Gauss_Jordan_elimination();
+//Mata_diagonalized_.show();
 
-            //double t = 0.0;
-            //double Delta_t = +1.0E-1;
-            //double x = default(double);
-            //double y = default(double);
-            ////
-            //for (; t <= System.Math.PI; t += Delta_t)
-            //{
-            //    x = Math.Cos(t);// assume the Radius==+1.
-            //    y = Math.Sin(t);// assume the Radius==+1.
-            //    //
-            //    double arg = System.Math.Atan2(y, x);
-            //    double partOfPi = arg / Math.PI;
-            //    //
-            //    // output
-            //    System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            //    sb.Append( "\n\t t=");
-            //    sb.Append( t.ToString() );
-            //    sb.Append( " x=Cos(t)=");
-            //    sb.Append( x.ToString() );
-            //    sb.Append( " y=Sin(t)=");
-            //    sb.Append( y.ToString() );
-            //    sb.Append( " arg=Atan2(y, x)=");
-            //    sb.Append( arg.ToString() );
-            //    sb.Append( " partOfPi=arg/Math.PI=");
-            //    sb.Append( partOfPi.ToString() );
-            //    string theMessage = sb.ToString();
-            //    LogSinkFs.Wrappers.LogWrappers.SectionContent(theMessage, 0);
-            //    Console.WriteLine("\n\t t={0} x=Cos(t)={1} y=Sin(t)={2} arg=Atan2(y, x)={3} partOfPi=arg/Math.PI={4}"
-            //        , t, x, y, arg, partOfPi);
-            //}// end for.
+//double t = 0.0;
+//double Delta_t = +1.0E-1;
+//double x = default(double);
+//double y = default(double);
+////
+//for (; t <= System.Math.PI; t += Delta_t)
+//{
+//    x = Math.Cos(t);// assume the Radius==+1.
+//    y = Math.Sin(t);// assume the Radius==+1.
+//    //
+//    double arg = System.Math.Atan2(y, x);
+//    double partOfPi = arg / Math.PI;
+//    //
+//    // output
+//    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+//    sb.Append( "\n\t t=");
+//    sb.Append( t.ToString() );
+//    sb.Append( " x=Cos(t)=");
+//    sb.Append( x.ToString() );
+//    sb.Append( " y=Sin(t)=");
+//    sb.Append( y.ToString() );
+//    sb.Append( " arg=Atan2(y, x)=");
+//    sb.Append( arg.ToString() );
+//    sb.Append( " partOfPi=arg/Math.PI=");
+//    sb.Append( partOfPi.ToString() );
+//    string theMessage = sb.ToString();
+//    LogSinkFs.Wrappers.LogWrappers.SectionContent(theMessage, 0);
+//    Console.WriteLine("\n\t t={0} x=Cos(t)={1} y=Sin(t)={2} arg=Atan2(y, x)={3} partOfPi=arg/Math.PI={4}"
+//        , t, x, y, arg, partOfPi);
+//}// end for.
 
 
 //double[,] proto = new double[9, 3]
@@ -425,7 +491,7 @@ namespace TestConsole
 //        Common.MonteCarlo.MonteCarlo_threadLocked.next_int(1, 999999);
 //    Console.WriteLine("  AnalyzedEntity = {0}  MagnitudoOrder = {1}   counter=={2}", thePar, RealField.TestsOnRationals.getMagnitudoOrder( thePar), c);
 //}
-            
+
 
 //
 //long[,] zorro = testQ.factorizationConcatenator(a, b);
@@ -1080,30 +1146,30 @@ namespace TestConsole
 //delta[1] = Euler_prod[1] - Dirich_sum[1];
 //System.Console.WriteLine("\n\t soglia={0} , Errore={1} +i* {2} ", threshold, delta[0], delta[1]);
 
-        //static double ExpMinusXSinX(double x)
-        //{
-        //    return Math.Exp(-1.0 * x) * Math.Sin(x);
-        //}// end f
+//static double ExpMinusXSinX(double x)
+//{
+//    return Math.Exp(-1.0 * x) * Math.Sin(x);
+//}// end f
 
-        //    int ENNE = 999;
-        //    for (int c = 0; c < ENNE; c++)
-        //    {
-        //        double image = ExpMinusXSinX((double)c);
-        //        string shiftingToken = "";
-        //        if( image > +1.0E-200) // assume it's positive
-        //        {
-        //            shiftingToken = "___________________________________POSITIVE_______________";
-        //        }
-        //        else if( image < -1.0E-200) // assume it's negative
-        //        {
-        //            shiftingToken = "_NEGATIVE_";
-        //        }
-        //        else // assume it's zero(==0)
-        //        {
-        //            shiftingToken = "_ZERO_";
-        //        }
-        //        System.Console.WriteLine("\n\t ExpMinusXSinX({0}) == {1} {2}", (double)c, image, shiftingToken );
-        //    }// for
+//    int ENNE = 999;
+//    for (int c = 0; c < ENNE; c++)
+//    {
+//        double image = ExpMinusXSinX((double)c);
+//        string shiftingToken = "";
+//        if( image > +1.0E-200) // assume it's positive
+//        {
+//            shiftingToken = "___________________________________POSITIVE_______________";
+//        }
+//        else if( image < -1.0E-200) // assume it's negative
+//        {
+//            shiftingToken = "_NEGATIVE_";
+//        }
+//        else // assume it's zero(==0)
+//        {
+//            shiftingToken = "_ZERO_";
+//        }
+//        System.Console.WriteLine("\n\t ExpMinusXSinX({0}) == {1} {2}", (double)c, image, shiftingToken );
+//    }// for
 //
 //Common.CalendarLib.LocalizedSingleDate ld = new Common.CalendarLib.LocalizedSingleDate(1, 4, 2017, "ITCAL", 2017, 2020);
 //string myNation = ld.CurrentNationFullName();
@@ -1342,7 +1408,7 @@ namespace TestConsole
 ////
 //target = +1.0E-17;
 //Arg_in_McLarinExp = Math.Log( target );
-            
+
 
 //RealField.AvailableAlgorithms.SetteSinSetteX da = new RealField.AvailableAlgorithms.SetteSinSetteX();
 //RealField.WeierstrassContinuity.Functional_form theCurrentFunction = new RealField.WeierstrassContinuity.Functional_form( da.f_SetteSinSetteX );
@@ -1451,6 +1517,4 @@ namespace TestConsole
 //    //}
 
 //}// end class TestMatrix
-
-
-#endregion
+//#endregion

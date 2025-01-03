@@ -24,7 +24,16 @@ namespace Entity.Proxies
                     "PrimeDataApp"
                 );
             if( null==cmd.Connection)
-                return null;// no conn
+            {
+                return null;
+            }// no conn
+            if ( System.Data.ConnectionState.Closed == cmd.Connection.State
+                || System.Data.ConnectionState.Broken == cmd.Connection.State
+                )
+            {
+                return null;
+            }// no conn
+            //
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "Prime_sequence_LOAD_atMaxOrdinal";
             //

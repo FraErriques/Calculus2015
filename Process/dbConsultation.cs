@@ -13,12 +13,22 @@ namespace Process
         {
             lock (typeof( Process.dbConsultation) )
             {
-                Entity.Entities.Prime_sequence primes = new Entity.Entities.Prime_sequence();
-                primes.GetActualOrdinal();// the last
-                Int64 availableOrdinal = primes.getCurrentOrdinal();
-                Int64 availablePrime = primes.getCurrentPrime();
+                Int64 availableOrdinal = default;
+                Int64 availablePrime = default;
+                string message = null;
+                try
+                {
+                    Entity.Entities.Prime_sequence primes = new Entity.Entities.Prime_sequence();
+                    primes.GetActualOrdinal();// the last
+                    availableOrdinal = primes.getCurrentOrdinal();
+                    availablePrime = primes.getCurrentPrime();
+                }
+                catch (Exception)
+                {
+                    message = "database not available now.";
+                }
                 //
-                string message =
+                message =
                     "\r\n prime = " + Process.Consultation.fillWithDots(availablePrime.ToString())
                     + "  its ordinal in the Primes sequence is= " + Process.Consultation.fillWithDots(availableOrdinal.ToString());
                 //

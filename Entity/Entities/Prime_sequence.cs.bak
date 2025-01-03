@@ -94,14 +94,13 @@ namespace Entity.Entities
             System.Data.DataTable specifiedCouple =
             Entity.Proxies.volatile_Prime_sequence_LOAD_SINGLE_SERVICE.volatile_Prime_sequence_LOAD_SINGLE(
                 specifiedOrdinal );
-			//
+            if (null == specifiedCouple)
+            {
+                LogSinkFs.Wrappers.LogWrappers.SectionContent("failed to retrieve the resultset. It is NULL.", 0);
+                throw new System.Exception("failed to retrieve the resultset.It is NULL.");
+            }
             try
             {
-	            if (null == specifiedCouple)
-	            {
-	                LogSinkFs.Wrappers.LogWrappers.SectionContent("failed to retrieve the resultset. It is NULL.", 0);
-	                throw new System.Exception("failed to retrieve the resultset.It is NULL.");
-	            }            	
                 this.prime = (Int64)(specifiedCouple.Rows[0]["prime"]);
                 this.ordinal = (Int64)(specifiedCouple.Rows[0]["ordinal"]);
             }
