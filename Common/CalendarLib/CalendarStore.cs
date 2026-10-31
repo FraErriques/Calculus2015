@@ -22,11 +22,11 @@ namespace Common.CalendarLib
 	{
 		# region data
 
-		private System.Collections.Hashtable data = null;
-		private System.Collections.ArrayList builtNations = null;
+		private System.Collections.Hashtable? data = null;
+		private System.Collections.ArrayList? builtNations = null;
 		private bool first_build_occurred = false;
 		// la classe non e' istanziabile per creazione di oggetti; espone solo questa handle statica.
-		private static CalendarStore handle = null;
+		private static CalendarStore? handle = null;
 		private static int brokerClientsCounter = 0;// Broker clients counter
 
 		# endregion data
@@ -97,8 +97,8 @@ namespace Common.CalendarLib
 				// if no more clients...
 				if( 0==CalendarStore.brokerClientsCounter)
 				{	// empty the two data structures
-					this.data.Clear();
-					this.builtNations.Clear();
+					if(null!=data) this.data.Clear();
+					if(null!=builtNations) this.builtNations.Clear();
 					// destroy the Singleton content : unlink it from its unique instance.
 					// The garbage collector will ake it away.
 					handle = null;
