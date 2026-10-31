@@ -1,5 +1,4 @@
-
-# let's start with directories
+# Build directories
 bin/
 obj/
 TempPE/
@@ -7,17 +6,20 @@ Debug/
 Release/
 .vs/
 
-# let's continue with files
-*.dll
-*.exe
-*.pdb
-*.scc
-*.cache
-*.vspscc
-*.csproj.vspscc
+# User-specific files
 *.user
 *.suo
+*.userosscache
+*.sln.docstates
+
+# Diagnostic logs and caches
 *.log
+*.cache
 *.VS2017
 *FileListAbsolute.txt
-*.config
+*.scc
+*.vspscc
+*.csproj.vspscc
+
+# Build results (handled by bin/obj, but safe to keep if needed)
+*.pdb
