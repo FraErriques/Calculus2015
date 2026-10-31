@@ -1,75 +1,84 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Threading;
-
 
 namespace TestConsole
 {
-
-       
-    
     class Program
     {
         public static System.Threading.Thread localThread = null;
+        
+        // 1. Introduce a CancellationTokenSource for modern cooperative cancellation
+        private static CancellationTokenSource s_cts = new CancellationTokenSource();
 
         public class workerContainer
         {
             public static void calcBkLoop()
             {
+                // 2. Get the token from the source
+                CancellationToken token = s_cts.Token;
+
                 try
                 {
-                    while ( localThread.ThreadState != System.Threading.ThreadState.SuspendRequested)
+                    // 3. Replace legacy ThreadState checks with token checking
+                    while (!token.IsCancellationRequested)
                     {
                         System.Console.WriteLine("\n from calcBkLoop CurrentThread.ManagedThreadId== " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString()
-                            +"___localThread.ManagedThreadId== " + localThread.ManagedThreadId.ToString() );
+                            + "___localThread.ManagedThreadId== " + localThread.ManagedThreadId.ToString());
                         System.Console.WriteLine("\n from calcBkLoop CurrentThread.ThreadState== " + System.Threading.Thread.CurrentThread.ThreadState.ToString()
                             + "___localThread.ThreadState== " + localThread.ThreadState.ToString());
-                        // do something
-                    }// while !suspended
-                    if (localThread.ThreadState == System.Threading.ThreadState.SuspendRequested)
-                    {
-                        System.Console.WriteLine("\n Suspended.");
+                        
+                        // Simulate some work or sleep briefly to allow cancellation check
+                        Thread.Sleep(100);
                     }
-                    // when here thread has been suspended
+
+                    if (token.IsCancellationRequested)
+                    {
+                        System.Console.WriteLine("\n Cancellation requested / Loop terminated gracefully.");
+                    }
                 }
-                catch(ThreadAbortException thrEx)
+                catch (OperationCanceledException)
                 {
-                    System.Console.WriteLine("\n Specialized Exception ThreadAbortException : "+ thrEx.Message); 
-                }// specific catch
-                catch(System.Exception ex)
+                    System.Console.WriteLine("\n Specialized Exception OperationCanceledException");
+                }
+                catch (System.Exception ex)
                 {
                     System.Console.WriteLine("\n Generic Exception : " + ex.Message);
-                }// general catch
+                }
                 return;
-            }// calcBkLoop()
-        }// class workerContainer
+            }
+        }
 
         public static void caller()
         {
             workerContainer wk = new workerContainer();
-            // ThreadStart  delegate
+            
+            // Re-initialize the cancellation token source if caller is run multiple times
+            s_cts = new CancellationTokenSource();
+
             Program.localThread = new Thread(Program.workerContainer.calcBkLoop);
             System.Console.WriteLine("\n from caller  before Start CurrentThread.ManagedThreadId== " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString()
                 + "___localThread.ManagedThreadId== " + localThread.ManagedThreadId.ToString());
             System.Console.WriteLine("\n from caller  before Start CurrentThread.ThreadState== " + System.Threading.Thread.CurrentThread.ThreadState.ToString()
                 + "___localThread.ThreadState== " + localThread.ThreadState.ToString());
-            // do something
+            
             Program.localThread.Start();
             System.Console.WriteLine("\n from caller after Start CurrentThread.ManagedThreadId== " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString()
                 + "___localThread.ManagedThreadId== " + localThread.ManagedThreadId.ToString());
             System.Console.WriteLine("\n from caller after Start CurrentThread.ThreadState== " + System.Threading.Thread.CurrentThread.ThreadState.ToString()
                 + "___localThread.ThreadState== " + localThread.ThreadState.ToString());
-            //
-            //Program.localThread.Suspend();
-            Program.localThread.Abort();
-            //Program.localThread.Join();
-            System.Console.WriteLine("\n from caller after Abort CurrentThread.ManagedThreadId== " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString()
+
+            // 4. Let the thread run for a brief moment before signaling cancellation
+            Thread.Sleep(300);
+
+            // 5. Replace Thread.Abort() with cooperative cancellation and Join()
+            s_cts.Cancel();
+            Program.localThread.Join(); // Wait safely for the thread to exit
+
+            System.Console.WriteLine("\n from caller after Cancel/Join CurrentThread.ManagedThreadId== " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString()
                 + "___localThread.ManagedThreadId== " + localThread.ManagedThreadId.ToString());
-            System.Console.WriteLine("\n from caller after Abort CurrentThread.ThreadState== " + System.Threading.Thread.CurrentThread.ThreadState.ToString()
+            System.Console.WriteLine("\n from caller after Cancel/Join CurrentThread.ThreadState== " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString()
                 + "___localThread.ThreadState== " + localThread.ThreadState.ToString());
-        }// caller
-
-
+        }
 
         static void Main( string[] args )
         {
@@ -77,16 +86,12 @@ namespace TestConsole
 
             caller();
 
-            //---########################################################################
             System.Console.WriteLine("\n\n\t Strike \"Enter\" to leave ");
             System.Console.ReadLine();
             LogSinkFs.Wrappers.LogWrappers.SectionClose();
-        }// end main
-
-    }// end class Program
-}// end nmsp
-
-
+        }//main
+    }//class-with-main
+}//nmsp
 
 
 
